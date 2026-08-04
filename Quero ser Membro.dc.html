@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
+  <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+  <script src="_ds/image-slot.js"></script>
+  <style>
+    body { margin:0; }
+    * { text-wrap: pretty; }
+    a { color: hsl(var(--primary)); text-decoration:none; }
+    button { font-family: inherit; transition: background-color .15s ease, color .15s ease, transform .12s ease, filter .15s ease, box-shadow .15s ease; }
+    input, textarea { font-family: inherit; }
+    .om-plan { transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease; }
+    .om-plan:hover { transform: translateY(-2px); border-color: hsl(var(--primary)/.6); }
+    .om-soc { transition: color .15s ease, border-color .15s ease, background-color .15s ease; }
+    .om-soc:hover { color:#fff; border-color:hsl(var(--primary)); background:hsl(var(--primary)); }
+    .om-gal { scrollbar-width:thin; }
+    .om-gal::-webkit-scrollbar { height:8px; }
+    .om-gal::-webkit-scrollbar-thumb { background:hsl(var(--border)); border-radius:9999px; }
+    .om-ev { transition: transform .14s ease, border-color .14s ease; }
+    .om-ev:hover { transform: translateY(-3px); border-color: hsl(var(--primary)/.5); }
+  </style>
+</helmet>
+<div class="dark">
+<div class="bg-background text-foreground font-sans" style="min-height:100vh;">
+
+  <header style="display:flex; align-items:center; justify-content:space-between; padding:18px 40px; border-bottom:1px solid hsl(var(--border));">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:28px; width:auto;">
+      <span class="font-impact" style="font-size:19px;">Brasa Mind</span>
+    </div>
+    <a href="Entrar.dc.html" class="text-muted-foreground" style="font-size:13px; font-weight:600;">Já é membro? Entrar</a>
+  </header>
+
+  <main style="max-width:960px; margin:0 auto; padding:36px 40px 64px;">
+
+    <!-- ===== LANDING / PLANO ===== -->
+    <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex; flex-direction:column; gap:28px;">
+      <a href="Entrar.dc.html" class="text-muted-foreground" style="align-self:flex-start; display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600;">‹ Voltar para o login</a>
+      <div style="text-align:center; max-width:620px; margin:0 auto;">
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Associação de membros</x-import>
+        <h1 class="font-impact" style="margin:16px 0 10px; font-size:44px; line-height:1.02;">ENTRE PARA O BRASA</h1>
+        <p class="text-muted-foreground" style="margin:0; font-size:16px; line-height:1.55;">Empresários gaúchos que conectam, indicam e fecham negócios. Um encontro por mês, rede o ano inteiro.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:20px; align-items:stretch;">
+        <div class="bg-card glow-ember" style="border:1px solid hsl(var(--primary)); border-radius:20px; padding:30px; display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="font-display" style="font-size:20px; font-weight:800;">Plano Membro</span>
+            <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Recorrente</x-import>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:8px;">
+            <span class="font-display" style="font-size:44px; font-weight:800;">R$ 97</span>
+            <span class="text-muted-foreground" style="font-size:15px;">/mês, no cartão ou PIX</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ beneficios }}" as="b" hint-placeholder-count="5">
+              <div style="display:flex; align-items:flex-start; gap:10px; font-size:14px;">
+                <span class="bg-success" style="width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success-foreground))" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span>{{ b.texto }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full" style="margin-top:4px;" hint-size="100%,48px">Quero ser Membro</x-import>
+          <p class="text-muted-foreground" style="margin:0; font-size:12px; text-align:center;">Sem fidelidade. Cancele quando quiser.</p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; flex:1; min-height:150px; position:relative;">
+            <image-slot id="membro-hero" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa"></image-slot>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+            <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px; text-align:center;"><div class="font-impact" style="font-size:26px;">128</div><div class="text-muted-foreground" style="font-size:11px;">membros</div></div>
+            <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px; text-align:center;"><div class="font-impact" style="font-size:26px;">4</div><div class="text-muted-foreground" style="font-size:11px;">anos de rede</div></div>
+            <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px; text-align:center;"><div class="font-impact" style="font-size:26px;">48</div><div class="text-muted-foreground" style="font-size:11px;">eventos</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:4px;">
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px;">
+          <div>
+            <div class="text-brasa font-display" style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.09em;">Encontros anteriores</div>
+            <h2 class="font-display" style="margin:4px 0 0; font-size:24px; font-weight:800;">O que você vai viver todo mês</h2>
+          </div>
+          <span class="text-muted-foreground" style="font-size:13px;">arraste para o lado</span>
+        </div>
+        <div class="om-gal" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x mandatory;">
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev1" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev2" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev3" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev4" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ===== STEPPER ===== -->
+    <sc-if value="{{ inFlow }}">
+    <div style="max-width:660px; margin:0 auto; display:flex; flex-direction:column; gap:26px;">
+      <button onClick="{{ back }}" style="align-self:flex-start; background:transparent; border:0; color:hsl(var(--muted-foreground)); font-size:13px; font-weight:600; cursor:pointer;">‹ Voltar</button>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="{{ s1Cls }}" style="width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;">1</span><span style="font-size:13px; font-weight:600;">Cadastro</span></div>
+        <div style="flex:1; height:2px; background:hsl(var(--border));"></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="{{ s2Cls }}" style="width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;">2</span><span style="font-size:13px; font-weight:600;">Pagamento</span></div>
+        <div style="flex:1; height:2px; background:hsl(var(--border));"></div>
+        <div style="display:flex; align-items:center; gap:10px;"><span class="{{ s3Cls }}" style="width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;">3</span><span style="font-size:13px; font-weight:600;">Confirmação</span></div>
+      </div>
+
+      <!-- Passo 1: cadastro -->
+      <sc-if value="{{ step1 }}">
+      <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px;">
+        <h3 class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">Seus dados</h3>
+        <p class="text-muted-foreground" style="margin:0 0 18px; font-size:13px;">Cada membro representa uma empresa na rede.</p>
+        <a href="#" onClick="{{ next }}" style="display:flex; align-items:center; justify-content:center; gap:10px; height:44px; border:1px solid hsl(var(--border)); border-radius:12px; background:#fff; color:#1f1f1f; font-size:14px; font-weight:600; margin-bottom:16px;">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continuar com Google
+        </a>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;"><div style="flex:1; height:1px; background:hsl(var(--border));"></div><span class="text-muted-foreground" style="font-size:12px;">ou preencha seus dados</span><div style="flex:1; height:1px; background:hsl(var(--border));"></div></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Seu nome" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Empresa</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Nome da empresa" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Especialidade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Ex.: Marketing" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Cidade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Porto Alegre" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">E-mail</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="voce@empresa.com.br" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="+55 51 90000 0000" hint-size="100%,40px"></x-import></div>
+        </div>
+        <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full" style="margin-top:20px;" hint-size="100%,44px">Continuar para pagamento</x-import>
+      </div>
+      </sc-if>
+
+      <!-- Passo 2: pagamento recorrente -->
+      <sc-if value="{{ step2 }}">
+      <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+          <h3 class="font-display" style="margin:0; font-size:18px; font-weight:800;">Assinatura mensal</h3>
+          <span class="bg-secondary text-muted-foreground" style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:9999px; font-size:11px; font-weight:700;"><span style="width:6px; height:6px; border-radius:50%; background:hsl(var(--success)); display:inline-block;"></span>Cobrança via Asaas</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; padding-bottom:12px; border-bottom:1px solid hsl(var(--border));"><span class="text-muted-foreground">Plano Membro, recorrente</span><span class="font-mono">R$ 97,00 /mês</span></div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; padding:14px 0;"><span style="font-weight:700;">Primeira cobrança hoje</span><span class="font-display font-mono" style="font-size:24px; font-weight:800;">R$ 97,00</span></div>
+
+        <div style="display:flex; gap:10px; margin:6px 0 16px;">
+          <div style="flex:1; border:1px solid hsl(var(--primary)); border-radius:12px; padding:12px; text-align:center; font-weight:700; font-size:14px; box-shadow:0 0 0 3px hsl(var(--primary)/.12);">Cartão de crédito</div>
+          <div style="flex:1; border:1px solid hsl(var(--border)); border-radius:12px; padding:12px; text-align:center; font-weight:600; font-size:14px; color:hsl(var(--muted-foreground));">PIX recorrente</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Número do cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="0000 0000 0000 0000" class="font-mono" hint-size="100%,40px"></x-import></div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="MM/AA" class="font-mono" hint-size="100%,40px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="000" class="font-mono" hint-size="100%,40px"></x-import></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px; padding:14px; border:1px solid hsl(var(--border)); border-radius:12px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span class="text-muted-foreground" style="font-size:12px;">Pagamento 100% seguro, criptografia SSL</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="text-muted-foreground" style="font-size:11px;">processado por</span>
+              <span class="font-display" style="font-size:16px; font-weight:800; color:#1a4bd6; letter-spacing:-.02em;">asaas</span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+            <span style="background:#fff; border-radius:5px; padding:4px 8px; font-style:italic; font-weight:800; font-size:12px; color:#1a1f71;">VISA</span>
+            <span style="background:#fff; border-radius:5px; padding:5px 8px; display:flex; align-items:center;"><span style="width:14px; height:14px; border-radius:50%; background:#eb001b;"></span><span style="width:14px; height:14px; border-radius:50%; background:#f79e1b; margin-left:-6px;"></span></span>
+            <span style="background:#000; border-radius:5px; padding:4px 8px; font-weight:800; font-size:12px; letter-spacing:.02em;"><span style="color:#ffcb05;">e</span><span style="color:#ef4123;">l</span><span style="color:#00a4e0;">o</span></span>
+            <span style="background:#dff5f1; color:#0a8f7f; border-radius:5px; padding:4px 8px; font-weight:800; font-size:12px;">PIX</span>
+            <span class="text-muted-foreground" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; border:1px solid hsl(var(--border)); border-radius:5px; padding:4px 8px; font-size:11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success))" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>Site Seguro</span>
+          </div>
+        </div>
+        <label style="display:flex; align-items:flex-start; gap:10px; margin-top:16px; cursor:pointer;">
+          <input type="checkbox" checked="{{ terms }}" onChange="{{ toggleTerms }}" style="margin-top:2px; width:16px; height:16px; accent-color:hsl(var(--primary)); flex:none;">
+          <span class="text-muted-foreground" style="font-size:13px; line-height:1.4;">Li e aceito os <a href="#" style="font-weight:600;">Termos de Uso</a> e a <a href="#" style="font-weight:600;">Política de Privacidade</a>, e autorizo a cobrança recorrente mensal.</span>
+        </label>
+        <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" disabled="{{ termsBlock }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full disabled:opacity-50 disabled:pointer-events-none" style="margin-top:14px;" hint-size="100%,44px">Assinar e entrar no Brasa</x-import>
+      </div>
+      </sc-if>
+
+      <!-- Passo 3: confirmação -->
+      <sc-if value="{{ step3 }}">
+      <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:32px 24px; text-align:center;">
+        <div class="bg-success" style="width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success-foreground))" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3 class="font-display" style="margin:0 0 6px; font-size:24px; font-weight:800;">Bem-vindo ao Brasa!</h3>
+        <p class="text-muted-foreground" style="margin:0 0 8px; font-size:14px;">Sua assinatura está ativa. A próxima cobrança será em <span class="font-mono" style="color:hsl(var(--foreground));">27/08/2026</span>.</p>
+        <span style="display:inline-block; margin-bottom:22px;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro Brasa Mind</x-import></span>
+        <div style="display:flex; gap:12px;">
+          <a href="Entrar.dc.html" style="flex:1; display:flex; align-items:center; justify-content:center; background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:12px; color:hsl(var(--foreground)); font-size:14px; font-weight:600;">Fazer login</a>
+          <a href="%C3%81rea%20do%20Membro.dc.html" class="bg-brasa glow-ember" style="flex:2; display:flex; align-items:center; justify-content:center; border-radius:10px; padding:12px; color:#fff; font-size:14px; font-weight:600;">Ir para minha área</a>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+  </main>
+
+  <footer style="border-top:1px solid hsl(var(--border));">
+    <div style="max-width:960px; margin:0 auto; padding:30px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:11px;">
+        <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto;">
+        <div>
+          <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasa Mind</div>
+          <div class="text-muted-foreground" style="font-size:12px;">Empreendedorismo, churrasco e network gaúcho</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="#" aria-label="Instagram" class="om-soc" style="width:38px; height:38px; border-radius:50%; border:1px solid hsl(var(--border)); display:flex; align-items:center; justify-content:center; color:hsl(var(--muted-foreground));"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="WhatsApp" class="om-soc" style="width:38px; height:38px; border-radius:50%; border:1px solid hsl(var(--border)); display:flex; align-items:center; justify-content:center; color:hsl(var(--muted-foreground));"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></a>
+        <a href="#" aria-label="LinkedIn" class="om-soc" style="width:38px; height:38px; border-radius:50%; border:1px solid hsl(var(--border)); display:flex; align-items:center; justify-content:center; color:hsl(var(--muted-foreground));"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.75-2.05C20.4 8.65 22 10.6 22 14v7h-4v-6.2c0-1.5-.03-3.4-2.1-3.4-2.1 0-2.4 1.6-2.4 3.3V21H9z"/></svg></a>
+        <a href="#" aria-label="E-mail" class="om-soc" style="width:38px; height:38px; border-radius:50%; border:1px solid hsl(var(--border)); display:flex; align-items:center; justify-content:center; color:hsl(var(--muted-foreground));"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg></a>
+      </div>
+    </div>
+    <div style="border-top:1px solid hsl(var(--border));">
+      <div class="text-muted-foreground" style="max-width:960px; margin:0 auto; padding:15px 40px; font-size:12px; display:flex; gap:22px; flex-wrap:wrap; align-items:center;">
+        <span>contato@brasamind.com.br</span><span>(51) 99000-0000</span><span>@brasamind</span><span>Porto Alegre, RS</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { step:0, terms:false };
+  next(){ window.scrollTo(0,0); this.setState(s=>({ step:Math.min(3, s.step+1) })); }
+  back(){ window.scrollTo(0,0); this.setState(s=>({ step:Math.max(0, s.step-1) })); }
+
+  beneficios = [
+    { texto:'Acesso ao encontro presencial do mês, com preço de membro' },
+    { texto:'Hub de membros: sua empresa visível para a rede toda' },
+    { texto:'Convites para levar convidados e ganhar pontos' },
+    { texto:'Ranking, medalhas e gamificação de presença' },
+    { texto:'Preço de ingresso reduzido em todos os eventos' },
+  ];
+
+  renderVals(){
+    const st = this.state.step;
+    const stepCls = n => st>n ? 'bg-success text-success-foreground' : st===n ? 'bg-brasa text-white' : 'bg-secondary text-muted-foreground';
+    return {
+      isLanding: st===0, inFlow: st>=1,
+      step1: st===1, step2: st===2, step3: st===3,
+      s1Cls:stepCls(1), s2Cls:stepCls(2), s3Cls:stepCls(3),
+      next:()=>this.next(), back:()=>this.back(),
+      beneficios:this.beneficios,
+      terms:this.state.terms, termsBlock:!this.state.terms, toggleTerms:(e)=>this.setState({ terms:e.target.checked }),
+    };
+  }
+}
+</script>
+</body>
+</html>

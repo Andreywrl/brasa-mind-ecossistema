@@ -1,0 +1,41 @@
+/* ============================================================================
+   BRASA MIND · tema escuro restaurado
+   O _ds_bundle.css empacotado só emitiu o tema claro (:root); o bloco `.dark`
+   do globals.css original foi perdido na conversão. Aqui ele é reposto verbatim
+   (canais HSL), para que todo componente do DS que lê hsl(var(--token))
+   troque para as superfícies escuras. Carregue DEPOIS do _ds_bundle.css.
+   ============================================================================ */
+.dark {
+  --background: 20 10% 5%;
+  --foreground: 40 20% 98%;
+  --card: 20 9% 8%;
+  --card-foreground: 40 20% 98%;
+  --popover: 20 9% 8%;
+  --popover-foreground: 40 20% 98%;
+  --primary: 13 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 20 8% 14%;
+  --secondary-foreground: 40 20% 96%;
+  --muted: 20 8% 14%;
+  --muted-foreground: 30 8% 64%;
+  --accent: 20 8% 16%;
+  --accent-foreground: 40 20% 98%;
+  --ember: 42 88% 60%;
+  --ember-foreground: 20 14% 8%;
+  --destructive: 350 80% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 142 62% 46%;
+  --success-foreground: 20 14% 6%;
+  --warning: 42 88% 60%;
+  --warning-foreground: 20 14% 8%;
+  --info: 217 90% 66%;
+  --info-foreground: 20 14% 6%;
+  --border: 20 8% 18%;
+  --input: 20 8% 18%;
+  --ring: 13 100% 60%;
+  --chart-1: 13 100% 60%;
+  --chart-2: 42 88% 60%;
+  --chart-3: 12 70% 46%;
+  --chart-4: 200 16% 60%;
+  --chart-5: 30 10% 74%;
+}

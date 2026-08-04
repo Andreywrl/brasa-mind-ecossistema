@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
+  <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+  <script src="_ds/image-slot.js"></script>
+  <style>
+    body { margin: 0; }
+    a { color: hsl(var(--primary)); }
+    a:hover { opacity: .8; }
+    button { transition: transform .15s ease, filter .15s ease, background-color .15s ease, box-shadow .15s ease; }
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0) scale(.98); }
+  </style>
+</helmet>
+<div class="{{ themeClass }}" style="min-height:100vh;">
+<div class="bg-background text-foreground font-sans" style="min-height:100vh;">
+
+  <!-- HERO -->
+  <header class="bg-brasa" style="padding:56px 48px; display:flex; flex-direction:column; gap:24px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <img src="_ds/brand/brasamind-lockup-branco.png" alt="Brasa Mind" style="height:38px; width:auto; display:block;">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button onClick="{{ toggleTheme }}" class="font-sans" style="cursor:pointer; border:1px solid rgba(255,255,255,.5); background:rgba(255,255,255,.14); color:#fff; border-radius:9999px; padding:7px 14px; font-size:13px; font-weight:600;">{{ toggleLabel }}</button>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Avatar" hint-size="40px,40px">
+          <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="40px,40px">JS</x-import>
+        </x-import>
+      </div>
+    </div>
+    <div style="max-width:720px;">
+      <h1 class="font-impact" style="font-size:56px; line-height:1.02; margin:8px 0 12px; color:#fff; letter-spacing:-.01em;">Design System do Brasa</h1>
+      <p style="font-size:18px; color:rgba(255,255,255,.9); margin:0; max-width:560px;">Um tour pelos componentes, cores e tipografia. Tudo dirigido pelos tokens do sistema, com tema claro e escuro.</p>
+      <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+        <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-brasa text-white glow-ember hover:brightness-105 h-11 rounded-md px-6 text-base" hint-size="auto,44px">Quero ser Membro</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="outline" size="lg" hint-size="auto,44px">Ver componentes</x-import>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding:48px; display:flex; flex-direction:column; gap:56px; max-width:1200px; margin:0 auto;">
+
+    <!-- BOTÕES -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Botões</h2>
+        <p class="text-muted-foreground" style="margin:0;">O rótulo diz o que acontece. Uma variante de destaque por tela.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="default" hint-size="auto,40px">Confirmar presença</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="ember" hint-size="auto,40px">Plano Membro</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="success" hint-size="auto,40px">Pagamento aprovado</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="destructive" hint-size="auto,40px">Cancelar inscrição</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="secondary" hint-size="auto,40px">Secundário</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="outline" hint-size="auto,40px">Outline</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="ghost" hint-size="auto,40px">Ghost</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Button" variant="link" hint-size="auto,40px">Link</x-import>
+      </div>
+    </section>
+
+    <!-- BADGES -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Selos</h2>
+        <p class="text-muted-foreground" style="margin:0;">Status de pagamento, selo de Membro e ofertas.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+        <x-import component-from-global-scope="BrasaMindUI.Badge" class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold transition-colors bg-brasa text-white" hint-size="auto,24px">♛ Fundador</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold transition-colors bg-secondary text-brasa border border-border" hint-size="auto,24px">◆ Patrocinador</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">40% OFF</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="success" hint-size="auto,24px">Pago</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="warning" hint-size="auto,24px">Pendente</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="destructive" hint-size="auto,24px">Estornado</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="info" hint-size="auto,24px">Processando</x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Badge" variant="default" hint-size="auto,24px">Padrão</x-import>
+      </div>
+    </section>
+
+    <!-- CARD DE MEMBRO -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Card de membro</h2>
+        <p class="text-muted-foreground" style="margin:0;">Perfil com banner, foto, empresa e contatos.</p>
+      </div>
+
+      <div style="max-width:400px;">
+        <x-import component-from-global-scope="BrasaMindUI.Card" class="rounded-lg border border-border bg-card text-card-foreground shadow-sm overflow-hidden" style="overflow:hidden" hint-size="100%,auto">
+
+          <!-- Banner -->
+          <div style="position:relative;">
+            <div class="bg-brasa" style="height:104px; width:100%;"></div>
+            <div style="position:absolute; left:20px; bottom:-32px; width:80px; height:80px; border-radius:9999px; padding:3px; background:hsl(var(--card));">
+              <image-slot id="membro-joao-foto" shape="circle" style="width:74px;height:74px" placeholder="Foto do membro"></image-slot>
+            </div>
+            <div style="position:absolute; right:16px; top:16px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
+            </div>
+          </div>
+
+          <x-import component-from-global-scope="BrasaMindUI.CardContent" style="padding-top:16px" hint-size="100%,auto">
+            <div style="display:flex; flex-direction:column; gap:2px; margin-left:92px; min-height:44px; justify-content:center;">
+              <div class="font-display" style="font-size:20px; font-weight:800;">João da Silva</div>
+              <div class="text-muted-foreground" style="font-size:14px;">Fundador, Brasa Churrascaria B2B</div>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="secondary" hint-size="auto,24px">Vendas B2B</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="secondary" hint-size="auto,24px">Food service</x-import>
+            </div>
+
+            <div style="height:1px; background:hsl(var(--border)); margin:16px 0;"></div>
+
+            <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+              <a href="https://brasachurrascaria.com.br" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+                <span aria-hidden="true" style="width:18px; text-align:center;">🌐</span>
+                <span>brasachurrascaria.com.br</span>
+              </a>
+              <a href="https://wa.me/5551999990000" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:hsl(var(--foreground));">
+                <span aria-hidden="true" style="width:18px; text-align:center; color:hsl(var(--success));">✆</span>
+                <span class="font-mono">+55 51 99999 0000</span>
+              </a>
+              <a href="https://instagram.com/brasachurrascaria" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:hsl(var(--foreground));">
+                <span aria-hidden="true" style="width:18px; text-align:center;">◎</span>
+                <span>@brasachurrascaria</span>
+              </a>
+              <div style="display:flex; align-items:flex-start; gap:10px; color:hsl(var(--foreground));">
+                <span aria-hidden="true" style="width:18px; text-align:center; color:hsl(var(--primary));">⌖</span>
+                <span>Av. Assis Brasil, 3940, Porto Alegre, RS</span>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:18px;">
+              <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4 py-2 w-full" hint-size="auto,40px">Chamar no WhatsApp</x-import>
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=Av.+Assis+Brasil+3940+Porto+Alegre+RS" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-secondary text-secondary-foreground hover:border-primary h-10 px-4 py-2 w-full" style="text-decoration:none;">Ver no Maps</a>
+            </div>
+          </x-import>
+        </x-import>
+      </div>
+    </section>
+
+    <!-- CARDS -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Cards</h2>
+        <p class="text-muted-foreground" style="margin:0;">Superfícies para eventos, planos e conteúdo.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+
+        <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,240px">
+          <x-import component-from-global-scope="BrasaMindUI.CardHeader" hint-size="100%,auto">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+              <x-import component-from-global-scope="BrasaMindUI.CardTitle" hint-size="auto,24px">Churrasco &amp; Vendas B2B</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
+            </div>
+            <x-import component-from-global-scope="BrasaMindUI.CardDescription" hint-size="auto,20px">Sáb, 24 ago, 12h. Porto Alegre.</x-import>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.CardContent" hint-size="100%,auto">
+            <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:16px;">
+              <span class="font-display" style="font-size:28px; font-weight:800;">R$ 180</span>
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">40% OFF</x-import>
+            </div>
+            <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:brightness-110 h-10 px-4 py-2 w-full" hint-size="100%,40px">Confirmar presença</x-import>
+          </x-import>
+        </x-import>
+
+        <x-import component-from-global-scope="BrasaMindUI.Card" class="rounded-lg border border-border bg-card text-card-foreground shadow-sm glow-ember" hint-size="100%,240px">
+          <x-import component-from-global-scope="BrasaMindUI.CardHeader" hint-size="100%,auto">
+            <x-import component-from-global-scope="BrasaMindUI.CardTitle" hint-size="auto,24px">Plano Membro</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.CardDescription" hint-size="auto,20px">Acesso à rede, eventos e mentorias.</x-import>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.CardContent" hint-size="100%,auto">
+            <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:16px;">
+              <span class="font-mono" style="font-size:28px; font-weight:700;">R$ 97</span>
+              <span class="text-muted-foreground">/mês</span>
+            </div>
+            <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-brasa text-white hover:brightness-105 h-10 px-4 py-2 w-full" hint-size="100%,40px">Quero ser Membro</x-import>
+          </x-import>
+        </x-import>
+
+        <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,240px">
+          <x-import component-from-global-scope="BrasaMindUI.CardHeader" hint-size="100%,auto">
+            <x-import component-from-global-scope="BrasaMindUI.CardTitle" hint-size="auto,24px">Newsletter do Brasa</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.CardDescription" hint-size="auto,20px">Receba as próximas datas.</x-import>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.CardContent" hint-size="100%,auto">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Seu e-mail</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.Input" placeholder="voce@email.com" hint-size="100%,40px"></x-import>
+              <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0 bg-secondary text-secondary-foreground border border-border hover:border-primary h-10 px-4 py-2 w-full" hint-size="100%,40px">Inscrever</x-import>
+            </div>
+          </x-import>
+        </x-import>
+
+      </div>
+    </section>
+
+    <!-- FORM + TABS -->
+    <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:32px;">
+
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Formulário</h2>
+          <p class="text-muted-foreground" style="margin:0;">Input, Label e Select.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import>
+          <x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Ex.: João da Silva" hint-size="100%,40px"></x-import>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Modalidade de ingresso</x-import>
+          <x-import component-from-global-scope="BrasaMindUI.Select" hint-size="100%,40px">
+            <x-import component-from-global-scope="BrasaMindUI.SelectTrigger" hint-size="100%,40px">
+              <x-import component-from-global-scope="BrasaMindUI.SelectValue" placeholder="Selecione" hint-size="auto,20px"></x-import>
+            </x-import>
+            <x-import component-from-global-scope="BrasaMindUI.SelectContent" hint-size="100%,auto">
+              <x-import component-from-global-scope="BrasaMindUI.SelectItem" value="membro" hint-size="100%,32px">Membro</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.SelectItem" value="convidado" hint-size="100%,32px">Convidado</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.SelectItem" value="vip" hint-size="100%,32px">VIP</x-import>
+            </x-import>
+          </x-import>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Abas</h2>
+          <p class="text-muted-foreground" style="margin:0;">A aba ativa recebe realce de fogo.</p>
+        </div>
+        <x-import component-from-global-scope="BrasaMindUI.Tabs" default-value="eventos" hint-size="100%,160px">
+          <x-import component-from-global-scope="BrasaMindUI.TabsList" hint-size="100%,40px">
+            <x-import component-from-global-scope="BrasaMindUI.TabsTrigger" value="eventos" hint-size="auto,32px">Eventos</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.TabsTrigger" value="rede" hint-size="auto,32px">Rede</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.TabsTrigger" value="mentorias" hint-size="auto,32px">Mentorias</x-import>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.TabsContent" value="eventos" hint-size="100%,auto">
+            <p class="text-muted-foreground" style="margin:12px 0 0;">Churrascos, encontros e talks com a comunidade gaúcha.</p>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.TabsContent" value="rede" hint-size="100%,auto">
+            <p class="text-muted-foreground" style="margin:12px 0 0;">Conexões B2B entre membros de todo o estado.</p>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.TabsContent" value="mentorias" hint-size="100%,auto">
+            <p class="text-muted-foreground" style="margin:12px 0 0;">Sessões com empreendedores que já escalaram.</p>
+          </x-import>
+        </x-import>
+      </div>
+
+    </section>
+
+    <!-- TABELA -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Tabela (área administrativa)</h2>
+        <p class="text-muted-foreground" style="margin:0;">Valores monetários em fonte mono.</p>
+      </div>
+      <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,auto">
+        <x-import component-from-global-scope="BrasaMindUI.Table" hint-size="100%,auto">
+          <x-import component-from-global-scope="BrasaMindUI.TableHeader" hint-size="100%,auto">
+            <x-import component-from-global-scope="BrasaMindUI.TableRow" hint-size="100%,40px">
+              <x-import component-from-global-scope="BrasaMindUI.TableHead" hint-size="auto,40px">Membro</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableHead" hint-size="auto,40px">Plano</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableHead" hint-size="auto,40px">Status</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableHead" hint-size="auto,40px">Valor</x-import>
+            </x-import>
+          </x-import>
+          <x-import component-from-global-scope="BrasaMindUI.TableBody" hint-size="100%,auto">
+            <x-import component-from-global-scope="BrasaMindUI.TableRow" hint-size="100%,44px">
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">João da Silva</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">Membro</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="success" hint-size="auto,24px">Pago</x-import></x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" class="font-mono" hint-size="auto,44px">R$ 97,00</x-import>
+            </x-import>
+            <x-import component-from-global-scope="BrasaMindUI.TableRow" hint-size="100%,44px">
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">Maria Souza</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">VIP</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="warning" hint-size="auto,24px">Pendente</x-import></x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" class="font-mono" hint-size="auto,44px">R$ 180,00</x-import>
+            </x-import>
+            <x-import component-from-global-scope="BrasaMindUI.TableRow" hint-size="100%,44px">
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">Pedro Lima</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px">Convidado</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" hint-size="auto,44px"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="destructive" hint-size="auto,24px">Estornado</x-import></x-import>
+              <x-import component-from-global-scope="BrasaMindUI.TableCell" class="font-mono" hint-size="auto,44px">R$ 0,00</x-import>
+            </x-import>
+          </x-import>
+        </x-import>
+      </x-import>
+    </section>
+
+    <!-- PAINEL & GRÁFICOS -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Painel &amp; gráficos</h2>
+        <p class="text-muted-foreground" style="margin:0;">Área administrativa: densa e orientada a dados. Fogo só nos KPIs e nas ações.</p>
+      </div>
+
+      <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,auto">
+        <x-import component-from-global-scope="BrasaMindUI.CardHeader" hint-size="100%,auto">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+            <x-import component-from-global-scope="BrasaMindUI.CardTitle" hint-size="auto,24px">Painel</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Badge" variant="info" hint-size="auto,24px">Julho 2026</x-import>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="BrasaMindUI.CardContent" hint-size="100%,auto">
+
+          <!-- KPIs com sparkline -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px; margin-bottom:24px;">
+            <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:14px 16px;">
+              <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.06em;">MRR</div>
+              <div class="font-display font-mono" style="font-weight:800; font-size:24px; margin-top:4px;">R$ 24,3k</div>
+              <div style="font-size:12px; font-weight:600; color:hsl(var(--success));">▲ 12%</div>
+              <svg viewBox="0 0 120 30" preserveAspectRatio="none" style="display:block; width:100%; height:30px; margin-top:8px;"><polyline fill="none" stroke="hsl(var(--primary))" stroke-width="2" points="0,24 20,20 40,22 60,14 80,16 100,8 120,4"></polyline></svg>
+            </div>
+            <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:14px 16px;">
+              <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.06em;">Membros</div>
+              <div class="font-display font-mono" style="font-weight:800; font-size:24px; margin-top:4px;">128</div>
+              <div style="font-size:12px; font-weight:600; color:hsl(var(--success));">▲ 9</div>
+              <svg viewBox="0 0 120 30" preserveAspectRatio="none" style="display:block; width:100%; height:30px; margin-top:8px;"><polyline fill="none" stroke="hsl(var(--success))" stroke-width="2" points="0,26 20,22 40,18 60,18 80,12 100,10 120,6"></polyline></svg>
+            </div>
+            <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:14px 16px;">
+              <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.06em;">Inadimplência</div>
+              <div class="font-display font-mono" style="font-weight:800; font-size:24px; margin-top:4px;">4,2%</div>
+              <div style="font-size:12px; font-weight:600; color:hsl(var(--destructive));">▲ 0,8%</div>
+              <svg viewBox="0 0 120 30" preserveAspectRatio="none" style="display:block; width:100%; height:30px; margin-top:8px;"><polyline fill="none" stroke="hsl(var(--destructive))" stroke-width="2" points="0,20 20,22 40,18 60,22 80,20 100,24 120,22"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Barras + Donut -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+
+            <!-- Barras -->
+            <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:16px;">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px;">
+                <div style="font-weight:700;" class="font-display">Receita por mês</div>
+                <div class="text-muted-foreground font-mono" style="font-size:12px;">em milhares</div>
+              </div>
+              <div style="display:flex; align-items:flex-end; gap:10px; height:150px;">
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-primary" style="width:100%; height:46%; border-radius:6px 6px 0 0;"></div>
+                  <span class="text-muted-foreground" style="font-size:11px;">Fev</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-primary" style="width:100%; height:58%; border-radius:6px 6px 0 0;"></div>
+                  <span class="text-muted-foreground" style="font-size:11px;">Mar</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-primary" style="width:100%; height:52%; border-radius:6px 6px 0 0;"></div>
+                  <span class="text-muted-foreground" style="font-size:11px;">Abr</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-primary" style="width:100%; height:70%; border-radius:6px 6px 0 0;"></div>
+                  <span class="text-muted-foreground" style="font-size:11px;">Mai</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-primary" style="width:100%; height:80%; border-radius:6px 6px 0 0;"></div>
+                  <span class="text-muted-foreground" style="font-size:11px;">Jun</span>
+                </div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end;">
+                  <div class="bg-brasa glow-ember" style="width:100%; height:96%; border-radius:6px 6px 0 0;"></div>
+                  <span style="font-size:11px; font-weight:700; color:hsl(var(--ember));">Jul</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Donut -->
+            <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:16px;">
+              <div style="font-weight:700; margin-bottom:16px;" class="font-display">Composição de membros</div>
+              <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+                <svg width="132" height="132" viewBox="0 0 132 132" style="flex:none;">
+                  <g transform="rotate(-90 66 66)">
+                    <circle cx="66" cy="66" r="54" fill="none" stroke="hsl(var(--chart-1))" stroke-width="20" stroke-dasharray="186.6 339.3" stroke-dashoffset="0"></circle>
+                    <circle cx="66" cy="66" r="54" fill="none" stroke="hsl(var(--chart-2))" stroke-width="20" stroke-dasharray="101.8 339.3" stroke-dashoffset="-186.6"></circle>
+                    <circle cx="66" cy="66" r="54" fill="none" stroke="hsl(var(--chart-4))" stroke-width="20" stroke-dasharray="50.9 339.3" stroke-dashoffset="-288.4"></circle>
+                  </g>
+                  <text x="66" y="62" text-anchor="middle" class="font-display" style="font-size:24px; font-weight:800; fill:hsl(var(--foreground));">128</text>
+                  <text x="66" y="80" text-anchor="middle" style="font-size:11px; fill:hsl(var(--muted-foreground));">membros</text>
+                </svg>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:12px; height:12px; border-radius:3px; background:hsl(var(--chart-1)); display:inline-block;"></span>Membro <span class="font-mono text-muted-foreground">55%</span></div>
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:12px; height:12px; border-radius:3px; background:hsl(var(--chart-2)); display:inline-block;"></span>Convidado <span class="font-mono text-muted-foreground">30%</span></div>
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:12px; height:12px; border-radius:3px; background:hsl(var(--chart-4)); display:inline-block;"></span>VIP <span class="font-mono text-muted-foreground">15%</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </x-import>
+      </x-import>
+    </section>
+
+    <!-- GAMIFICAÇÃO -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Gamificação</h2>
+        <p class="text-muted-foreground" style="margin:0;">O ranking Top 3 do ecossistema, por presença, indicações e negócios fechados.</p>
+      </div>
+
+      <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,auto">
+        <x-import component-from-global-scope="BrasaMindUI.CardHeader" hint-size="100%,auto">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+            <x-import component-from-global-scope="BrasaMindUI.CardTitle" hint-size="auto,24px">Ranking do mês</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Agosto</x-import>
+          </div>
+          <x-import component-from-global-scope="BrasaMindUI.CardDescription" hint-size="auto,20px">Pontos por presença, indicações e negócios fechados.</x-import>
+        </x-import>
+        <x-import component-from-global-scope="BrasaMindUI.CardContent" hint-size="100%,auto">
+          <div style="display:flex; align-items:flex-end; justify-content:center; gap:16px; padding-top:8px;">
+
+            <!-- 2º -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
+              <div style="width:64px; height:64px; border-radius:9999px; padding:2px; background:hsl(30 8% 62%);">
+                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px">
+                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">MS</x-import>
+                </x-import>
+              </div>
+              <div style="text-align:center;">
+                <div class="font-display" style="font-weight:800; font-size:15px;">Maria Souza</div>
+                <div class="font-mono text-muted-foreground" style="font-size:13px;">1.840 pts</div>
+              </div>
+              <div style="width:100%; height:96px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(30 8% 30%); border-bottom:0; display:flex; align-items:center; justify-content:center;">
+                <span class="font-impact" style="font-size:40px; color:hsl(30 8% 66%);">2</span>
+              </div>
+            </div>
+
+            <!-- 1º -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:160px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold transition-colors bg-brasa text-white" hint-size="auto,24px">♛ Fundador</x-import>
+              <div class="glow-ember" style="width:76px; height:76px; border-radius:9999px; padding:2px; background:linear-gradient(135deg, hsl(13 95% 52%), hsl(42 88% 58%));">
+                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:72px;height:72px" hint-size="72px,72px">
+                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="72px,72px">JS</x-import>
+                </x-import>
+              </div>
+              <div style="text-align:center;">
+                <div class="font-display" style="font-weight:800; font-size:16px;">João da Silva</div>
+                <div class="font-mono" style="font-size:14px; color:hsl(42 88% 60%);">2.310 pts</div>
+              </div>
+              <div class="bg-brasa" style="width:100%; height:132px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center;">
+                <span class="font-impact" style="font-size:52px; color:#fff;">1</span>
+              </div>
+            </div>
+
+            <!-- 3º -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
+              <div style="width:64px; height:64px; border-radius:9999px; padding:2px; background:hsl(24 45% 42%);">
+                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px">
+                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">PL</x-import>
+                </x-import>
+              </div>
+              <div style="text-align:center;">
+                <div class="font-display" style="font-weight:800; font-size:15px;">Pedro Lima</div>
+                <div class="font-mono text-muted-foreground" style="font-size:13px;">1.520 pts</div>
+              </div>
+              <div style="width:100%; height:74px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(24 40% 34%); border-bottom:0; display:flex; align-items:center; justify-content:center;">
+                <span class="font-impact" style="font-size:36px; color:hsl(24 55% 56%);">3</span>
+              </div>
+            </div>
+
+          </div>
+        </x-import>
+      </x-import>
+    </section>
+
+    <!-- TIPOGRAFIA -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Tipografia</h2>
+        <p class="text-muted-foreground" style="margin:0;">Quatro famílias, cada uma com seu papel.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+        <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
+          <div class="font-impact" style="font-size:32px;">BRASA MIND</div>
+          <div class="text-muted-foreground" style="margin-top:8px; font-size:13px;">font-impact · Barlow Semi Condensed · herói e logo</div>
+        </div>
+        <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
+          <div class="font-display" style="font-size:28px; font-weight:800;">Títulos</div>
+          <div class="text-muted-foreground" style="margin-top:8px; font-size:13px;">font-display · Barlow · títulos</div>
+        </div>
+        <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
+          <div class="font-sans" style="font-size:20px;">Corpo e interface</div>
+          <div class="text-muted-foreground" style="margin-top:8px; font-size:13px;">font-sans · Inter · corpo e UI</div>
+        </div>
+        <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
+          <div class="font-mono" style="font-size:22px;">R$ 1.240,00</div>
+          <div class="text-muted-foreground" style="margin-top:8px; font-size:13px;">font-mono · JetBrains Mono · valores e dados</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORES -->
+    <section style="display:flex; flex-direction:column; gap:20px;">
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Cores</h2>
+        <p class="text-muted-foreground" style="margin:0;">Tokens de marca e de status (reagem ao tema).</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:12px;">
+        <div class="bg-primary text-primary-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Fogo<br><span style="font-weight:400; opacity:.85; font-size:13px;">primary</span></div>
+        <div class="bg-ember text-ember-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Ember<br><span style="font-weight:400; opacity:.85; font-size:13px;">dourado</span></div>
+        <div class="bg-success text-success-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Success<br><span style="font-weight:400; opacity:.85; font-size:13px;">success</span></div>
+        <div class="bg-warning text-warning-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Warning<br><span style="font-weight:400; opacity:.85; font-size:13px;">warning</span></div>
+        <div class="bg-destructive text-destructive-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Destructive<br><span style="font-weight:400; opacity:.85; font-size:13px;">destructive</span></div>
+        <div class="bg-info text-info-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Info<br><span style="font-weight:400; opacity:.85; font-size:13px;">info</span></div>
+        <div class="bg-brasa" style="border-radius:12px; padding:20px; font-weight:600; color:#fff;">Gradiente<br><span style="font-weight:400; opacity:.9; font-size:13px;">.bg-brasa</span></div>
+        <div class="bg-muted text-muted-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Muted<br><span style="font-weight:400; opacity:.85; font-size:13px;">muted</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-border text-muted-foreground" style="padding:32px 48px; border-top-width:1px; border-top-style:solid; display:flex; align-items:center; gap:12px;">
+    <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto; display:block;">
+    <span>Brasa Mind Design System, demo de componentes. Tema atual: {{ themeName }}.</span>
+  </footer>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { dark: true };
+  renderVals() {
+    const dark = this.state.dark;
+    return {
+      themeClass: dark ? "dark" : "",
+      themeName: dark ? "escuro" : "claro",
+      toggleLabel: dark ? "☀ Tema claro" : "☾ Tema escuro",
+      toggleTheme: () => this.setState(s => ({ dark: !s.dark })),
+    };
+  }
+}
+</script>
+</body>
+</html>
