@@ -1,0 +1,14 @@
+{
+  "name": "Brasa Mind",
+  "short_name": "Brasa Mind",
+  "description": "Empreendedorismo, churrasco e network gaúcho.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0c0b",
+  "theme_color": "#0e0c0b",
+  "icons": [
+    { "src": "/_ds/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/_ds/brand/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/_ds/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
