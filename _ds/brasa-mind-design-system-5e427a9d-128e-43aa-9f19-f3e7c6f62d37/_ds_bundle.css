@@ -1273,7 +1273,7 @@ body {
   --accent-foreground: 20 14% 12%;
   --ember: 42 78% 48%;
   --ember-foreground: 20 14% 8%;
-  --destructive: 350 84% 48%;
+  --destructive: 0 72% 48%;
   --destructive-foreground: 0 0% 100%;
   --success: 142 68% 38%;
   --success-foreground: 0 0% 100%;
@@ -1309,7 +1309,7 @@ body {
   --accent-foreground: 40 20% 98%;
   --ember: 42 88% 60%;
   --ember-foreground: 20 14% 8%;
-  --destructive: 350 80% 58%;
+  --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --success: 142 62% 46%;
   --success-foreground: 20 14% 6%;

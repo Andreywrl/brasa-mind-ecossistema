@@ -64,7 +64,7 @@
             <div class="text-muted-foreground" style="font-size:13px;">Ingresso de convidado</div>
             <div style="display:flex; align-items:baseline; gap:8px; margin-top:2px;"><span class="font-display" style="font-size:32px; font-weight:800;">R$ 200</span><span class="text-muted-foreground" style="font-size:13px;">acesso único ao evento</span></div>
           </div>
-          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6" hint-size="auto,48px">Quero participar</x-import>
+          <button onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 cursor-pointer border-0">Quero participar</button>
         </div>
       </div>
 
@@ -127,7 +127,7 @@
             <span>Você entra vinculado a <span style="font-weight:700;">João da Silva</span>.</span>
           </div>
         </div>
-        <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full" style="margin-top:20px;" hint-size="100%,44px">Continuar para pagamento</x-import>
+        <button onClick="{{ next }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full cursor-pointer border-0" style="margin-top:20px;">Continuar para pagamento</button>
       </div>
       </sc-if>
 
@@ -150,7 +150,7 @@
           <input type="checkbox" checked="{{ terms }}" onChange="{{ toggleTerms }}" style="margin-top:2px; width:16px; height:16px; accent-color:hsl(var(--primary)); flex:none;">
           <span class="text-muted-foreground" style="font-size:13px; line-height:1.4;">Li e aceito os <a href="#" style="font-weight:600;">Termos de Uso</a> e a <a href="#" style="font-weight:600;">Política de Privacidade</a>.</span>
         </label>
-        <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ next }}" disabled="{{ termsBlock }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full disabled:opacity-50 disabled:pointer-events-none" style="margin-top:12px;" hint-size="100%,44px">Confirmar pagamento</x-import>
+        <button onClick="{{ next }}" disabled="{{ termsBlock }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6 w-full disabled:opacity-50 disabled:pointer-events-none cursor-pointer border-0" style="margin-top:12px;">Confirmar pagamento</button>
       </div>
       </sc-if>
 

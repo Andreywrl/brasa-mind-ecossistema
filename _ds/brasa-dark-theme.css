@@ -6,6 +6,7 @@
    troque para as superfícies escuras. Carregue DEPOIS do _ds_bundle.css.
    ============================================================================ */
 .dark {
+  color-scheme: dark;
   --background: 20 10% 5%;
   --foreground: 40 20% 98%;
   --card: 20 9% 8%;
@@ -22,7 +23,7 @@
   --accent-foreground: 40 20% 98%;
   --ember: 42 88% 60%;
   --ember-foreground: 20 14% 8%;
-  --destructive: 350 80% 58%;
+  --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --success: 142 62% 46%;
   --success-foreground: 20 14% 6%;
