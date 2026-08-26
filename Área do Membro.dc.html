@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Brasa Mind | Área do Membro</title>
+<title>Brasamind | Área do Membro</title>
 <meta name="robots" content="noindex, nofollow">
 
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -21,6 +21,7 @@
 <helmet>
   <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
   <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <link rel="stylesheet" href="_ds/brasa-app-shell.css">
   <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
   <script src="_ds/image-slot.js"></script>
   <style>
@@ -40,17 +41,24 @@
   </style>
 </helmet>
 <div class="{{ themeClass }}">
-<div class="bg-background text-foreground font-sans" style="min-height:100vh; display:flex;">
+<div class="om-shell bg-background text-foreground font-sans">
+  <a class="om-skip" href="#conteudo">Ir para o conteúdo</a>
+  <sc-if value="{{ menuOpen }}"><div class="om-scrim" onClick="{{ closeMenu }}"></div></sc-if>
 
   <!-- ============ SIDEBAR ============ -->
-  <aside style="width:252px; flex:none; position:sticky; top:0; height:100vh; box-sizing:border-box; padding:22px 16px; display:flex; flex-direction:column; gap:26px; border-right:1px solid hsl(var(--border)); background:hsl(var(--card));">
-    <div style="display:flex; align-items:center; gap:10px; padding:4px 8px;">
-      <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:30px; width:auto; display:block;">
-      <span class="font-impact" style="font-size:20px; line-height:1; letter-spacing:.01em;">Brasa Mind</span>
+  <aside class="om-sidebar {{ menuOpenCls }}">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="_ds/brand/simbolo-laranja.png" alt="Brasamind" style="height:30px; width:auto; display:block;">
+        <span class="font-impact" style="font-size:20px; line-height:1; letter-spacing:.01em;">Brasamind</span>
+      </div>
+      <button class="om-menu-btn om-icon-btn" onClick="{{ closeMenu }}" aria-label="Fechar menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+      </button>
     </div>
 
     <nav style="display:flex; flex-direction:column; gap:4px;">
-      <div class="text-muted-foreground" style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:0 10px 4px;">Menu</div>
+      <div class="text-muted-foreground" style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:0 10px 4px;">Menu</div>
       <button class="om-nav {{ navCls.dashboard }}" onClick="{{ goDashboard }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
         <sc-if value="{{ isDashboard }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg>Início
@@ -67,11 +75,12 @@
         <sc-if value="{{ isConvites }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 6 10 7L22 6"></path></svg>Convites
       </button>
-      <button class="om-nav {{ navCls.game }}" onClick="{{ goGame }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
+      <button class="om-nav {{ navCls.game }}" onClick="{{ goGame }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; min-height:44px; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
         <sc-if value="{{ isGame }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3"></path></svg>Ranking
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3"></path></svg>Ranking
       </button>
-      <button class="om-nav {{ navCls.financeiro }}" onClick="{{ goFinanceiro }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
+      <div class="text-muted-foreground" style="font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:16px 10px 4px;">Mais</div>
+      <button class="om-nav {{ navCls.financeiro }}" onClick="{{ goFinanceiro }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; min-height:44px; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
         <sc-if value="{{ isFinanceiro }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20M16 14h.01"></path></svg>Financeiro
       </button>
@@ -92,7 +101,7 @@
         </x-import>
         <span style="display:flex; flex-direction:column; line-height:1.2;">
           <span style="font-size:13px; font-weight:700;">João da Silva</span>
-          <span class="text-muted-foreground" style="font-size:11px;">Fundador</span>
+          <span class="text-muted-foreground" style="font-size:12px;">Fundador</span>
         </span>
       </button>
       <button onClick="{{ openLogout }}" class="om-nav text-muted-foreground" style="display:flex; align-items:center; gap:12px; width:100%; padding:9px 12px; border:0; background:transparent; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; text-align:left;">
@@ -102,20 +111,26 @@
   </aside>
 
   <!-- ============ MAIN ============ -->
-  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+  <div class="om-maincol">
 
-    <header style="position:sticky; top:0; z-index:20; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 36px; border-bottom:1px solid hsl(var(--border)); background:hsl(var(--background)/.85); backdrop-filter:blur(8px);">
-      <div style="display:flex; flex-direction:column; gap:2px;">
-        <h1 class="font-display" style="margin:0; font-size:22px; font-weight:800; letter-spacing:-.01em;">{{ pageTitle }}</h1>
-        <span class="text-muted-foreground" style="font-size:13px;">{{ pageSub }}</span>
+    <header style="position:sticky; top:0; z-index:20; border-bottom:1px solid hsl(var(--border)); background:hsl(var(--background)/.85); backdrop-filter:blur(8px);">
+      <div class="om-header-inner">
+      <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+        <button class="om-menu-btn om-icon-btn" onClick="{{ openMenu }}" aria-label="Abrir menu" aria-expanded="{{ menuOpen }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+          <h1 class="font-display" style="margin:0; font-size:22px; font-weight:800; letter-spacing:-.01em;">{{ pageTitle }}</h1>
+          <span class="text-muted-foreground om-hide-sm" style="font-size:13px;">{{ pageSub }}</span>
+        </div>
       </div>
-      <div style="display:flex; align-items:center; gap:14px;">
-        <button onClick="{{ toggleTheme }}" aria-label="Alternar tema" style="width:38px; height:38px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:10px; cursor:pointer;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button onClick="{{ toggleTheme }}" class="om-icon-btn" aria-label="Alternar tema">
           <sc-if value="{{ isDark }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
           <sc-if value="{{ isLight }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></sc-if>
         </button>
         <div style="position:relative;">
-          <button onClick="{{ toggleNotif }}" aria-label="Notificações" style="position:relative; width:38px; height:38px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:10px; cursor:pointer;">
+          <button onClick="{{ toggleNotif }}" class="om-icon-btn" aria-label="Notificações" style="position:relative;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
             <sc-if value="{{ hasUnread }}"><span class="bg-destructive" style="position:absolute; top:5px; right:5px; min-width:16px; height:16px; padding:0 4px; box-sizing:border-box; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:hsl(var(--destructive-foreground)); border:2px solid hsl(var(--card));">{{ notifUnread }}</span></sc-if>
           </button>
@@ -144,9 +159,10 @@
         </div>
         <x-import component-from-global-scope="BrasaMindUI.Badge" variant="success" hint-size="auto,24px">Mensalidade em dia</x-import>
       </div>
+      </div>
     </header>
 
-    <main style="flex:1; padding:32px 36px 56px; max-width:1180px; width:100%; box-sizing:border-box; margin:0 auto;">
+    <main id="conteudo" class="om-main" tabindex="-1">
 
       <!-- ================= DASHBOARD ================= -->
       <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
@@ -154,7 +170,7 @@
 
         <!-- Evento do mês (hero) -->
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:20px; overflow:hidden;">
-          <div style="display:grid; grid-template-columns:1.35fr 1fr;">
+          <div style="display:grid;" class="om-hero-split">
             <div style="padding:28px 30px; display:flex; flex-direction:column; gap:18px;">
               <div style="display:flex; align-items:center; gap:10px;">
                 <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Evento do mês</x-import>
@@ -188,13 +204,13 @@
               </div>
             </div>
             <div style="position:relative; min-height:230px; border-left:1px solid hsl(var(--border));">
-              <image-slot id="hero-evento" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento"></image-slot>
+              <image-slot id="hero-evento" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="uploads/imagens-gerais/IMG_3917.PNG"></image-slot>
             </div>
           </div>
         </div>
 
         <!-- KPIs -->
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+        <div class="om-grid-3">
           <button onClick="{{ goFinanceiro }}" class="om-kpi bg-card" style="text-align:left; display:flex; flex-direction:column; gap:8px; border:1px solid hsl(var(--border)); border-radius:16px; padding:18px 20px; cursor:pointer;">
             <div class="text-muted-foreground" style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em;">Minha mensalidade</div>
             <div class="font-display" style="font-size:22px; font-weight:800;">Em dia</div>
@@ -216,7 +232,7 @@
         </div>
 
         <!-- Ranking mini + histórico -->
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="om-split">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 22px;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
               <h3 class="font-display" style="margin:0; font-size:16px; font-weight:800;">Sua posição no ranking</h3>
@@ -262,12 +278,12 @@
       <sc-if value="{{ isEvento }}">
       <div style="display:flex; flex-direction:column; gap:24px;">
         <div style="position:relative; border-radius:20px; overflow:hidden; border:1px solid hsl(var(--border)); min-height:260px;">
-          <image-slot id="evento-banner" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento"></image-slot>
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, hsl(20 10% 5% / .92));"></div>
-          <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 30px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <image-slot id="evento-banner" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="uploads/imagens-gerais/IMG_3921.PNG"></image-slot>
+          <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
+          <div class="om-img-over" style="position:absolute; left:0; right:0; bottom:0; padding:26px 30px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
             <div>
               <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Inscrições abertas</x-import>
-              <h2 class="font-impact" style="margin:12px 0 4px; font-size:40px; color:#fff; letter-spacing:.01em;">A MENTE POR TRÁS DOS GRANDES MOVIMENTOS</h2>
+          <h2 class="font-impact om-event-title" style="margin:12px 0 4px; font-size:32px; color:#fff; letter-spacing:.01em;">A MENTE POR TRÁS DOS GRANDES MOVIMENTOS</h2>
               <p style="margin:0 0 10px; font-size:15px; color:rgba(255,255,255,.9);">A mente por trás do marketing da Agrofel, Yara e Alibem.</p>
               <div style="display:flex; gap:20px; flex-wrap:wrap; color:rgba(255,255,255,.9); font-size:14px;">
                 <span>📅 Sex, 28 de agosto de 2026</span>
@@ -293,7 +309,7 @@
           <div style="display:flex; align-items:center; gap:8px;"><span class="bg-success" style="width:8px; height:8px; border-radius:50%;"></span><span class="text-muted-foreground" style="font-size:13px;">Rede aquecida para esta edição</span></div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 360px; gap:24px; align-items:start;">
+        <div class="om-split" style="align-items:start;">
           <div style="display:flex; flex-direction:column; gap:24px;">
             <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
               <h3 class="font-display" style="margin:0 0 10px; font-size:17px; font-weight:800;">Sobre o encontro</h3>
@@ -303,7 +319,7 @@
             <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
               <h3 class="font-display" style="margin:0 0 16px; font-size:17px; font-weight:800;">Palestrante</h3>
               <div style="display:flex; align-items:center; gap:16px;">
-                <div style="width:72px; height:72px; border-radius:50%; overflow:hidden; flex:none; border:2px solid hsl(var(--primary));"><image-slot id="palestrante-eduardo" shape="circle" style="width:100%;height:100%;" placeholder="Rosto de Eduardo Seibel" src="./images-msdwfbiv-3sco.jpg"></image-slot></div>
+                <div style="width:72px; height:72px; border-radius:50%; overflow:hidden; flex:none; border:2px solid hsl(var(--primary));"><image-slot id="palestrante-eduardo" shape="circle" style="width:100%;height:100%;" placeholder="Rosto de Eduardo Seibel" src="uploads/imagens-gerais/IMG_3912.PNG" focus="face-right"></image-slot></div>
                 <div>
                   <div class="font-display" style="font-size:18px; font-weight:800;">Eduardo Seibel</div>
                   <div class="text-muted-foreground" style="font-size:13px; margin-top:2px;">A mente por trás do marketing da Agrofel, Yara e Alibem</div>
@@ -342,13 +358,12 @@
 
             <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
               <h3 class="font-display" style="margin:0 0 14px; font-size:17px; font-weight:800;">Local</h3>
-              <div style="position:relative; height:190px; border-radius:12px; overflow:hidden; border:1px solid hsl(var(--border));">
-                <image-slot id="evento-mapa" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Mapa do local"></image-slot>
-                <span class="bg-brasa" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-100%); width:26px; height:26px; border-radius:50% 50% 50% 0; rotate:-45deg; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px hsl(20 10% 4% / .5);"><span style="width:9px; height:9px; border-radius:50%; background:#fff; rotate:45deg;"></span></span>
+              <div class="om-map">
+                <iframe title="Mapa do Espaço Brasa" src="https://maps.google.com/maps?q=Espa%C3%A7o%20Brasa%2C%20R.%20Leopoldo%20Bier%2C%20644%2C%20Santana%2C%20Porto%20Alegre%20RS&amp;hl=pt-BR&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
               </div>
               <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-top:14px;">
                 <div style="font-size:14px;"><div style="font-weight:700;">Espaço Brasa</div><div class="text-muted-foreground">R. Leopoldo Bier, 644, Santana, Porto Alegre RS</div></div>
-                <a href="https://www.google.com/maps/search/?api=1&amp;query=R.+Leopoldo+Bier+644+Santana+Porto+Alegre+RS" target="_blank" rel="noopener" style="flex:none; font-size:13px; font-weight:600;">Abrir no Maps</a>
+                <a href="https://www.google.com/maps/search/?api=1&amp;query=Espa%C3%A7o+Brasa%2C+R.+Leopoldo+Bier%2C+644%2C+Santana%2C+Porto+Alegre+RS" target="_blank" rel="noopener" style="flex:none; font-size:13px; font-weight:600;">Abrir no Maps</a>
               </div>
             </div>
           </div>
@@ -427,7 +442,7 @@
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px;">
           <h3 class="font-display" style="margin:0 0 18px; font-size:18px; font-weight:800;">Resumo do pedido</h3>
           <div style="display:flex; gap:16px; padding-bottom:18px; border-bottom:1px solid hsl(var(--border));">
-            <div style="width:84px; height:84px; border-radius:12px; overflow:hidden; flex:none;"><image-slot id="compra-thumb" style="width:100%;height:100%;" placeholder="Evento"></image-slot></div>
+            <div style="width:84px; height:84px; border-radius:12px; overflow:hidden; flex:none;"><image-slot id="compra-thumb" focus="brand" style="width:100%;height:100%;" placeholder="Evento" src="uploads/imagens-gerais/IMG_3917.PNG"></image-slot></div>
             <div>
               <div class="font-display" style="font-size:17px; font-weight:800;">A mente por trás dos grandes movimentos</div>
               <div class="text-muted-foreground" style="font-size:13px; margin-top:4px;">Sex, 28 de agosto, 19h às 23h</div>
@@ -470,7 +485,7 @@
           <sc-if value="{{ buyPayIsCartao }}">
           <div style="display:flex; flex-direction:column; gap:14px;">
             <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Número do cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="0000 0000 0000 0000" hint-size="100%,40px"></x-import></div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="om-split">
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="MM/AA" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="000" hint-size="100%,40px"></x-import></div>
             </div>
@@ -547,9 +562,10 @@
       <sc-if value="{{ isHub }}">
       <div style="display:flex; flex-direction:column; gap:22px;">
         <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-          <div style="position:relative; flex:1; min-width:260px;">
+          <div style="position:relative; flex:1; min-width:240px;">
+            <label class="om-sr" for="hub-busca">Buscar membros</label>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; left:14px; top:50%; transform:translateY(-50%);"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
-            <input value="{{ hubQuery }}" onInput="{{ onHubQuery }}" placeholder="Buscar por nome, empresa ou especialidade" style="width:100%; box-sizing:border-box; padding:11px 14px 11px 40px; border-radius:10px; border:1px solid hsl(var(--border)); background:hsl(var(--card)); color:hsl(var(--foreground)); font-size:14px; outline:none;">
+            <input id="hub-busca" value="{{ hubQuery }}" onInput="{{ onHubQuery }}" placeholder="Buscar por nome, empresa ou especialidade" style="width:100%; box-sizing:border-box; min-height:44px; padding:11px 14px 11px 40px; border-radius:10px; border:1px solid hsl(var(--border)); background:hsl(var(--card)); color:hsl(var(--foreground)); font-size:16px;">
           </div>
           <div style="display:flex; gap:8px;">
             <button class="om-chip {{ hubChip.todas }}" onClick="{{ catAll }}" style="padding:9px 16px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Todas</button>
@@ -594,7 +610,7 @@
         </div>
         <div class="text-muted-foreground" style="font-size:13px;">Ordenado por categoria (fundadores, patrocinadores, membros) e pontuação. <span class="font-mono">{{ hubCount }}</span> membros.</div>
 
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;">
+        <div class="om-grid-3">
           <sc-for list="{{ hubMembers }}" as="m" hint-placeholder-count="9">
             <button class="bg-card om-lift" onClick="{{ m.open }}" style="text-align:left; border:1px solid hsl(var(--border)); border-radius:16px; padding:0; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;">
               <div style="height:56px; position:relative;" class="{{ m.bannerCls }}">
@@ -628,7 +644,7 @@
       <!-- ================= PERFIL ================= -->
       <sc-if value="{{ isPerfil }}">
       <div style="display:flex; flex-direction:column; gap:22px;">
-        <button onClick="{{ goHub }}" style="align-self:flex-start; background:transparent; border:0; color:hsl(var(--muted-foreground)); font-size:13px; font-weight:600; cursor:pointer;">‹ Voltar ao hub</button>
+        <sc-if value="{{ profile.isOther }}"><button onClick="{{ goHub }}" style="align-self:flex-start; background:transparent; border:0; color:hsl(var(--muted-foreground)); font-size:13px; font-weight:600; cursor:pointer;">‹ Voltar ao hub</button></sc-if>
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:20px; overflow:hidden;">
           <div style="height:130px; position:relative;" class="{{ profile.bannerCls }}">
@@ -646,11 +662,11 @@
                 <div class="text-muted-foreground" style="font-size:15px; margin-top:2px;">{{ profile.empresa }}, {{ profile.especialidade }}</div>
                 <div class="text-muted-foreground" style="font-size:14px; margin-top:2px;">{{ profile.cidade }}</div>
               </div>
-              <div style="display:flex; gap:10px;">
-                <sc-if value="{{ profile.isSelf }}"><button onClick="{{ goEditar }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-10 px-4 border-0 cursor-pointer">Editar perfil</button></sc-if>
-                <sc-if value="{{ profile.isOther }}"><button onClick="{{ profile.openWa }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-success text-success-foreground hover:brightness-110 h-10 px-4 cursor-pointer border-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.9-2.15-.24-.56-.48-.48-.65-.49h-.55c-.19 0-.51.07-.77.36-.26.29-1.01.99-1.01 2.42 0 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.04 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.41-9.4 2.51 0 4.87.98 6.65 2.76a9.35 9.35 0 0 1 2.75 6.65c-.01 5.18-4.22 9.4-9.4 9.4z"></path></svg>WhatsApp</button></sc-if>
-                <button onClick="{{ profile.openIg }}" style="display:flex; align-items:center; gap:8px; background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24"><defs><radialGradient id="igp1" cx="30%" cy="107%" r="130%"><stop offset="0%" stop-color="#fdf497"></stop><stop offset="8%" stop-color="#fdf497"></stop><stop offset="45%" stop-color="#fd5949"></stop><stop offset="60%" stop-color="#d6249f"></stop><stop offset="90%" stop-color="#285AEB"></stop></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#igp1)"></rect><rect x="4.5" y="4.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="1.8"></rect><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="1.8"></circle><circle cx="17" cy="7" r="1.1" fill="#fff"></circle></svg>Instagram</button>
-                <button onClick="{{ profile.openSite }}" style="display:flex; align-items:center; gap:8px; background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"></path></svg>Site</button>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <sc-if value="{{ profile.isSelf }}"><button onClick="{{ goEditar }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-4 border-0 cursor-pointer">Editar perfil</button></sc-if>
+                <sc-if value="{{ profile.isOther }}"><button onClick="{{ profile.openWa }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-success text-success-foreground hover:brightness-110 h-11 px-4 cursor-pointer border-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.9-2.15-.24-.56-.48-.48-.65-.49h-.55c-.19 0-.51.07-.77.36-.26.29-1.01.99-1.01 2.42 0 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.04 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.41-9.4 2.51 0 4.87.98 6.65 2.76a9.35 9.35 0 0 1 2.75 6.65c-.01 5.18-4.22 9.4-9.4 9.4z"></path></svg>WhatsApp</button></sc-if>
+                <sc-if value="{{ profile.isOther }}"><button onClick="{{ profile.openIg }}" style="display:flex; align-items:center; gap:8px; min-height:44px; background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24"><defs><radialGradient id="igp1" cx="30%" cy="107%" r="130%"><stop offset="0%" stop-color="#fdf497"></stop><stop offset="8%" stop-color="#fdf497"></stop><stop offset="45%" stop-color="#fd5949"></stop><stop offset="60%" stop-color="#d6249f"></stop><stop offset="90%" stop-color="#285AEB"></stop></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#igp1)"></rect><rect x="4.5" y="4.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="1.8"></rect><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="1.8"></circle><circle cx="17" cy="7" r="1.1" fill="#fff"></circle></svg>Instagram</button></sc-if>
+                <sc-if value="{{ profile.isOther }}"><button onClick="{{ profile.openSite }}" style="display:flex; align-items:center; gap:8px; min-height:44px; background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"></path></svg>Site</button></sc-if>
               </div>
             </div>
 
@@ -671,7 +687,7 @@
               </sc-if>
             </div>
 
-            <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:24px;">
+            <div class="om-grid-4" style="margin-top:24px;">
               <div style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px;">
                 <div class="text-muted-foreground" style="font-size:12px;">Pontuação</div>
                 <div class="font-mono" style="font-size:20px; font-weight:700; margin-top:4px; color:hsl(var(--foreground));">{{ profile.pontosFmt }}</div>
@@ -690,8 +706,7 @@
               </div>
             </div>
 
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; margin-top:20px; font-size:14px;">
-              <div style="display:flex; align-items:center; gap:10px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"></path></svg><span class="font-mono">{{ profile.whatsapp }}</span></div>
+            <div class="om-split" style="margin-top:20px; font-size:14px;">
               <a href="{{ profile.waHref }}" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:10px; color:hsl(var(--foreground));"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366" style="flex:none;"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.9-2.15-.24-.56-.48-.48-.65-.49h-.55c-.19 0-.51.07-.77.36-.26.29-1.01.99-1.01 2.42 0 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.04 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.41-9.4 2.51 0 4.87.98 6.65 2.76a9.35 9.35 0 0 1 2.75 6.65c-.01 5.18-4.22 9.4-9.4 9.4z"></path></svg><span class="font-mono">{{ profile.whatsapp }}</span></a>
               <a href="{{ profile.mailHref }}" style="display:flex; align-items:center; gap:10px; color:hsl(var(--foreground)); min-width:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="2" y="4" width="20" height="16" rx="2.5"></rect><path d="m3 7 9 6 9-6"></path></svg><span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ profile.email }}</span></a>
               <a href="{{ profile.igHref }}" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:10px; color:hsl(var(--foreground));"><svg width="18" height="18" viewBox="0 0 24 24" style="flex:none;"><defs><radialGradient id="igp2" cx="30%" cy="107%" r="130%"><stop offset="0%" stop-color="#fdf497"></stop><stop offset="8%" stop-color="#fdf497"></stop><stop offset="45%" stop-color="#fd5949"></stop><stop offset="60%" stop-color="#d6249f"></stop><stop offset="90%" stop-color="#285AEB"></stop></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#igp2)"></rect><rect x="4.5" y="4.5" width="15" height="15" rx="4.5" fill="none" stroke="#fff" stroke-width="1.8"></rect><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="1.8"></circle><circle cx="17" cy="7" r="1.1" fill="#fff"></circle></svg><span>{{ profile.instagram }}</span></a>
@@ -734,7 +749,7 @@
                 <div class="text-muted-foreground" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Mensagem de convite</div>
                 <span class="text-muted-foreground" style="font-size:12px;">edite se quiser</span>
               </div>
-              <textarea value="{{ inviteMessage }}" onChange="{{ editInviteMessage }}" rows="6" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; margin-top:8px; border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:14px; line-height:1.6; resize:vertical; outline:none;"></textarea>
+              <textarea value="{{ inviteMessage }}" onChange="{{ editInviteMessage }}" rows="6" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; margin-top:8px; border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:16px; line-height:1.6; resize:vertical;"></textarea>
               <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
                 <button onClick="{{ shareInviteWa }}" style="display:flex; align-items:center; justify-content:center; gap:8px; background:#25D366; border:0; border-radius:10px; padding:11px 18px; color:#fff; font-size:14px; font-weight:700; cursor:pointer;"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.9-2.15-.24-.56-.48-.48-.65-.49h-.55c-.19 0-.51.07-.77.36-.26.29-1.01.99-1.01 2.42 0 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.04 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.41-9.4 2.51 0 4.87.98 6.65 2.76a9.35 9.35 0 0 1 2.75 6.65c-.01 5.18-4.22 9.4-9.4 9.4z"></path></svg>Enviar no WhatsApp</button>
                 <button onClick="{{ copyInviteMsg }}" style="display:flex; align-items:center; justify-content:center; gap:8px; background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:11px 18px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copiar mensagem</button>
@@ -755,7 +770,7 @@
             <button onClick="{{ showRecrutar }}" class="hover:bg-secondary" style="display:flex; align-items:center; justify-content:center; gap:8px; background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:11px 18px; font-size:14px; font-weight:700; cursor:pointer; color:hsl(var(--foreground)); flex:none;">Convidar para o grupo<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate({{ recrutarChevron }}); transition:transform .18s ease;"><path d="M6 9l6 6 6-6"></path></svg></button>
           </div>
           <sc-if value="{{ modeRecrutar }}">
-          <div style="border-top:1px solid hsl(var(--border)); padding:20px 26px; display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;">
+          <div class="om-grid-4" style="border-top:1px solid hsl(var(--border)); padding:20px 24px;">
             <div><div class="font-impact" style="font-size:28px; line-height:1;">128</div><div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">membros ativos</div></div>
             <div><div class="font-impact" style="font-size:28px; line-height:1;">48</div><div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">eventos realizados</div></div>
             <div><div class="font-impact" style="font-size:28px; line-height:1;">4 anos</div><div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">de grupo</div></div>
@@ -774,7 +789,7 @@
                 <div class="text-muted-foreground" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Mensagem de convite para o grupo</div>
                 <span class="text-muted-foreground" style="font-size:12px;">edite se quiser</span>
               </div>
-              <textarea value="{{ recruitMessage }}" onChange="{{ editRecruitMessage }}" rows="6" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; margin-top:8px; border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:14px; line-height:1.6; resize:vertical; outline:none;"></textarea>
+              <textarea value="{{ recruitMessage }}" onChange="{{ editRecruitMessage }}" rows="6" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; margin-top:8px; border:1px solid hsl(var(--border)); border-radius:12px; padding:14px 16px; font-size:16px; line-height:1.6; resize:vertical;"></textarea>
               <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
                 <button onClick="{{ shareRecruitWa }}" style="display:flex; align-items:center; justify-content:center; gap:8px; background:#25D366; border:0; border-radius:10px; padding:11px 18px; color:#fff; font-size:14px; font-weight:700; cursor:pointer;"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.14-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.14-1.22-.45-2.32-1.44-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.44.13-.59.13-.13.29-.34.44-.51.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.9-2.15-.24-.56-.48-.48-.65-.49h-.55c-.19 0-.51.07-.77.36-.26.29-1.01.99-1.01 2.42 0 1.43 1.04 2.81 1.19 3 .14.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.7-.7 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.04 21.5a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.41-9.4 2.51 0 4.87.98 6.65 2.76a9.35 9.35 0 0 1 2.75 6.65c-.01 5.18-4.22 9.4-9.4 9.4z"></path></svg>Enviar no WhatsApp</button>
                 <button onClick="{{ copyRecruitMsg }}" style="display:flex; align-items:center; justify-content:center; gap:8px; background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:11px 18px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Copiar mensagem</button>
@@ -784,7 +799,7 @@
           </sc-if>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+        <div class="om-grid-3">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Enviados</div><div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px;">8</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Convertidos</div><div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px; color:hsl(var(--success));">5</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Taxa de conversão</div><div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px;">63%</div></div>
@@ -822,7 +837,7 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:20px; align-items:start;">
+        <div class="om-split" style="align-items:start;">
           <!-- Tabela ranking -->
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
             <div class="font-display" style="padding:16px 20px; font-size:16px; font-weight:800; border-bottom:1px solid hsl(var(--border));">Classificação completa</div>
@@ -840,7 +855,7 @@
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 22px;">
             <h3 class="font-display" style="margin:0 0 4px; font-size:16px; font-weight:800;">Medalhas &amp; conquistas</h3>
             <p class="text-muted-foreground" style="margin:0 0 16px; font-size:13px;">Pontos por presença, assiduidade, convites e adimplência.</p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="om-split">
               <sc-for list="{{ conquistas }}" as="c" hint-placeholder-count="6">
                 <div style="border:1px solid hsl(var(--border)); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px; opacity:{{ c.op }};">
                   <span class="{{ c.medalCls }}" style="width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
@@ -858,7 +873,7 @@
       <!-- ================= FINANCEIRO ================= -->
       <sc-if value="{{ isFinanceiro }}">
       <div style="display:flex; flex-direction:column; gap:22px;">
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+        <div class="om-grid-3">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Status</div><div class="font-display" style="font-size:22px; font-weight:800; margin-top:8px; color:hsl(var(--success));">Em dia</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Próxima cobrança</div><div class="font-mono" style="font-size:22px; font-weight:800; margin-top:8px;">05/08</div><div class="text-muted-foreground" style="font-size:12px; margin-top:2px;">R$ 97,00</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;"><div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Total pago em 2026</div><div class="font-mono" style="font-size:22px; font-weight:800; margin-top:8px;">R$ 679,00</div></div>
@@ -875,17 +890,17 @@
           <button onClick="{{ openPayMethod }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:9px; padding:10px 18px; color:hsl(var(--foreground)); font-size:14px; font-weight:600; cursor:pointer;">Alterar cartão</button>
         </div>
 
-        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
-          <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid hsl(var(--border));">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:auto;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:18px 22px; border-bottom:1px solid hsl(var(--border));">
             <span class="font-display" style="font-size:16px; font-weight:800;">Mensalidades</span>
             <sc-if value="{{ mensHasOpen }}"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="warning" hint-size="auto,24px">{{ mensOpenLabel }}</x-import></sc-if>
             <sc-if value="{{ mensAllPaid }}"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="success" hint-size="auto,24px">Em dia</x-import></sc-if>
           </div>
-          <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 0.8fr auto; padding:12px 22px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:hsl(var(--muted-foreground)); border-bottom:1px solid hsl(var(--border));">
+          <div class="om-table-5" style="padding:12px 22px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:hsl(var(--muted-foreground)); border-bottom:1px solid hsl(var(--border));">
             <span>Competência</span><span>Vencimento</span><span>Valor</span><span>Status</span><span></span>
           </div>
           <sc-for list="{{ mensalidades }}" as="t" hint-placeholder-count="6">
-            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 0.8fr auto; align-items:center; padding:14px 22px; border-bottom:1px solid hsl(var(--border)); font-size:14px;">
+            <div class="om-table-5" style="align-items:center; padding:14px 22px; border-bottom:1px solid hsl(var(--border)); font-size:14px;">
               <span style="font-weight:600;">{{ t.competencia }}</span>
               <span class="font-mono text-muted-foreground">{{ t.vencimento }}</span>
               <span class="font-mono">{{ t.valor }}</span>
@@ -940,7 +955,7 @@
               <span class="text-muted-foreground">Cartão cadastrado: </span><span style="font-weight:600;">final 4821</span>
             </div>
             <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Ou use outro cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="0000 0000 0000 0000" hint-size="100%,40px"></x-import></div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="om-split">
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="MM/AA" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="000" hint-size="100%,40px"></x-import></div>
             </div>
@@ -1013,11 +1028,12 @@
       <sc-if value="{{ isHistorico }}">
       <div style="display:flex; flex-direction:column; gap:20px;">
         <p class="text-muted-foreground" style="margin:0; font-size:14px;">Seus eventos anteriores, com participação e pontos conquistados.</p>
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:18px;">
+        <div class="om-grid-2">
           <sc-for list="{{ pastEvents }}" as="e" hint-placeholder-count="4">
             <button class="bg-card om-lift" onClick="{{ e.open }}" style="text-align:left; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; cursor:pointer; padding:0;">
-              <div style="height:120px; position:relative; width:100%;"><image-slot id="{{ e.slot }}" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do evento"></image-slot>
-                <span style="position:absolute; right:12px; top:12px;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ e.badgeVar }}" hint-size="auto,24px">{{ e.status }}</x-import></span>
+              <div style="height:120px; position:relative; width:100%;"><image-slot id="{{ e.slot }}" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do evento" src="{{ e.foto }}"></image-slot>
+                <span class="om-img-scrim" aria-hidden="true"></span>
+                <span class="om-img-over" style="position:absolute; right:12px; top:12px;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ e.badgeVar }}" hint-size="auto,24px">{{ e.status }}</x-import></span>
               </div>
               <div style="padding:18px 20px; display:flex; flex-direction:column; gap:10px; width:100%; box-sizing:border-box;">
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
@@ -1048,13 +1064,13 @@
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
           <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="6">
             <div style="border-bottom:1px solid hsl(var(--border));">
-              <button onClick="{{ f.toggle }}" class="om-faq" style="width:100%; display:flex; align-items:flex-start; gap:14px; padding:18px 22px; border:0; background:transparent; color:inherit; text-align:left; cursor:pointer;">
-                <span class="text-muted-foreground" style="flex:none; margin-top:2px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; min-width:78px;">{{ f.catLabel }}</span>
+              <button onClick="{{ f.toggle }}" class="om-faq" style="width:100%; display:flex; align-items:flex-start; gap:12px; padding:18px 22px; border:0; background:transparent; color:inherit; text-align:left; cursor:pointer;">
+                <span class="text-muted-foreground" style="flex:none; margin-top:2px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;">{{ f.catLabel }}</span>
                 <span style="flex:1; min-width:0;"><span style="display:block; font-size:15px; font-weight:700; line-height:1.35;">{{ f.q }}</span></span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none; margin-top:2px; transform:rotate({{ f.chevron }}); transition:transform .18s ease;"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <sc-if value="{{ f.open }}">
-              <div style="padding:0 22px 18px 114px;">
+              <sc-if value="{{ f.isOpen }}">
+              <div style="padding:0 22px 18px 22px;">
                 <p class="text-muted-foreground" style="margin:0; font-size:14px; line-height:1.6;">{{ f.a }}</p>
               </div>
               </sc-if>
@@ -1086,9 +1102,9 @@
         <button onClick="{{ goHistorico }}" style="align-self:flex-start; background:transparent; border:0; color:hsl(var(--muted-foreground)); font-size:13px; font-weight:600; cursor:pointer;">‹ Voltar ao histórico</button>
 
         <div style="position:relative; border-radius:20px; overflow:hidden; border:1px solid hsl(var(--border)); min-height:220px;">
-          <image-slot id="{{ past.slot }}" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do evento"></image-slot>
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, transparent 35%, hsl(20 10% 5% / .92));"></div>
-          <div style="position:absolute; left:0; right:0; bottom:0; padding:24px 28px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <image-slot id="{{ past.slot }}" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do evento" src="{{ past.foto }}"></image-slot>
+          <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
+          <div class="om-img-over" style="position:absolute; left:0; right:0; bottom:0; padding:24px 28px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
             <div>
               <span style="margin-bottom:10px; display:inline-block;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ past.badgeVar }}" hint-size="auto,24px">{{ past.status }}</x-import></span>
               <h2 class="font-impact" style="margin:4px 0 6px; font-size:34px; color:#fff;">{{ past.nomeUp }}</h2>
@@ -1097,23 +1113,23 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;">
+        <div class="om-grid-4">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px;"><div class="text-muted-foreground" style="font-size:12px;">Seu check-in</div><div class="font-mono" style="font-size:18px; font-weight:700; margin-top:4px;">{{ past.checkin }}</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px;"><div class="text-muted-foreground" style="font-size:12px;">Participantes</div><div class="font-mono" style="font-size:18px; font-weight:700; margin-top:4px;">{{ past.participantes }}</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px;"><div class="text-muted-foreground" style="font-size:12px;">Convidados levados</div><div class="font-mono" style="font-size:18px; font-weight:700; margin-top:4px;">{{ past.numConvidados }}</div></div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:16px;"><div class="text-muted-foreground" style="font-size:12px;">Pontos</div><div class="font-mono" style="font-size:18px; font-weight:700; margin-top:4px; color:hsl(var(--foreground));">+{{ past.pontos }}</div></div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:16px; align-items:start;">
+        <div class="om-split" style="align-items:start;">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
             <h3 class="font-display" style="margin:0 0 14px; font-size:16px; font-weight:800;">Fotos do encontro</h3>
-            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
-              <image-slot id="{{ past.slot }}-f1" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
-              <image-slot id="{{ past.slot }}-f2" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
-              <image-slot id="{{ past.slot }}-f3" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
-              <image-slot id="{{ past.slot }}-f4" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
-              <image-slot id="{{ past.slot }}-f5" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
-              <image-slot id="{{ past.slot }}-f6" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto"></image-slot>
+            <div class="om-grid-3" style="gap:10px;">
+              <image-slot id="{{ past.slot }}-f1" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g1 }}"></image-slot>
+              <image-slot id="{{ past.slot }}-f2" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g2 }}"></image-slot>
+              <image-slot id="{{ past.slot }}-f3" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g3 }}"></image-slot>
+              <image-slot id="{{ past.slot }}-f4" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g4 }}"></image-slot>
+              <image-slot id="{{ past.slot }}-f5" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g5 }}"></image-slot>
+              <image-slot id="{{ past.slot }}-f6" focus="faces" style="aspect-ratio:1; border-radius:10px;" placeholder="Foto" src="{{ past.g6 }}"></image-slot>
             </div>
           </div>
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
@@ -1141,29 +1157,30 @@
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; overflow:hidden;">
           <div style="position:relative; height:120px;" class="bg-brasa">
-            <image-slot id="editar-banner" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do perfil"></image-slot>
-            <span style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px; border-radius:50%; padding:3px; background:hsl(var(--card));"><image-slot id="editar-foto" shape="circle" style="width:86px;height:86px" placeholder="Foto"></image-slot></span>
-            <span class="bg-card" style="position:absolute; right:20px; bottom:16px; font-size:12px; font-weight:600; padding:7px 12px; border-radius:9px; border:1px solid hsl(var(--border)); cursor:pointer;">Trocar capa</span>
+            <image-slot id="editar-banner" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do perfil" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
+            <span class="om-img-scrim" aria-hidden="true"></span>
+            <span class="om-img-over" style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px; border-radius:50%; padding:3px; background:hsl(var(--card));"><image-slot id="editar-foto" focus="face" shape="circle" style="width:86px;height:86px" placeholder="Foto" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot></span>
+            <span class="bg-card om-img-over" style="position:absolute; right:20px; bottom:16px; font-size:12px; font-weight:600; padding:7px 12px; border-radius:9px; border:1px solid hsl(var(--border)); cursor:pointer;">Trocar capa</span>
           </div>
           <div style="padding:52px 28px 28px; display:flex; flex-direction:column; gap:18px;">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="om-split">
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="João da Silva" hint-size="100%,40px"></x-import></div>
-              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Empresa</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="Brasa Churrascaria B2B" hint-size="100%,40px"></x-import></div>
+              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Empresa</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="Silva Alimentos" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Especialidade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="Food service" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Cidade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="Porto Alegre" hint-size="100%,40px"></x-import></div>
             </div>
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Descrição</x-import><textarea rows="3" style="width:100%; box-sizing:border-box; padding:10px 12px; border-radius:10px; border:1px solid hsl(var(--input)); background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit; resize:vertical; outline:none;">Fundador do Brasa e da Brasa Churrascaria B2B. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.</textarea></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Descrição</x-import><textarea rows="3" style="width:100%; box-sizing:border-box; padding:10px 12px; border-radius:10px; border:1px solid hsl(var(--input)); background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:16px; font-family:inherit; resize:vertical;">Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.</textarea></div>
             <div style="display:flex; flex-direction:column; gap:6px;">
               <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Vídeo do YouTube</x-import>
               <x-import component-from-global-scope="BrasaMindUI.Input" placeholder="https://www.youtube.com/watch?v=..." default-value="https://www.youtube.com/watch?v=ysz5S6PUM-U" hint-size="100%,40px"></x-import>
               <span class="text-muted-foreground" style="font-size:12px;">Cole o link do YouTube. O vídeo aparece no seu perfil para a rede.</span>
             </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
-              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Telefone</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="+55 51 3333 0000" hint-size="100%,40px"></x-import></div>
-              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="+55 51 99999 0000" hint-size="100%,40px"></x-import></div>
-              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Instagram</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="@brasachurrascaria" hint-size="100%,40px"></x-import></div>
+            <div class="om-split">
+              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Telefone</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="tel" autocomplete="tel" default-value="+55 51 3333 0000" hint-size="100%,40px"></x-import></div>
+              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="tel" autocomplete="tel" default-value="+55 51 99999 0000" hint-size="100%,40px"></x-import></div>
+              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Instagram</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="@silvaalimentos" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">LinkedIn</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="in/joaodasilva" hint-size="100%,40px"></x-import></div>
-              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Site</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="brasachurrascaria.com.br" hint-size="100%,40px"></x-import></div>
+              <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Site</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="url" default-value="silvaalimentos.com.br" hint-size="100%,40px"></x-import></div>
               <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Endereço</x-import><x-import component-from-global-scope="BrasaMindUI.Input" default-value="Av. Assis Brasil, 3940" hint-size="100%,40px"></x-import></div>
             </div>
             <div style="display:flex; gap:12px; justify-content:flex-end; padding-top:6px; border-top:1px solid hsl(var(--border));">
@@ -1185,27 +1202,47 @@
           </div>
           </sc-if>
           <div style="display:flex; flex-direction:column; gap:6px;">
-            <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Senha atual</x-import>
-            <x-import component-from-global-scope="BrasaMindUI.Input" type="password" placeholder="••••••••" hint-size="100%,40px"></x-import>
+            <label for="pwd-atual" style="font-size:14px; font-weight:600;">Senha atual</label>
+            <div class="om-pwd">
+              <input id="pwd-atual" type="{{ pwdType }}" autocomplete="current-password" placeholder="••••••••" style="min-height:44px; padding:10px 12px; border-radius:10px; border:1px solid hsl(var(--input)); background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:16px; font-family:inherit;">
+              <button type="button" class="om-pwd-toggle" onClick="{{ togglePwd }}">{{ pwdToggleLabel }}</button>
+            </div>
           </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="om-split">
             <div style="display:flex; flex-direction:column; gap:6px;">
-              <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nova senha</x-import>
-              <x-import component-from-global-scope="BrasaMindUI.Input" type="password" placeholder="Mínimo 8 caracteres" hint-size="100%,40px"></x-import>
+              <label for="pwd-nova" style="font-size:14px; font-weight:600;">Nova senha</label>
+              <input id="pwd-nova" type="{{ pwdType }}" autocomplete="new-password" placeholder="Mínimo 8 caracteres" style="min-height:44px; padding:10px 12px; border-radius:10px; border:1px solid hsl(var(--input)); background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:16px; font-family:inherit;">
             </div>
             <div style="display:flex; flex-direction:column; gap:6px;">
-              <x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Confirmar nova senha</x-import>
-              <x-import component-from-global-scope="BrasaMindUI.Input" type="password" placeholder="••••••••" hint-size="100%,40px"></x-import>
+              <label for="pwd-conf" style="font-size:14px; font-weight:600;">Confirmar nova senha</label>
+              <input id="pwd-conf" type="{{ pwdType }}" autocomplete="new-password" placeholder="••••••••" style="min-height:44px; padding:10px 12px; border-radius:10px; border:1px solid hsl(var(--input)); background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:16px; font-family:inherit;">
             </div>
           </div>
           <div style="display:flex; justify-content:flex-end; padding-top:6px; border-top:1px solid hsl(var(--border));">
-            <button onClick="{{ savePassword }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 border-0 cursor-pointer">Salvar nova senha</button>
+            <button onClick="{{ savePassword }}" disabled="{{ pwdSaving }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 border-0 cursor-pointer">{{ pwdSaveLabel }}</button>
           </div>
         </div>
       </div>
       </sc-if>
 
     </main>
+    <nav class="om-bottom" aria-label="Navegação principal">
+      <button class="{{ tabCls.dashboard }}" onClick="{{ goDashboard }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path></svg>Início
+      </button>
+      <button class="{{ tabCls.evento }}" onClick="{{ goEvento }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Evento
+      </button>
+      <button class="{{ tabCls.hub }}" onClick="{{ goHub }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Hub
+      </button>
+      <button class="{{ tabCls.game }}" onClick="{{ goGame }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"></path></svg>Ranking
+      </button>
+      <button class="{{ tabCls.more }}" onClick="{{ openMenu }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>Mais
+      </button>
+    </nav>
   </div>
 
   <sc-if value="{{ payMethodOpen }}">
@@ -1216,11 +1253,11 @@
           <h3 class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">Alterar cartão</h3>
           <p class="text-muted-foreground" style="margin:0; font-size:13px;">Atualize o cartão usado na cobrança recorrente via Asaas.</p>
         </div>
-        <button onClick="{{ closePayMethod }}" aria-label="Fechar" style="flex:none; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:8px; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+        <button onClick="{{ closePayMethod }}" class="om-icon-btn" aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
       </div>
       <div style="display:flex; flex-direction:column; gap:14px;">
         <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Número do cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="0000 0000 0000 0000" hint-size="100%,40px"></x-import></div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="om-split">
           <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="MM/AA" hint-size="100%,40px"></x-import></div>
           <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="000" hint-size="100%,40px"></x-import></div>
         </div>
@@ -1255,7 +1292,7 @@
               <p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">{{ confirmBody }}</p>
             </div>
           </div>
-          <button onClick="{{ closeConfirm }}" aria-label="Fechar" style="flex:none; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:8px; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+          <button onClick="{{ closeConfirm }}" class="om-icon-btn" aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
         </div>
         <sc-if value="{{ confirmIsCancel }}">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border:1px solid hsl(var(--border)); border-radius:12px;">
@@ -1279,10 +1316,10 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { screen:'dashboard', buyStep:1, buyPayMethod:'pix', hubQuery:'', hubCat:'todas', hubEsp:'todas', hubCidade:'todas', rankPeriod:'mensal', invite:false, profile:null, theme:'dark', hasTicket:false, past:null, termsMember:false, notifOpen:false, payMethodOpen:false, payMethod:'pix', payDraft:'pix', pwdOk:false, confirm:null, payMens:null, payMensStep:1, faqOpen:'membro', faqCat:'todas', inviteCopied:false, recruitCopied:false,
-    inviteMessage:'Fala! Estou te chamando para o próximo encontro do Brasa Mind: "A mente por trás dos grandes movimentos", dia 28/08 às 19h, no Espaço Brasa, em Porto Alegre.\n\nÉ empreendedorismo, churrasco e muito network gaúcho. Garanta sua vaga pelo meu convite: brasamind.com.br/convite/joao-da-silva-8f2c',
+  state = { screen:'dashboard', menuOpen:false, showPwd:false, pwdSaving:false, buyStep:1, buyPayMethod:'pix', hubQuery:'', hubCat:'todas', hubEsp:'todas', hubCidade:'todas', rankPeriod:'mensal', invite:false, profile:null, theme:'dark', hasTicket:false, past:null, termsMember:false, notifOpen:false, payMethodOpen:false, payMethod:'pix', payDraft:'pix', pwdOk:false, confirm:null, payMens:null, payMensStep:1, faqOpen:'membro', faqCat:'todas', inviteCopied:false, recruitCopied:false,
+    inviteMessage:'Fala! Estou te chamando para o próximo encontro do Brasamind: "A mente por trás dos grandes movimentos", dia 28/08 às 19h, no Espaço Brasa, em Porto Alegre.\n\nÉ empreendedorismo, churrasco e muito network gaúcho. Garanta sua vaga pelo meu convite: brasamind.com.br/convite/joao-da-silva-8f2c',
     inviteMode:'evento',
-    recruitMessage:'Fala! Faço parte do Brasa Mind, um grupo gaúcho de empreendedorismo, churrasco e network, e queria te chamar para fazer parte também.\n\nSão encontros todo mês, uma rede de mais de 120 empresários que fecham negócios juntos e muita indicação de confiança. Acho que é a sua cara. Entra pelo meu convite: brasamind.com.br/membro/joao-da-silva-3a9d',
+    recruitMessage:'Fala! Faço parte do Brasamind, um grupo gaúcho de empreendedorismo, churrasco e network, e queria te chamar para fazer parte também.\n\nSão encontros todo mês, uma rede de mais de 120 empresários que fecham negócios juntos e muita indicação de confiança. Acho que é a sua cara. Entra pelo meu convite: brasamind.com.br/membro/joao-da-silva-3a9d',
     notifs:[
       { id:1, tipo:'evento', titulo:'Inscrições abertas: A mente por trás dos grandes movimentos', quando:'há 2 horas', read:false },
       { id:2, tipo:'financeiro', titulo:'Sua mensalidade de agosto vence em 05/08', quando:'ontem', read:false },
@@ -1291,13 +1328,30 @@ class Component extends DCLogic {
     ] };
   target = new Date('2026-08-28T19:00:00');
 
-  componentDidMount() { this._t = setInterval(() => this.forceUpdate(), 1000); }
-  componentWillUnmount() { clearInterval(this._t); }
+  screens = ['notificacoes','dashboard','evento','compra','hub','perfil','convites','game','financeiro','pagarMensalidade','historico','faq','eventoDetalhe','editar'];
+  setHash(s){ try { history.replaceState(null, '', '#'+s); } catch(e) { location.hash = s; } }
+  readHash(){
+    const h = (location.hash||'').replace(/^#/, '');
+    if (this.screens.indexOf(h) >= 0) this.setState({ screen:h, menuOpen:false });
+  }
+  componentDidMount() {
+    this._t = setInterval(() => this.forceUpdate(), 1000);
+    this._onHash = () => this.readHash();
+    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ notifOpen:false, menuOpen:false, confirm:null, payMethodOpen:false }); };
+    window.addEventListener('hashchange', this._onHash);
+    window.addEventListener('keydown', this._onKey);
+    this.readHash();
+  }
+  componentWillUnmount() {
+    clearInterval(this._t);
+    window.removeEventListener('hashchange', this._onHash);
+    window.removeEventListener('keydown', this._onKey);
+  }
 
-  nav(s) { window.scrollTo(0,0); this.setState({ screen:s, notifOpen:false }); }
+  nav(s) { window.scrollTo(0,0); this.setHash(s); this.setState({ screen:s, notifOpen:false, menuOpen:false }); }
   markNotif(id){ this.setState(st=>({ notifs: st.notifs.map(n=> n.id===id ? { ...n, read:true } : n) })); }
-  openProfile(m) { window.scrollTo(0,0); this.setState({ screen:'perfil', profile:m }); }
-  openPast(e) { window.scrollTo(0,0); this.setState({ screen:'eventoDetalhe', past:e }); }
+  openProfile(m) { window.scrollTo(0,0); this.setHash('perfil'); this.setState({ screen:'perfil', profile:m, menuOpen:false, notifOpen:false }); }
+  openPast(e) { window.scrollTo(0,0); this.setHash('eventoDetalhe'); this.setState({ screen:'eventoDetalhe', past:e, menuOpen:false }); }
 
   payMethods = [
     { id:'pix', tag:'PIX', nome:'PIX automático', desc:'Cobrança automática todo dia 05. Cartão final 4821 como reserva.' },
@@ -1305,9 +1359,9 @@ class Component extends DCLogic {
     { id:'boleto', tag:'BOL', nome:'Boleto bancário', desc:'Boleto enviado por e-mail 5 dias antes do vencimento (dia 05).' },
   ];
   membersRaw = [
-    { nome:'João da Silva', empresa:'Brasa Churrascaria B2B', especialidade:'Food service', cidade:'Porto Alegre', categoria:'Fundador', pontos:2310, iniciais:'JS', rank:1, eventos:24, convidados:12,
+    { nome:'João da Silva', empresa:'Silva Alimentos', especialidade:'Food service', cidade:'Porto Alegre', categoria:'Fundador', pontos:2310, iniciais:'JS', rank:1, eventos:24, convidados:12,
       youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U',
-      descricao:'Fundador do Brasa e da Brasa Churrascaria B2B. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.', whatsapp:'+55 51 99999 0000', instagram:'@brasachurrascaria', site:'brasachurrascaria.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS' },
+      descricao:'Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS' },
     { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', especialidade:'Construção', cidade:'Porto Alegre', categoria:'Fundador', pontos:2180, iniciais:'AR', rank:2, eventos:22, convidados:9,
       youtube:'https://youtu.be/ysz5S6PUM-U',
       descricao:'Cofundadora do Brasa, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS' },
@@ -1358,10 +1412,10 @@ class Component extends DCLogic {
     { competencia:'Março 2026', vencimento:'05/03/2026', valor:'R$ 97,00', status:'Pago', badgeVar:'success', pendente:false, pago:true },
   ];
   pastEvents = [
-    { nome:'Networking de Inverno', data:'21/06/2026', local:'Gramado RS', participantes:78, status:'Presente', badgeVar:'success', pontos:90, slot:'ev-inverno', checkin:'19h12', convidados:[{nome:'Bruno Carvalho',empresa:'Carvalho Advocacia',ini:'BC'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
-    { nome:'Talk: Escala e Cultura', data:'17/05/2026', local:'Porto Alegre RS', participantes:64, status:'Faltou', badgeVar:'destructive', pontos:0, slot:'ev-escala', checkin:'—', convidados:[] },
-    { nome:'Happy Hour Fundadores', data:'19/04/2026', local:'Bento Gonçalves RS', participantes:42, status:'Presente', badgeVar:'success', pontos:80, slot:'ev-happy', checkin:'20h04', convidados:[{nome:'Lucas Pereira',empresa:'LP Consultoria',ini:'LP'}] },
-    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', local:'Porto Alegre RS', participantes:88, status:'Presente', badgeVar:'success', pontos:110, slot:'ev-abertura', checkin:'12h30', convidados:[{nome:'Marcos Dias',empresa:'Dias Log',ini:'MD'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
+    { nome:'Networking de Inverno', data:'21/06/2026', local:'Gramado RS', participantes:78, status:'Presente', badgeVar:'success', pontos:90, slot:'ev-inverno', foto:'uploads/imagens-gerais/IMG_3921.PNG', g1:'uploads/imagens-gerais/IMG_3914.PNG', g2:'uploads/imagens-gerais/IMG_3908.PNG', g3:'uploads/imagens-gerais/IMG_3927.PNG', g4:'uploads/imagens-gerais/IMG_3915.PNG', g5:'uploads/imagens-gerais/IMG_3922.PNG', g6:'uploads/imagens-gerais/IMG_3926.PNG', checkin:'19h12', convidados:[{nome:'Bruno Carvalho',empresa:'Carvalho Advocacia',ini:'BC'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
+    { nome:'Talk: Escala e Cultura', data:'17/05/2026', local:'Porto Alegre RS', participantes:64, status:'Faltou', badgeVar:'destructive', pontos:0, slot:'ev-escala', foto:'uploads/imagens-gerais/IMG_3914.PNG', g1:'uploads/imagens-gerais/IMG_3915.PNG', g2:'uploads/imagens-gerais/IMG_3922.PNG', g3:'uploads/imagens-gerais/IMG_3926.PNG', g4:'uploads/imagens-gerais/IMG_3920.PNG', g5:'uploads/imagens-gerais/IMG_3912.PNG', g6:'uploads/imagens-gerais/IMG_3908.PNG', checkin:'—', convidados:[] },
+    { nome:'Happy Hour Fundadores', data:'19/04/2026', local:'Bento Gonçalves RS', participantes:42, status:'Presente', badgeVar:'success', pontos:80, slot:'ev-happy', foto:'uploads/imagens-gerais/IMG_3919.PNG', g1:'uploads/imagens-gerais/IMG_3918.PNG', g2:'uploads/imagens-gerais/IMG_3916.PNG', g3:'uploads/imagens-gerais/IMG_3924.PNG', g4:'uploads/imagens-gerais/IMG_3919.PNG', g5:'uploads/imagens-gerais/IMG_3927.PNG', g6:'uploads/imagens-gerais/IMG_3922.PNG', checkin:'20h04', convidados:[{nome:'Lucas Pereira',empresa:'LP Consultoria',ini:'LP'}] },
+    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', local:'Porto Alegre RS', participantes:88, status:'Presente', badgeVar:'success', pontos:110, slot:'ev-abertura', foto:'uploads/imagens-gerais/IMG_3913.PNG', g1:'uploads/imagens-gerais/IMG_3909.PNG', g2:'uploads/imagens-gerais/IMG_3910.PNG', g3:'uploads/imagens-gerais/IMG_3923.PNG', g4:'uploads/imagens-gerais/IMG_3927.PNG', g5:'uploads/imagens-gerais/IMG_3913.PNG', g6:'uploads/imagens-gerais/IMG_3911.PNG', checkin:'12h30', convidados:[{nome:'Marcos Dias',empresa:'Dias Log',ini:'MD'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
   ];
   conquistas = [
     { nome:'Assíduo', desc:'6 meses seguidos presente', earned:true },
@@ -1372,7 +1426,7 @@ class Component extends DCLogic {
     { nome:'Top do mês', desc:'1º lugar no ranking mensal', earned:true },
   ];
   faqs = [
-    { id:'membro', cat:'membro', catLabel:'Membros', q:'O que é o Brasa Mind?', a:'O Brasa Mind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
+    { id:'membro', cat:'membro', catLabel:'Membros', q:'O que é o Brasamind?', a:'O Brasamind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
     { id:'valor', cat:'pagamento', catLabel:'Pagamentos', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
     { id:'ingresso', cat:'evento', catLabel:'Eventos', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
     { id:'convidado', cat:'evento', catLabel:'Eventos', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
@@ -1474,7 +1528,22 @@ class Component extends DCLogic {
     const stepCls = n => s.buyStep>n ? 'bg-success text-success-foreground' : s.buyStep===n ? 'bg-brasa text-white' : 'bg-secondary text-muted-foreground';
 
     const nav = k => s.screen===k ? 'bg-secondary text-foreground' : 'text-muted-foreground';
-    const titles = { notificacoes:['Notificações','Histórico completo das suas notificações.'], dashboard:['Boa noite, João','Seu ecossistema do Brasa em um lugar só.'], evento:['Evento do mês','Um único evento ativo por mês. Garanta sua vaga.'], compra:['Comprar ingresso','Resumo, pagamento e QR Code.'], hub:['Hub de membros','Cada card é uma empresa da rede.'], perfil:['Perfil do membro','Conecte, indique, feche negócios.'], convites:['Convites','Traga empresários e ganhe pontos.'], game:['Ranking','Ranking, medalhas e conquistas.'], financeiro:['Financeiro','Mensalidades, histórico e pendências.'], pagarMensalidade:['Pagar mensalidade','Quite a competência em aberto via Asaas.'], historico:['Histórico de eventos','Onde você esteve e quanto pontuou.'], faq:['FAQ','Perguntas frequentes e suporte do Brasa.'], eventoDetalhe:[(s.past?s.past.nome:'Evento'),'Detalhes da sua participação.'], editar:['Editar perfil','Mantenha seus dados atualizados para a rede.'] };
+    const titles = {
+      notificacoes:['Minhas notificações','Histórico completo das suas notificações.'],
+      dashboard:['Boa noite, João','Seu ecossistema do Brasa em um lugar só.'],
+      evento:['Evento do mês','Um único evento ativo por mês. Garanta sua vaga.'],
+      compra:['Comprar ingresso','Resumo, pagamento e QR Code.'],
+      hub:['Hub de membros','Cada card é uma empresa da rede.'],
+      perfil: isSelf ? ['Meu perfil','Seus dados na rede para conectar, indicar e fechar negócios.'] : [profileBase.nome,'Conecte, indique, feche negócios.'],
+      convites:['Meus convites','Traga empresários e ganhe pontos.'],
+      game:['Ranking','Ranking, medalhas e conquistas.'],
+      financeiro:['Meu financeiro','Mensalidades, histórico e pendências.'],
+      pagarMensalidade:['Pagar mensalidade','Quite a competência em aberto via Asaas.'],
+      historico:['Meu histórico','Onde você esteve e quanto pontuou.'],
+      faq:['FAQ','Perguntas frequentes e suporte do Brasa.'],
+      eventoDetalhe:[(s.past?s.past.nome:'Evento'),'Detalhes da sua participação.'],
+      editar:['Editar meu perfil','Mantenha seus dados atualizados para a rede.']
+    };
     const t = titles[s.screen] || ['',''];
 
     return {
@@ -1487,7 +1556,7 @@ class Component extends DCLogic {
       isEventoDetalhe:s.screen==='eventoDetalhe', isEditar:s.screen==='editar', isNotificacoes:s.screen==='notificacoes', isPagarMensalidade:s.screen==='pagarMensalidade',
       faqs: this.faqs.filter(f => s.faqCat==='todas' || f.cat===s.faqCat).map(f=>({
         ...f,
-        open: s.faqOpen===f.id,
+        isOpen: s.faqOpen===f.id,
         chevron: s.faqOpen===f.id ? '180deg' : '0deg',
         toggle:()=>this.setState(st=>({ faqOpen: st.faqOpen===f.id ? null : f.id })),
       })),
@@ -1497,10 +1566,10 @@ class Component extends DCLogic {
       faqCatEvento:()=>this.setState({ faqCat:'evento' }),
       faqCatPagamento:()=>this.setState({ faqCat:'pagamento' }),
       faqCatConta:()=>this.setState({ faqCat:'conta' }),
-      waSupport: 'https://wa.me/5551999990000?text=' + encodeURIComponent('Olá! Preciso de ajuda com o Brasa Mind.'),
+      waSupport: 'https://wa.me/5551999990000?text=' + encodeURIComponent('Olá! Preciso de ajuda com o Brasamind.'),
       payMens: s.payMens || { competencia:'', vencimento:'', valor:'' },
       payMensStep1: s.payMensStep===1, payMensStep2: s.payMensStep===2,
-      startPayMensalidade:(t)=>{ window.scrollTo(0,0); this.setState({ screen:'pagarMensalidade', payMens:t, payMensStep:1, buyPayMethod:'pix', notifOpen:false }); },
+      startPayMensalidade:(t)=>{ this.setHash('pagarMensalidade'); window.scrollTo(0,0); this.setState({ screen:'pagarMensalidade', payMens:t, payMensStep:1, buyPayMethod:'pix', notifOpen:false, menuOpen:false }); },
       confirmPayMens:()=>{
         const t = this.state.payMens;
         if (t) this.mensalidades = this.mensalidades.map(m => m.competencia===t.competencia ? { ...m, status:'Pago', badgeVar:'success', pendente:false, pago:true } : m);
@@ -1508,9 +1577,25 @@ class Component extends DCLogic {
         this.setState({ payMensStep:2 });
       },
       past,
-      goEditar:()=>{ window.scrollTo(0,0); this.setState({ screen:'editar', notifOpen:false, pwdOk:false }); },
+      goEditar:()=>{ this.setHash('editar'); window.scrollTo(0,0); this.setState({ screen:'editar', notifOpen:false, pwdOk:false, menuOpen:false }); },
       pwdOk: !!s.pwdOk,
-      savePassword:()=>this.setState({ pwdOk:true }),
+      pwdSaving: !!s.pwdSaving,
+      pwdType: s.showPwd ? 'text' : 'password',
+      pwdToggleLabel: s.showPwd ? 'Ocultar' : 'Mostrar',
+      togglePwd:()=>this.setState(st=>({ showPwd: !st.showPwd })),
+      pwdSaveLabel: s.pwdSaving ? 'Salvando...' : 'Salvar nova senha',
+      savePassword:()=>{ this.setState({ pwdSaving:true }); setTimeout(()=>this.setState({ pwdSaving:false, pwdOk:true }), 500); },
+      menuOpen: !!s.menuOpen,
+      menuOpenCls: s.menuOpen ? 'is-open' : '',
+      openMenu:()=>this.setState({ menuOpen:true, notifOpen:false }),
+      closeMenu:()=>this.setState({ menuOpen:false }),
+      tabCls:{
+        dashboard: (s.screen==='dashboard'?'is-on':''),
+        evento: (s.screen==='evento'||s.screen==='compra'?'is-on':''),
+        hub: (s.screen==='hub'||s.screen==='perfil'?'is-on':''),
+        game: (s.screen==='game'?'is-on':''),
+        more: (['convites','financeiro','historico','faq','editar','pagarMensalidade','notificacoes'].indexOf(s.screen)>=0?'is-on':''),
+      },
       hasTicket:s.hasTicket, noTicket:!s.hasTicket,
       cancelTicket:()=>this.setState({ confirm:{ kind:'cancelTicket', title:'Cancelar presença?', body:'Você perde a vaga neste evento e poderá comprar o ingresso de novo depois.', cancel:'Manter presença', label:'Cancelar presença' } }),
       openLogout:()=>this.setState({ confirm:{ kind:'logout', title:'Sair da conta?', body:'Você será desconectado da Área do Membro e precisará entrar de novo.', cancel:'Continuar logado', label:'Sair da conta' } }),
@@ -1535,9 +1620,9 @@ class Component extends DCLogic {
       pageTitle:t[0], pageSub:t[1],
       cdD:pad(d), cdH:pad(h), cdM:pad(mi), cdS:pad(se),
       goDashboard:()=>this.nav('dashboard'), goEvento:()=>this.nav('evento'), goHub:()=>this.nav('hub'),
-      goConvites:()=>{ window.scrollTo(0,0); this.setState({ screen:'convites', inviteMode:'evento', notifOpen:false }); }, goGame:()=>this.nav('game'), goFinanceiro:()=>this.nav('financeiro'),
+      goConvites:()=>{ this.setHash('convites'); window.scrollTo(0,0); this.setState({ screen:'convites', inviteMode:'evento', notifOpen:false, menuOpen:false }); }, goGame:()=>this.nav('game'), goFinanceiro:()=>this.nav('financeiro'),
       goHistorico:()=>this.nav('historico'), goFaq:()=>this.nav('faq'), goNotificacoes:()=>this.nav('notificacoes'), goPerfil:()=>this.openProfile(this.membersRaw[0]),
-      startBuy:()=>{ window.scrollTo(0,0); this.setState({ screen:'compra', buyStep:1, buyPayMethod:'pix' }); },
+      startBuy:()=>{ this.setHash('compra'); window.scrollTo(0,0); this.setState({ screen:'compra', buyStep:1, buyPayMethod:'pix', menuOpen:false }); },
       buyNext:()=>this.setState(st=>{ const ns=Math.min(3, st.buyStep+1); return { buyStep:ns, hasTicket: ns===3 ? true : st.hasTicket }; }),
       buyBack:()=>{ window.scrollTo(0,0); this.setState(st=>({ buyStep:Math.max(1, st.buyStep-1) })); },
       buyStep1:s.buyStep===1, buyStep2:s.buyStep===2, buyStep3:s.buyStep===3,
@@ -1572,7 +1657,7 @@ class Component extends DCLogic {
       rankTop:sorted.slice(0,4).map(rankRow), rankFull:sorted.map(rankRow),
       rankChip:{ mensal:chip(s.rankPeriod==='mensal'), geral:chip(s.rankPeriod==='geral'), anual:chip(s.rankPeriod==='anual') },
       rankMensal:()=>this.setState({rankPeriod:'mensal'}), rankGeral:()=>this.setState({rankPeriod:'geral'}), rankAnual:()=>this.setState({rankPeriod:'anual'}),
-      mensalidades:this.mensalidades.map(t=>({ ...t, pay:()=>{ window.scrollTo(0,0); this.setState({ screen:'pagarMensalidade', payMens:t, payMensStep:1, buyPayMethod:'pix', notifOpen:false }); } })),
+      mensalidades:this.mensalidades.map(t=>({ ...t, pay:()=>{ this.setHash('pagarMensalidade'); window.scrollTo(0,0); this.setState({ screen:'pagarMensalidade', payMens:t, payMensStep:1, buyPayMethod:'pix', notifOpen:false, menuOpen:false }); } })),
       mensOpen: this.mensalidades.filter(m=>m.pendente).length,
       mensHasOpen: this.mensalidades.some(m=>m.pendente),
       mensAllPaid: this.mensalidades.every(m=>!m.pendente),
@@ -1618,7 +1703,7 @@ class Component extends DCLogic {
       editRecruitMessage:(e)=>this.setState({ recruitMessage:e.target.value }),
       inviteMessage: s.inviteMessage,
       editInviteMessage:(e)=>this.setState({ inviteMessage:e.target.value }),
-      genInvite:()=>{ window.scrollTo(0,0); this.setState({ screen:'convites', inviteMode:'evento' }); },
+      genInvite:()=>{ this.setHash('convites'); window.scrollTo(0,0); this.setState({ screen:'convites', inviteMode:'evento', menuOpen:false }); },
     };
   }
 }

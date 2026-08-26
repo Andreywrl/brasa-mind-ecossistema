@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Brasa Mind | Convite do Convidado</title>
-<meta name="description" content="Você foi convidado para um encontro do Brasa Mind. Confirme sua presença e conheça a rede de empresários gaúchos.">
+<title>Brasamind | Convite do Convidado</title>
+<meta name="description" content="Você foi convidado para um encontro do Brasamind. Confirme sua presença e conheça a rede de empresários gaúchos.">
 <link rel="canonical" href="https://brasamind.com.br/convite">
 
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -16,22 +16,22 @@
 <meta name="theme-color" content="#0e0c0b">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Brasa Mind">
+<meta property="og:site_name" content="Brasamind">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Brasa Mind | Convite do Convidado">
-<meta property="og:description" content="Você foi convidado para um encontro do Brasa Mind. Confirme sua presença e conheça a rede de empresários gaúchos.">
+<meta property="og:title" content="Brasamind | Convite do Convidado">
+<meta property="og:description" content="Você foi convidado para um encontro do Brasamind. Confirme sua presença e conheça a rede de empresários gaúchos.">
 <meta property="og:url" content="https://brasamind.com.br/convite">
 <meta property="og:image" content="https://brasamind.com.br/_ds/brand/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Brasa Mind: conecte, indique, feche negócios.">
+<meta property="og:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Brasa Mind | Convite do Convidado">
-<meta name="twitter:description" content="Você foi convidado para um encontro do Brasa Mind. Confirme sua presença e conheça a rede de empresários gaúchos.">
+<meta name="twitter:title" content="Brasamind | Convite do Convidado">
+<meta name="twitter:description" content="Você foi convidado para um encontro do Brasamind. Confirme sua presença e conheça a rede de empresários gaúchos.">
 <meta name="twitter:image" content="https://brasamind.com.br/_ds/brand/og-image.png">
-<meta name="twitter:image:alt" content="Brasa Mind: conecte, indique, feche negócios.">
+<meta name="twitter:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
 <script src="./support.js"></script>
 </head>
@@ -40,6 +40,7 @@
 <helmet>
   <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
   <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <link rel="stylesheet" href="_ds/brasa-app-shell.css">
   <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
   <script src="_ds/image-slot.js"></script>
   <style>
@@ -63,7 +64,7 @@
   <header style="display:flex; align-items:center; justify-content:space-between; padding:18px 40px; border-bottom:1px solid hsl(var(--border));">
     <div style="display:flex; align-items:center; gap:10px;">
       <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:28px; width:auto;">
-      <span class="font-impact" style="font-size:19px;">Brasa Mind</span>
+      <span class="font-impact" style="font-size:19px;">Brasamind</span>
     </div>
     <a href="Entrar.dc.html" class="text-muted-foreground" style="font-size:13px; font-weight:600;">Já é membro? Entrar</a>
   </header>
@@ -80,9 +81,9 @@
 
       <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:20px; overflow:hidden;">
         <div style="position:relative; min-height:220px;">
-          <image-slot id="convite-banner" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento"></image-slot>
-          <div style="position:absolute; inset:0; background:linear-gradient(180deg, transparent 30%, hsl(20 10% 5% / .92));"></div>
-          <div style="position:absolute; left:0; right:0; bottom:0; padding:26px 30px;">
+          <image-slot id="convite-banner" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="uploads/imagens-gerais/IMG_3921.PNG"></image-slot>
+          <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
+          <div class="om-img-over" style="position:absolute; left:0; right:0; bottom:0; padding:26px 30px;">
             <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Convite exclusivo</x-import>
             <h1 class="font-impact" style="margin:12px 0 4px; font-size:38px; color:#fff;">A MENTE POR TRÁS DOS GRANDES MOVIMENTOS</h1>
             <p style="margin:0 0 8px; font-size:14px; color:rgba(255,255,255,.9);">A mente por trás do marketing da Agrofel, Yara e Alibem.</p>
@@ -98,7 +99,18 @@
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+      <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
+        <h3 class="font-display" style="margin:0 0 14px; font-size:17px; font-weight:800;">Local</h3>
+        <div class="om-map">
+          <iframe title="Mapa do Espaço Brasa" src="https://maps.google.com/maps?q=Espa%C3%A7o%20Brasa%2C%20R.%20Leopoldo%20Bier%2C%20644%2C%20Santana%2C%20Porto%20Alegre%20RS&amp;hl=pt-BR&amp;z=17&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-top:14px;">
+          <div style="font-size:14px;"><div style="font-weight:700;">Espaço Brasa</div><div class="text-muted-foreground">R. Leopoldo Bier, 644, Santana, Porto Alegre RS</div></div>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Espa%C3%A7o+Brasa%2C+R.+Leopoldo+Bier%2C+644%2C+Santana%2C+Porto+Alegre+RS" target="_blank" rel="noopener" style="flex:none; font-size:13px; font-weight:600;">Abrir no Maps</a>
+        </div>
+      </div>
+
+      <div class="om-grid-3">
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:18px;"><div class="font-display" style="font-size:15px; font-weight:800;">Rede gaúcha</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">128 empresários em um encontro por mês.</p></div>
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:18px;"><div class="font-display" style="font-size:15px; font-weight:800;">Conexões reais</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada para fechar negócios.</p></div>
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:14px; padding:18px;"><div class="font-display" style="font-size:15px; font-weight:800;">Palestra + assado</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Eduardo Seibel e muito network, com comida no ponto.</p></div>
@@ -113,10 +125,10 @@
           <span class="text-muted-foreground" style="font-size:13px;">arraste para o lado</span>
         </div>
         <div class="om-gal" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x mandatory;">
-          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev1" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
-          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev2" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
-          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev3" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
-          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev4" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev1" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário" src="uploads/imagens-gerais/IMG_3920.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev2" focus="upper" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios" src="uploads/imagens-gerais/IMG_3913.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev3" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo" src="uploads/imagens-gerais/IMG_3915.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
+          <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="conv-ev4" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno" src="uploads/imagens-gerais/IMG_3908.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
         </div>
       </div>
     </div>
@@ -146,11 +158,11 @@
         </a>
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;"><div style="flex:1; height:1px; background:hsl(var(--border));"></div><span class="text-muted-foreground" style="font-size:12px;">ou preencha seus dados</span><div style="flex:1; height:1px; background:hsl(var(--border));"></div></div>
         <div style="display:flex; flex-direction:column; gap:14px;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Seu nome" hint-size="100%,40px"></x-import></div>
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Empresa</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Nome da empresa" hint-size="100%,40px"></x-import></div>
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">E-mail</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="voce@empresa.com.br" hint-size="100%,40px"></x-import></div>
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="+55 51 90000 0000" hint-size="100%,40px"></x-import></div>
+          <div class="om-split">
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" autocomplete="name" placeholder="Seu nome" hint-size="100%,44px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Empresa</x-import><x-import component-from-global-scope="BrasaMindUI.Input" autocomplete="organization" placeholder="Nome da empresa" hint-size="100%,44px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">E-mail</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="email" autocomplete="email" placeholder="voce@empresa.com.br" hint-size="100%,44px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="tel" autocomplete="tel" placeholder="+55 51 90000 0000" hint-size="100%,44px"></x-import></div>
           </div>
           <div class="bg-secondary" style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:12px; font-size:13px;">
             <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:30px;height:30px" hint-size="30px,30px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="30px,30px">JS</x-import></x-import>
@@ -208,7 +220,7 @@
       <div style="display:flex; align-items:center; gap:11px;">
         <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto;">
         <div>
-          <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasa Mind</div>
+          <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasamind</div>
           <div class="text-muted-foreground" style="font-size:12px;">Empreendedorismo, churrasco e network gaúcho</div>
         </div>
       </div>

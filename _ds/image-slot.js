@@ -438,7 +438,7 @@
 
   class ImageSlot extends HTMLElement {
     static get observedAttributes() {
-      return ['shape', 'radius', 'mask', 'fit', 'placeholder', 'src', 'id', 'credit', 'credit-href'];
+      return ['shape', 'radius', 'mask', 'fit', 'focus', 'placeholder', 'src', 'id', 'credit', 'credit-href'];
     }
 
     /** Duplicate-slide hook (called by deck-stage, see its
@@ -1083,10 +1083,17 @@
       const url = this._userUrl || srcAttr;
       // Don't clobber an in-flight reframe with a store-triggered re-render.
       if (!this.hasAttribute('data-reframe')) {
+        const focus = (this.getAttribute('focus') || '').toLowerCase();
+        let ds = 1, dx = 0, dy = 0;
+        if (focus === 'faces' || focus === 'top') dy = 22;
+        else if (focus === 'upper') dy = 14;
+        else if (focus === 'face') { ds = 1.32; dy = 18; }
+        else if (focus === 'face-right') { ds = 1.42; dx = -11; dy = 8; }
+        else if (focus === 'brand') dy = 12;
         this._view = {
-          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : 1,
-          x: stored && Number.isFinite(stored.x) ? stored.x : 0,
-          y: stored && Number.isFinite(stored.y) ? stored.y : 0,
+          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : ds,
+          x: stored && Number.isFinite(stored.x) ? stored.x : dx,
+          y: stored && Number.isFinite(stored.y) ? stored.y : dy,
         };
       }
       this._cap.textContent = this.getAttribute('placeholder') || 'Drop an image';

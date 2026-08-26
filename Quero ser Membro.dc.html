@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Brasa Mind | Quero ser Membro</title>
-<meta name="description" content="Peça sua vaga no Brasa Mind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
+<title>Brasamind | Quero ser Membro</title>
+<meta name="description" content="Peça sua vaga no Brasamind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
 <link rel="canonical" href="https://brasamind.com.br/quero-ser-membro">
 
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -16,22 +16,22 @@
 <meta name="theme-color" content="#0e0c0b">
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Brasa Mind">
+<meta property="og:site_name" content="Brasamind">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Brasa Mind | Quero ser Membro">
-<meta property="og:description" content="Peça sua vaga no Brasa Mind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
+<meta property="og:title" content="Brasamind | Quero ser Membro">
+<meta property="og:description" content="Peça sua vaga no Brasamind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
 <meta property="og:url" content="https://brasamind.com.br/quero-ser-membro">
 <meta property="og:image" content="https://brasamind.com.br/_ds/brand/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Brasa Mind: conecte, indique, feche negócios.">
+<meta property="og:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Brasa Mind | Quero ser Membro">
-<meta name="twitter:description" content="Peça sua vaga no Brasa Mind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
+<meta name="twitter:title" content="Brasamind | Quero ser Membro">
+<meta name="twitter:description" content="Peça sua vaga no Brasamind: um encontro por mês com empresários gaúchos para conectar, indicar e fechar negócios.">
 <meta name="twitter:image" content="https://brasamind.com.br/_ds/brand/og-image.png">
-<meta name="twitter:image:alt" content="Brasa Mind: conecte, indique, feche negócios.">
+<meta name="twitter:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
 <script src="./support.js"></script>
 </head>
@@ -40,6 +40,7 @@
 <helmet>
   <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
   <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <link rel="stylesheet" href="_ds/brasa-app-shell.css">
   <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
   <script src="_ds/image-slot.js"></script>
   <style>
@@ -81,7 +82,7 @@
       backdrop-filter: blur(8px);
     }
     .om-subbar .om-chrome-inner { justify-content: flex-start; }
-    .om-landing-wrap { padding-top: 105px; }
+    .om-landing-wrap { padding-top: 64px; }
     .om-flow-wrap { padding-top: 97px; }
     .om-landing-gap { gap: 80px; }
     .om-stepper { display:flex; align-items:center; gap:6px; overflow-x:auto; padding-bottom:4px; }
@@ -102,7 +103,7 @@
     <div class="om-chrome-inner">
       <div style="display:flex; align-items:center; gap:10px;">
         <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:28px; width:auto;">
-        <span class="font-impact" style="font-size:19px;">Brasa Mind</span>
+        <span class="font-impact" style="font-size:19px;">Brasamind</span>
       </div>
       <a href="index.html" class="text-muted-foreground" style="font-size:13px; font-weight:600;">Já é membro? Entrar</a>
     </div>
@@ -111,22 +112,16 @@
   <!-- ===== LANDING ===== -->
   <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
 
-  <div class="om-subbar">
-    <div class="om-chrome-inner">
-      <a href="index.html" class="text-muted-foreground" style="display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600;">‹ Voltar para o login</a>
-    </div>
-  </div>
-
   <div class="om-landing-wrap">
 
   <!-- Hero full-bleed -->
   <section style="position:relative; min-height:440px; overflow:hidden;">
-    <image-slot id="membro-hero" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa"></image-slot>
+    <image-slot id="membro-hero" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
     <div style="position:absolute; inset:0; background:linear-gradient(135deg, hsl(20 85% 42% / .92) 0%, hsl(20 10% 5% / .88) 100%);"></div>
     <img src="_ds/brand/simbolo-branco.png" alt="" style="position:absolute; right:-40px; bottom:-30px; width:360px; opacity:.1;">
     <div class="om-hero-inner" style="position:relative; max-width:1100px; margin:0 auto; padding:56px 40px; display:flex; flex-direction:column; gap:22px; min-height:440px; justify-content:center;">
       <h1 class="font-impact om-hero-title" style="margin:0; font-size:52px; line-height:1.02; color:#fff; letter-spacing:.01em; max-width:640px;">ENTRE PARA O BRASA</h1>
-      <p style="margin:0; font-size:17px; color:rgba(255,255,255,.9); max-width:520px; line-height:1.55;">Empresários gaúchos que conectam, indicam e fecham negócios. Um encontro por mês, rede o ano inteiro.</p>
+      <p style="margin:0; font-size:17px; color:rgba(255,255,255,.9); max-width:520px; line-height:1.55;">Empresários gaúchos que conectam, indicam e fecham negócios. Um encontro por mês, rede o ano inteiro. Mensalidade de R$ 97.</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
         <a href="#plano" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6" style="text-decoration:none; color:#fff;">Quero ser Membro</a>
         <a href="index.html" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-white/40 text-white hover:bg-white/10 h-11 px-6" style="text-decoration:none;">Já tenho conta</a>
@@ -143,12 +138,12 @@
     </div>
     <div class="bg-card glow-ember" style="position:relative; aspect-ratio:16/9; border:1px solid hsl(var(--primary)/.5); border-radius:16px; overflow:hidden; max-width:800px; margin:0 auto; width:100%; background:hsl(20 10% 5%);">
       <sc-if value="{{ vslPlaying }}">
-        <iframe src="{{ vslUrl }}" title="Vídeo sobre o Brasa Mind" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <iframe src="{{ vslUrl }}" title="Vídeo sobre o Brasamind" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </sc-if>
       <sc-if value="{{ vslIdle }}">
-        <image-slot id="membro-vsl" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Thumbnail da VSL"></image-slot>
-        <div style="position:absolute; inset:0; background:linear-gradient(180deg, hsl(20 10% 5% / .15) 0%, hsl(20 10% 5% / .55) 100%);"></div>
-        <button onClick="{{ playVsl }}" aria-label="Assistir vídeo" class="om-vsl-play" style="position:absolute; inset:0; margin:auto; width:72px; height:72px; border:0; border-radius:50%; background:hsl(var(--primary)); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px hsl(20 85% 42% / .4);">
+        <image-slot id="membro-vsl" focus="face" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Thumbnail da VSL" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot>
+        <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
+        <button onClick="{{ playVsl }}" aria-label="Assistir vídeo" class="om-vsl-play om-img-over" style="position:absolute; inset:0; margin:auto; width:72px; height:72px; border:0; border-radius:50%; background:hsl(var(--primary)); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px hsl(20 85% 42% / .4);">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px;"><path d="M8 5v14l11-7z"/></svg>
         </button>
       </sc-if>
@@ -175,10 +170,10 @@
         <span class="text-muted-foreground" style="font-size:13px;">arraste para o lado</span>
       </div>
       <div class="om-gal" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x mandatory;">
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev1" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev2" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev3" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev4" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno"></image-slot><span class="font-mono" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev1" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário" src="uploads/imagens-gerais/IMG_3920.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev2" focus="upper" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios" src="uploads/imagens-gerais/IMG_3913.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev3" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo" src="uploads/imagens-gerais/IMG_3915.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev4" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno" src="uploads/imagens-gerais/IMG_3908.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
       </div>
     </section>
 
@@ -235,16 +230,16 @@
       <sc-if value="{{ step1 }}">
       <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px;">
         <h3 class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">Seus dados</h3>
-        <p class="text-muted-foreground" style="margin:0 0 18px; font-size:13px;">Crie sua conta para entrar no Brasa Mind.</p>
+        <p class="text-muted-foreground" style="margin:0 0 18px; font-size:13px;">Crie sua conta para entrar no Brasamind.</p>
         <button onClick="{{ next }}" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; height:44px; border:1px solid hsl(var(--border)); border-radius:12px; background:#fff; color:#1f1f1f; font-size:14px; font-weight:600; margin-bottom:16px; cursor:pointer;">
           <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
           Continuar com Google
         </button>
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;"><div style="flex:1; height:1px; background:hsl(var(--border));"></div><span class="text-muted-foreground" style="font-size:12px;">ou preencha seus dados</span><div style="flex:1; height:1px; background:hsl(var(--border));"></div></div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-          <div style="display:flex; flex-direction:column; gap:6px; grid-column:1/-1;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="Seu nome" hint-size="100%,40px"></x-import></div>
-          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">E-mail</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="voce@empresa.com.br" hint-size="100%,40px"></x-import></div>
-          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="+55 51 90000 0000" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px; grid-column:1/-1;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome completo</x-import><x-import component-from-global-scope="BrasaMindUI.Input" autocomplete="name" placeholder="Seu nome" hint-size="100%,44px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">E-mail</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="email" autocomplete="email" placeholder="voce@empresa.com.br" hint-size="100%,44px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">WhatsApp</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="tel" autocomplete="tel" placeholder="+55 51 90000 0000" hint-size="100%,44px"></x-import></div>
           <div style="display:flex; flex-direction:column; gap:6px; grid-column:1/-1;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Senha</x-import><x-import component-from-global-scope="BrasaMindUI.Input" type="password" placeholder="Mínimo 8 caracteres" hint-size="100%,40px"></x-import></div>
         </div>
         <div style="display:flex; gap:12px; margin-top:20px;">
@@ -303,10 +298,10 @@
 
         <sc-if value="{{ payIsCartao }}">
         <div style="display:flex; flex-direction:column; gap:14px;">
-          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Número do cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="0000 0000 0000 0000" hint-size="100%,40px"></x-import></div>
+          <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Número do cartão</x-import><x-import component-from-global-scope="BrasaMindUI.Input" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" hint-size="100%,44px"></x-import></div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="MM/AA" hint-size="100%,40px"></x-import></div>
-            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" placeholder="000" hint-size="100%,40px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Validade</x-import><x-import component-from-global-scope="BrasaMindUI.Input" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" hint-size="100%,44px"></x-import></div>
+            <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">CVV</x-import><x-import component-from-global-scope="BrasaMindUI.Input" inputmode="numeric" autocomplete="cc-csc" placeholder="000" hint-size="100%,44px"></x-import></div>
           </div>
         </div>
         </sc-if>
@@ -355,7 +350,7 @@
         <div class="bg-success" style="width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success-foreground))" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
         <h3 class="font-display" style="margin:0 0 6px; font-size:24px; font-weight:800;">Bem-vindo ao Brasa!</h3>
         <p class="text-muted-foreground" style="margin:0 0 8px; font-size:14px;">A rede já está ansiosa para te conhecer, conectar e fechar negócios juntos.</p>
-        <span style="display:inline-block; margin-bottom:20px;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro Brasa Mind</x-import></span>
+        <span style="display:inline-block; margin-bottom:20px;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro Brasamind</x-import></span>
         <div class="bg-secondary" style="border:1px solid hsl(var(--border)); border-radius:12px; padding:16px 18px; text-align:left; margin-bottom:22px;">
           <div class="font-display" style="font-size:14px; font-weight:800; margin-bottom:10px;">Próximos passos na rede</div>
           <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
@@ -377,7 +372,7 @@
       <div style="display:flex; align-items:center; gap:11px;">
         <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto;">
         <div>
-          <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasa Mind</div>
+          <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasamind</div>
           <div class="text-muted-foreground" style="font-size:12px;">Empreendedorismo, churrasco e network gaúcho</div>
         </div>
       </div>

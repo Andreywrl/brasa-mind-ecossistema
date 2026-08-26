@@ -1,6 +1,6 @@
-# Brasa Mind: convenções para construir UI
+# Brasamind: convenções para construir UI
 
-Design system do **Brasa Mind** (empreendedorismo, churrasco e network gaúcho). Identidade: fogo/brasa laranja `#F93A06`, dourado (ember), carvão morno. Importe os componentes de `@brasamind/ui` e o CSS uma vez: `import '@brasamind/ui/styles.css'`.
+Design system do **Brasamind** (empreendedorismo, churrasco e network gaúcho). Identidade: fogo/brasa laranja `#F93A06`, dourado (ember), carvão morno. Importe os componentes de `@brasamind/ui` e o CSS uma vez: `import '@brasamind/ui/styles.css'`.
 
 ## Setup e temas
 - **Sem provider obrigatório**: os componentes são autossuficientes.
@@ -36,7 +36,7 @@ Fontes: `font-sans` (Inter, corpo/UI), `font-display` (Barlow, títulos), `font-
 A verdade de cada API está em `components/<grupo>/<Nome>/<Nome>.d.ts` e o uso em `<Nome>.prompt.md`. Leia `styles.css` para as classes disponíveis.
 
 ## Voz e escrita (obrigatório em toda copy)
-- Nome **"Brasa Mind"**, duas palavras. "Brasa" é o grupo, referenciado no **masculino**: "o Brasa", "do Brasa". Nunca "a Brasa".
+- Nome **"Brasamind"**, uma palavra. Sempre no **masculino**, porque é um grupo de networking: "o Brasamind", "do Brasamind". Forma curta: "o Brasa", "do Brasa". Nunca "a Brasa" nem "a Brasamind".
 - **Não use travessão nem a seta comum.** Prefira vírgula, dois-pontos ou parênteses; a ação vai no próprio botão ("Quero ser Membro").
 - Voz ativa e direta; o botão diz o que acontece e o retorno confirma.
 
@@ -115,9 +115,9 @@ preserved verbatim from upstream. They are declared inside `_ds_bundle.css` (thi
 - `AvatarFallback` - Fallback com iniciais, sobre gradiente de fogo.
 - `AvatarImage`
 - `Badge` - Selo de status ou rtulo curto.
-- `BrasaMindLogo` - Lockup do Brasa Mind: smbolo + wordmark BRASA MIND (BRASA na cor do texto,
-- `BrasaMindSymbol` - O smbolo do Brasa Mind: a chama no hexgono.  a assinatura da marca.
-- `Button` - Boto de ao do Brasa Mind.
+- `BrasaMindLogo` - Lockup do Brasamind: smbolo + wordmark BRASA MIND (BRASA na cor do texto,
+- `BrasaMindSymbol` - O smbolo do Brasamind: a chama no hexgono.  a assinatura da marca.
+- `Button` - Boto de ao do Brasamind.
 - `Card` - Superfcie de card: painel com borda e fundo card.
 - `CardContent`
 - `CardDescription`
