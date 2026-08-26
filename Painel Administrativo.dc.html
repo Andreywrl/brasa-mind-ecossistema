@@ -70,6 +70,10 @@
         <sc-if value="{{ isTermos }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Termos e privacidade
       </button>
+      <button class="om-nav {{ navCls.faq }}" onClick="{{ goFaq }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
+        <sc-if value="{{ isFaq }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>FAQ
+      </button>
 
       <div class="text-muted-foreground" style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:16px 10px 4px;">Operação</div>
       <button class="om-nav {{ navCls.seg }}" onClick="{{ goSeg }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
@@ -87,9 +91,9 @@
         <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:36px;height:36px" hint-size="36px,36px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="36px,36px">CT</x-import></x-import>
         <span style="display:flex; flex-direction:column; line-height:1.2;"><span style="font-size:13px; font-weight:700;">Carla Teixeira</span><span class="text-muted-foreground" style="font-size:11px;">Administradora</span></span>
       </div>
-      <a href="index.html" class="om-nav text-muted-foreground" style="display:flex; align-items:center; gap:12px; padding:9px 12px; border-radius:9px; font-size:13px; font-weight:600;">
+      <button onClick="{{ openLogout }}" class="om-nav text-muted-foreground" style="display:flex; align-items:center; gap:12px; width:100%; padding:9px 12px; border:0; background:transparent; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; text-align:left;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sair
-      </a>
+      </button>
     </div>
   </aside>
 
@@ -241,6 +245,7 @@
       <!-- ============ EVENTOS ============ -->
       <sc-if value="{{ isEventos }}">
       <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="display:flex; justify-content:flex-end;"><x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ newEvent }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4" hint-size="auto,40px">+ Novo evento</x-import></div>
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; overflow:hidden;">
           <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid hsl(var(--border));">
             <div style="display:flex; align-items:center; gap:12px;">
@@ -249,8 +254,7 @@
             </div>
             <div style="display:flex; gap:10px;">
               <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ verEventoAtivo }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-10 px-4" hint-size="auto,40px">Ver detalhes</x-import>
-              <button onClick="{{ editEvent }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer;">Editar</button>
-              <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ newEvent }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4" hint-size="auto,40px">+ Criar evento</x-import>
+              <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ editEvent }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-10 px-4" hint-size="auto,40px">Editar</x-import>
             </div>
           </div>
           <div style="display:grid; grid-template-columns:repeat(4, 1fr);">
@@ -403,7 +407,7 @@
             <div style="display:flex; align-items:center; justify-content:space-between; font-size:14px;"><span class="text-muted-foreground">Check-in</span><x-import component-from-global-scope="BrasaMindUI.Badge" variant="warning" hint-size="auto,24px">Pendente</x-import></div>
           </div>
           <div style="padding:0 24px 22px;">
-            <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-success text-success-foreground hover:brightness-110 h-12 px-6 w-full" hint-size="100%,48px">Confirmar check-in</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-success text-success-foreground hover:brightness-110 h-11 px-6 w-full" hint-size="100%,48px">Confirmar check-in</x-import>
           </div>
         </div>
       </div>
@@ -422,7 +426,7 @@
                 <div><h2 class="font-display" style="margin:0; font-size:24px; font-weight:800;">{{ sel.nome }}</h2><div class="text-muted-foreground" style="font-size:14px;">{{ sel.empresa }}, {{ sel.especialidade }}</div></div>
               </div>
               <div style="display:flex; gap:10px;">
-                <button onClick="{{ goFinanceiro }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:8px 16px; font-size:13px; font-weight:600; cursor:pointer;">Ver financeiro</button>
+                <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goFinanceiro }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-10 px-4" hint-size="auto,40px">Ver financeiro</x-import>
                 <x-import component-from-global-scope="BrasaMindUI.Button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4" hint-size="auto,40px">Editar categoria</x-import>
               </div>
             </div>
@@ -485,7 +489,7 @@
           </div>
 
           <div style="display:flex; gap:12px; justify-content:flex-end; padding-top:8px; border-top:1px solid hsl(var(--border));">
-            <button onClick="{{ goEventos }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer;">Cancelar</button>
+            <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goEventos }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-11 px-6" hint-size="auto,44px">Cancelar</x-import>
             <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goEventos }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-11 px-6" hint-size="auto,44px">{{ eventoFormCta }}</x-import>
           </div>
         </div>
@@ -569,7 +573,7 @@
           <div style="display:flex; gap:12px; justify-content:space-between; align-items:center; padding-top:8px; border-top:1px solid hsl(var(--border));">
             <button style="background:transparent; border:1px solid hsl(var(--destructive)); border-radius:10px; padding:10px 18px; font-size:14px; font-weight:600; color:hsl(var(--destructive)); cursor:pointer;">{{ adminSel.toggleLabel }} usuário</button>
             <div style="display:flex; gap:12px;">
-              <button onClick="{{ goAdmins }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer;">Cancelar</button>
+              <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goAdmins }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-11 px-6" hint-size="auto,44px">Cancelar</x-import>
               <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goAdmins }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-11 px-6" hint-size="auto,44px">Salvar usuário</x-import>
             </div>
           </div>
@@ -582,7 +586,7 @@
       <div style="display:flex; flex-direction:column; gap:20px;">
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
           <div style="max-width:460px;"><h3 class="font-display" style="margin:0 0 4px; font-size:16px; font-weight:800;">Acesso temporário de check-in</h3><p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">Gere um acesso limitado para a equipe de portaria. Ele expira automaticamente no fim da janela definida.</p></div>
-          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ toggleSegForm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-5" hint-size="auto,40px">+ Novo acesso</x-import>
+          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ toggleSegForm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4" style="flex:none;" hint-size="auto,40px">+ Novo acesso</x-import>
         </div>
         <sc-if value="{{ segFormOpen }}" hint-placeholder-val="{{ false }}">
         <div class="bg-card" style="border:1px solid hsl(var(--primary)); border-radius:16px; padding:22px 24px; display:flex; flex-direction:column; gap:16px; box-shadow:0 0 0 3px hsl(var(--primary)/.1);">
@@ -595,7 +599,6 @@
                 <x-import component-from-global-scope="BrasaMindUI.SelectTrigger" hint-size="100%,40px"><x-import component-from-global-scope="BrasaMindUI.SelectValue" placeholder="Selecione o evento" hint-size="auto,20px"></x-import></x-import>
                 <x-import component-from-global-scope="BrasaMindUI.SelectContent" hint-size="100%,auto">
                   <x-import component-from-global-scope="BrasaMindUI.SelectItem" value="ativo" hint-size="100%,32px">A mente por trás dos grandes movimentos (28/08)</x-import>
-                  <x-import component-from-global-scope="BrasaMindUI.SelectItem" value="inverno" hint-size="100%,32px">Networking de Inverno (21/06)</x-import>
                 </x-import>
               </x-import>
             </div>
@@ -615,8 +618,8 @@
           </sc-if>
           <div class="bg-secondary" style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px; font-size:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="text-muted-foreground">{{ segExpiraNotice }}</span></div>
           <div style="display:flex; gap:12px; justify-content:flex-end;">
-            <button onClick="{{ toggleSegForm }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:9px 18px; font-size:14px; font-weight:600; cursor:pointer;">Cancelar</button>
-            <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ toggleSegForm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-5" hint-size="auto,40px">Gerar acesso</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ toggleSegForm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-10 px-4" hint-size="auto,40px">Cancelar</x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ toggleSegForm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-10 px-4" hint-size="auto,40px">Gerar acesso</x-import>
           </div>
         </div>
         </sc-if>
@@ -685,9 +688,55 @@
             <span class="text-muted-foreground" style="font-size:13px;">Publicar como nova versão e exigir novo aceite de todos os membros.</span>
           </label>
           <div style="display:flex; gap:12px; justify-content:flex-end; padding-top:8px; border-top:1px solid hsl(var(--border));">
-            <button onClick="{{ goTermos }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:10px 20px; font-size:14px; font-weight:600; cursor:pointer;">Salvar rascunho</button>
+            <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goTermos }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-11 px-6" hint-size="auto,44px">Salvar rascunho</x-import>
             <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goTermos }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-11 px-6" hint-size="auto,44px">Publicar versão</x-import>
           </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ FAQ ============ -->
+      <sc-if value="{{ isFaq }}">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div style="max-width:520px;">
+            <h3 class="font-display" style="margin:0 0 4px; font-size:16px; font-weight:800;">Perguntas da Área do Membro</h3>
+            <p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">Gerencie o FAQ que aparece para os membros. O suporte continua no WhatsApp.</p>
+          </div>
+          <button onClick="{{ openNewFaq }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-10 px-4 border-0 cursor-pointer">+ Nova pergunta</button>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button onClick="{{ faqFilterAll }}" class="om-chip {{ faqFilterChip.todas }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Todas ({{ faqCount }})</button>
+          <button onClick="{{ faqFilterMembro }}" class="om-chip {{ faqFilterChip.membro }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Membros</button>
+          <button onClick="{{ faqFilterEvento }}" class="om-chip {{ faqFilterChip.evento }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Eventos</button>
+          <button onClick="{{ faqFilterPagamento }}" class="om-chip {{ faqFilterChip.pagamento }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Pagamentos</button>
+          <button onClick="{{ faqFilterConta }}" class="om-chip {{ faqFilterChip.conta }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Conta</button>
+        </div>
+
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
+          <div style="display:grid; grid-template-columns:100px 1.4fr 1.6fr auto; padding:13px 22px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:hsl(var(--muted-foreground)); border-bottom:1px solid hsl(var(--border));">
+            <span>Categoria</span><span>Pergunta</span><span>Resposta</span><span></span>
+          </div>
+          <sc-for list="{{ faqRows }}" as="f" hint-placeholder-count="6">
+            <div class="om-row" style="display:grid; grid-template-columns:100px 1.4fr 1.6fr auto; align-items:start; gap:12px; padding:16px 22px; border-bottom:1px solid hsl(var(--border));">
+              <span class="bg-secondary" style="display:inline-flex; align-self:flex-start; padding:4px 10px; border-radius:9999px; font-size:11px; font-weight:700;">{{ f.catLabel }}</span>
+              <div style="font-size:14px; font-weight:600; line-height:1.4;">{{ f.q }}</div>
+              <div class="text-muted-foreground" style="font-size:13px; line-height:1.45; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ f.a }}</div>
+              <span style="display:flex; gap:8px; justify-content:flex-end; flex:none;">
+                <button onClick="{{ f.edit }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:6px 12px; font-size:13px; font-weight:600; cursor:pointer;">Editar</button>
+                <button onClick="{{ f.remove }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:6px 12px; font-size:13px; font-weight:600; color:hsl(var(--destructive)); cursor:pointer;">Excluir</button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div>
+            <div class="font-display" style="font-size:15px; font-weight:800;">WhatsApp de suporte</div>
+            <p class="text-muted-foreground" style="margin:4px 0 0; font-size:13px;">Número usado no CTA "Falar no WhatsApp" do FAQ.</p>
+          </div>
+          <div class="font-mono" style="font-size:14px; font-weight:600;">+55 51 99999-0000</div>
         </div>
       </div>
       </sc-if>
@@ -793,7 +842,7 @@
         </div>
         <span class="bg-secondary text-muted-foreground" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:9999px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:hsl(var(--success)); display:inline-block;"></span>Pagamento processado via Asaas</span>
         <div style="display:flex; gap:12px; width:100%;">
-          <button onClick="{{ goGeral }}" style="flex:1; background:transparent; border:1px solid hsl(var(--border)); border-radius:10px; padding:12px; font-size:14px; font-weight:600; cursor:pointer;">Falar com o Brasa</button>
+          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goGeral }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent hover:bg-secondary h-11 px-6" style="flex:1;" hint-size="auto,44px">Falar com o Brasa</x-import>
           <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ goGeral }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-11 px-6" style="flex:2;" hint-size="auto,44px">Pagar R$ 194,00 e liberar</x-import>
         </div>
       </div>
@@ -939,7 +988,7 @@
         <button onClick="{{ closeSegEdit }}" aria-label="Fechar" style="flex:none; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:8px; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       </div>
       <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Nome do usuário</x-import><input value="{{ segEditDraft.nome }}" onInput="{{ setSegEditNome }}" placeholder="Ex.: Portaria 3" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px;"></div>
-      <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Evento vinculado</x-import><input value="{{ segEditDraft.evento }}" onInput="{{ setSegEditEvento }}" placeholder="Evento" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px;"></div>
+      <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Evento vinculado</x-import><select value="{{ segEditDraft.evento }}" onChange="{{ setSegEditEvento }}" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit; cursor:pointer;"><sc-for list="{{ segEventosAtivos }}" as="ev" hint-placeholder-count="2"><option value="{{ ev.nome }}">{{ ev.label }}</option></sc-for></select></div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
         <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Data de expiração</x-import><input type="date" value="{{ segEditDraft.expData }}" onInput="{{ setSegEditData }}" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit;"></div>
         <div style="display:flex; flex-direction:column; gap:6px;"><x-import component-from-global-scope="BrasaMindUI.Label" hint-size="auto,18px">Horário de expiração</x-import><input type="time" value="{{ segEditDraft.expHora }}" onInput="{{ setSegEditHora }}" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit;"></div>
@@ -951,11 +1000,69 @@
     </div>
   </div>
   </sc-if>
+
+  <sc-if value="{{ faqModalOpen }}">
+  <div onClick="{{ closeFaqModal }}" class="{{ themeClass }}" style="position:fixed; inset:0; z-index:60; background:hsl(20 10% 3% / .55); display:flex; align-items:center; justify-content:center; padding:24px;">
+    <div onClick="{{ stopProp }}" class="bg-card text-card-foreground" style="width:100%; max-width:560px; max-height:90vh; overflow-y:auto; border:1px solid hsl(var(--border)); border-radius:18px; padding:24px; box-shadow:0 24px 60px hsl(20 10% 2% / .4); display:flex; flex-direction:column; gap:18px;">
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+        <div>
+          <h3 class="font-display" style="margin:0 0 4px; font-size:19px; font-weight:800;">{{ faqModalTitle }}</h3>
+          <p class="text-muted-foreground" style="margin:0; font-size:13px;">A pergunta aparece na Área do Membro, no menu FAQ.</p>
+        </div>
+        <button onClick="{{ closeFaqModal }}" aria-label="Fechar" style="flex:none; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:8px; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <span style="font-size:13px; font-weight:600;">Categoria</span>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <sc-for list="{{ faqCatOptions }}" as="c" hint-placeholder-count="4">
+            <button onClick="{{ c.select }}" class="{{ c.cls }}" style="padding:8px 14px; border-radius:9px; border:1px solid hsl(var(--border)); font-size:13px; font-weight:600; cursor:pointer;">{{ c.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <span style="font-size:13px; font-weight:600;">Pergunta</span>
+        <input value="{{ faqDraft.q }}" onInput="{{ setFaqQ }}" placeholder="Ex.: Como altero meu cartão?" style="height:40px; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit;">
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <span style="font-size:13px; font-weight:600;">Resposta</span>
+        <textarea value="{{ faqDraft.a }}" onInput="{{ setFaqA }}" placeholder="Resposta clara para o membro." style="min-height:120px; padding:10px 12px; border:1px solid hsl(var(--border)); border-radius:9px; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:14px; font-family:inherit; resize:vertical; line-height:1.5;"></textarea>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:2px;">
+        <button onClick="{{ closeFaqModal }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-border bg-transparent hover:bg-secondary h-11 px-6 cursor-pointer">Cancelar</button>
+        <button onClick="{{ saveFaq }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 border-0 cursor-pointer" style="flex:1;">{{ faqSaveLabel }}</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ confirmOpen }}">
+  <div onClick="{{ closeConfirm }}" class="{{ themeClass }}" style="position:fixed; inset:0; z-index:70; background:hsl(20 10% 3% / .62); display:flex; align-items:center; justify-content:center; padding:24px;">
+    <div onClick="{{ stopProp }}" class="bg-card text-card-foreground" role="dialog" aria-modal="true" aria-labelledby="confirm-title" style="width:100%; max-width:460px; overflow:hidden; border:1px solid hsl(var(--border)); border-radius:18px; box-shadow:0 24px 60px hsl(20 10% 2% / .5); display:flex; flex-direction:column;">
+      <span class="bg-brasa" style="display:block; height:3px; width:100%;"></span>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:18px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+          <div style="display:flex; align-items:flex-start; gap:12px; min-width:0;">
+            <span style="flex:none; width:40px; height:40px; border-radius:10px; border:1px solid hsl(var(--border)); background:hsl(var(--secondary)); display:flex; align-items:center; justify-content:center;"><img src="_ds/brand/simbolo-laranja.png" alt="" style="height:22px; width:auto; display:block;"></span>
+            <div style="min-width:0;">
+              <h3 id="confirm-title" class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">{{ confirmTitle }}</h3>
+              <p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">{{ confirmBody }}</p>
+            </div>
+          </div>
+          <button onClick="{{ closeConfirm }}" aria-label="Fechar" style="flex:none; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--muted-foreground)); border-radius:8px; cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:2px;">
+          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ closeConfirm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent text-foreground hover:border-primary hover:text-primary h-11 px-6" hint-size="auto,44px">{{ confirmCancel }}</x-import>
+          <x-import component-from-global-scope="BrasaMindUI.Button" onClick="{{ runConfirm }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-destructive text-destructive-foreground hover:brightness-110 h-11 px-6 w-full border-0" style="flex:1;" hint-size="100%,44px">{{ confirmLabel }}</x-import>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { screen:'geral', mCat:'todos', theme:'light', memberSel:null, eventMode:'edit', adminSel:null, termoSel:null, evSel:null, segFormOpen:false, newMemberOpen:false, newMemberCat:'Membro', newMemberInvite:true, galeriaNotificada:false, galeriaTemFoto:false, rulesEditOpen:false, rulesDraft:null, catModalOpen:false, catMode:'new', catDraft:null, catIndex:-1, catConfirm:false, segExpiraMode:'evento', segExpData:'', segExpHora:'23:59', segEditOpen:false, segEditIndex:-1, segEditDraft:null };
+  state = { screen:'geral', mCat:'todos', theme:'light', memberSel:null, eventMode:'edit', adminSel:null, termoSel:null, evSel:null, segFormOpen:false, newMemberOpen:false, newMemberCat:'Membro', newMemberInvite:true, galeriaNotificada:false, galeriaTemFoto:false, rulesEditOpen:false, rulesDraft:null, catModalOpen:false, catMode:'new', catDraft:null, catIndex:-1, catConfirm:false, segExpiraMode:'evento', segExpData:'', segExpHora:'23:59', segEditOpen:false, segEditIndex:-1, segEditDraft:null, confirm:null, faqFilter:'todas', faqModalOpen:false, faqMode:'new', faqIndex:-1, faqDraft:null };
   nav(s){ window.scrollTo(0,0); this.setState({ screen:s }); }
   openMember(m){ window.scrollTo(0,0); this.setState({ screen:'membroDetalhe', memberSel:m }); }
   openAdmin(a){ window.scrollTo(0,0); this.setState({ screen:'adminEdit', adminSel:a }); }
@@ -981,6 +1088,24 @@ class Component extends DCLogic {
   closeSegEdit(){ this.setState({ segEditOpen:false }); }
   setSegEditField(f,v){ this.setState(s=>({ segEditDraft:{ ...s.segEditDraft, [f]:v } })); }
   saveSegEdit(){ const d=this.state.segEditDraft; if(!d) return; let expira=d._expira; if(d.expData){ const p=d.expData.split('-'); const hm=(d.expHora||'23:59').split(':'); expira=p[2]+'/'+p[1]+' '+hm[0]+'h'+hm[1]; } this.segUsers=this.segUsers.map((u,i)=> i===this.state.segEditIndex ? { ...u, nome:d.nome, evento:d.evento, expira:expira } : u); this.setState({ segEditOpen:false }); }
+  openNewFaq(){ this.setState({ faqModalOpen:true, faqMode:'new', faqIndex:-1, faqDraft:{ cat:'membro', q:'', a:'' } }); }
+  openEditFaq(f,i){ this.setState({ faqModalOpen:true, faqMode:'edit', faqIndex:i, faqDraft:{ cat:f.cat, q:f.q, a:f.a } }); }
+  closeFaqModal(){ this.setState({ faqModalOpen:false, faqDraft:null }); }
+  setFaqField(f,v){ this.setState(s=>({ faqDraft:{ ...s.faqDraft, [f]:v } })); }
+  saveFaq(){
+    const d=this.state.faqDraft;
+    if(!d || !(d.q||'').trim() || !(d.a||'').trim()) return;
+    const cat=(d.cat||'membro');
+    if(this.state.faqMode==='new'){
+      this.faqs=[...this.faqs, { id:'faq-'+Date.now(), cat, q:d.q.trim(), a:d.a.trim() }];
+    } else {
+      this.faqs=this.faqs.map((f,i)=> i===this.state.faqIndex ? { ...f, cat, q:d.q.trim(), a:d.a.trim() } : f);
+    }
+    this.setState({ faqModalOpen:false, faqDraft:null });
+  }
+  askDeleteFaq(f,i){
+    this.setState({ confirm:{ kind:'deleteFaq', index:i, title:'Excluir pergunta?', body:'A pergunta "'+f.q+'" sai do FAQ da Área do Membro.', cancel:'Manter pergunta', label:'Excluir pergunta' } });
+  }
 
   kpis = [
     { label:'Total de membros', value:'128', delta:'▲ 9 novos', deltaCls:'text-success' },
@@ -1027,6 +1152,18 @@ class Component extends DCLogic {
   termos = [
     { nome:'Termos de Uso', versao:'v3.2', desde:'01/07/2026', status:'Publicado', badgeVar:'success', resumo:'Regras de participação, ingressos, convites e conduta nos eventos do Brasa.' },
     { nome:'Política de Privacidade', versao:'v2.1', desde:'01/07/2026', status:'Publicado', badgeVar:'success', resumo:'Como coletamos, usamos e protegemos os dados dos membros e convidados (LGPD).' },
+  ];
+  faqCatMap = { membro:'Membros', evento:'Eventos', pagamento:'Pagamentos', conta:'Conta' };
+  faqs = [
+    { id:'membro', cat:'membro', q:'O que é o Brasa Mind?', a:'O Brasa Mind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
+    { id:'valor', cat:'pagamento', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
+    { id:'ingresso', cat:'evento', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
+    { id:'convidado', cat:'evento', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
+    { id:'pontos', cat:'membro', q:'Como funcionam os pontos e o ranking?', a:'Você ganha pontos por presença, convites convertidos e adimplência. O ranking mensal, geral e anual mostra quem mais conecta na rede. Medalhas destacam assiduidade e indicações.' },
+    { id:'pagamento', cat:'pagamento', q:'Como alterar o cartão de cobrança?', a:'Em Financeiro, abra Cartão de cobrança e escolha Alterar cartão. O pagamento continua recorrente via Asaas com a nova forma cadastrada.' },
+    { id:'senha', cat:'conta', q:'Esqueci minha senha. O que faço?', a:'Na tela de Entrar, use Esqueci a senha. Enviamos um token por e-mail para você criar uma nova. Se já estiver logado, altere a senha em Editar perfil.' },
+    { id:'perfil', cat:'conta', q:'Como atualizo meu perfil no hub?', a:'Abra seu perfil, Editar perfil, e atualize foto, descrição, contatos e vídeo do YouTube. Esses dados ajudam outros membros a conectar e indicar você.' },
+    { id:'cancelar', cat:'evento', q:'Posso cancelar minha presença no evento?', a:'Sim. No painel do ingresso, use Cancelar presença. A vaga é liberada e você pode comprar o ingresso de novo se mudar de ideia.' },
   ];
   eventos = [
     { nome:'Networking de Inverno', data:'21/06/2026', part:'78', receita:'R$ 14,0k', local:'Gramado RS', convidados:'14', checkins:'71 / 78', descricao:'Encontro de inverno na serra, com fondue e rodada de conexões entre membros.', cronograma:[{hora:'19h00',item:'Recepção'},{hora:'19h30',item:'Jantar'},{hora:'21h00',item:'Rodada de conexões'},{hora:'22h30',item:'Encerramento'}] },
@@ -1095,9 +1232,9 @@ class Component extends DCLogic {
     const adminSel = s.adminSel || this.admins[0];
     const adminSelD = { ...adminSel, toggleLabel: adminSel.status==='Ativo' ? 'Inativar' : 'Ativar' };
     const evSel = s.evSel || this.eventos[0];
-    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Regras de pontos e ranking geral.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
+    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Regras de pontos e ranking geral.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
     const t = titles[s.screen] || ['',''];
-    const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
+    const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', faq:'Exportar relatório do FAQ', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
     const exportLabel = exportLabels[s.screen] || 'Exportar relatório';
     const _pf = s.partFilter || 'todos';
     const evParticipantes = _pf==='membros' ? this.membrosEvento : _pf==='convidados' ? this.convidadosEvento : [...this.membrosEvento, ...this.convidadosEvento];
@@ -1120,9 +1257,30 @@ class Component extends DCLogic {
       lockup: s.theme==='dark' ? '_ds/brand/brasamind-lockup-branco.png' : '_ds/brand/brasamind-lockup-cor-claro.png',
       toggleTheme: ()=>this.setState(st=>({ theme: st.theme==='dark'?'light':'dark' })),
       isGeral:s.screen==='geral', isMembros:s.screen==='membros', isEventos:s.screen==='eventos', isFinanceiro:s.screen==='financeiro', isGame:s.screen==='game', isSeg:s.screen==='seg',
-      isSegUsers:s.screen==='segUsers', isCategorias:s.screen==='categorias', isAdmins:s.screen==='admins', isTermos:s.screen==='termos', isMembroDetalhe:s.screen==='membroDetalhe', isEventoForm:s.screen==='eventoForm',
+      isSegUsers:s.screen==='segUsers', isCategorias:s.screen==='categorias', isAdmins:s.screen==='admins', isTermos:s.screen==='termos', isFaq:s.screen==='faq', isMembroDetalhe:s.screen==='membroDetalhe', isEventoForm:s.screen==='eventoForm',
       isAdminEdit:s.screen==='adminEdit', isTermosEdit:s.screen==='termosEdit', isEventoView:s.screen==='eventoView', isBloqueio:s.screen==='bloqueio',
       goBloqueio:()=>this.nav('bloqueio'),
+      faqModalOpen: !!s.faqModalOpen,
+      faqModalTitle: s.faqMode==='new' ? 'Nova pergunta' : 'Editar pergunta',
+      faqSaveLabel: s.faqMode==='new' ? 'Publicar pergunta' : 'Salvar alterações',
+      faqDraft: s.faqDraft || { cat:'membro', q:'', a:'' },
+      openNewFaq:()=>this.openNewFaq(),
+      closeFaqModal:()=>this.closeFaqModal(),
+      setFaqQ:e=>this.setFaqField('q', e.target.value),
+      setFaqA:e=>this.setFaqField('a', e.target.value),
+      saveFaq:()=>this.saveFaq(),
+      faqCatOptions:['membro','evento','pagamento','conta'].map(cat=>({ cat, label:this.faqCatMap[cat], cls: (s.faqDraft&&s.faqDraft.cat===cat) ? 'bg-primary text-primary-foreground' : 'bg-transparent text-foreground', select:()=>this.setFaqField('cat', cat) })),
+      faqFilterChip:{ todas:chip(s.faqFilter==='todas'), membro:chip(s.faqFilter==='membro'), evento:chip(s.faqFilter==='evento'), pagamento:chip(s.faqFilter==='pagamento'), conta:chip(s.faqFilter==='conta') },
+      faqFilterAll:()=>this.setState({ faqFilter:'todas' }),
+      faqFilterMembro:()=>this.setState({ faqFilter:'membro' }),
+      faqFilterEvento:()=>this.setState({ faqFilter:'evento' }),
+      faqFilterPagamento:()=>this.setState({ faqFilter:'pagamento' }),
+      faqFilterConta:()=>this.setState({ faqFilter:'conta' }),
+      faqCount: String(this.faqs.length),
+      faqRows: this.faqs
+        .map((f,i)=>({ ...f, i, catLabel:this.faqCatMap[f.cat]||f.cat }))
+        .filter(f => s.faqFilter==='todas' || f.cat===s.faqFilter)
+        .map(f=>({ ...f, edit:()=>this.openEditFaq(f,f.i), remove:()=>this.askDeleteFaq(f,f.i) })),
       segFormOpen:s.segFormOpen, toggleSegForm:()=>this.setState(st=>({ segFormOpen:!st.segFormOpen })),
       newMemberOpen:s.newMemberOpen,
       stopProp:(e)=>e.stopPropagation(),
@@ -1137,10 +1295,10 @@ class Component extends DCLogic {
       addFotos: (e)=>{ if(e.target.files && e.target.files.length) this.setState({ galeriaTemFoto:true }); },
       notificarGaleria: ()=>this.setState({ galeriaNotificada:true }),
       permissoes:this.permissoesBase,
-      navCls:{ geral:nav('geral'), membros:nav('membros'), eventos:nav('eventos'), financeiro:nav('financeiro'), game:nav('game'), seg:nav('seg'), segUsers:nav('segUsers'), categorias:nav('categorias'), admins:nav('admins'), termos:nav('termos') },
+      navCls:{ geral:nav('geral'), membros:nav('membros'), eventos:nav('eventos'), financeiro:nav('financeiro'), game:nav('game'), seg:nav('seg'), segUsers:nav('segUsers'), categorias:nav('categorias'), admins:nav('admins'), termos:nav('termos'), faq:nav('faq') },
       pageTitle:t[0], pageSub:t[1], exportLabel,
       goGeral:()=>this.nav('geral'), goMembros:()=>this.nav('membros'), goEventos:()=>this.nav('eventos'), goFinanceiro:()=>this.nav('financeiro'), goGame:()=>this.nav('game'), goSeg:()=>this.nav('seg'),
-      goSegUsers:()=>this.nav('segUsers'), goCategorias:()=>this.nav('categorias'), goAdmins:()=>this.nav('admins'), goTermos:()=>this.nav('termos'),
+      goSegUsers:()=>this.nav('segUsers'), goCategorias:()=>this.nav('categorias'), goAdmins:()=>this.nav('admins'), goTermos:()=>this.nav('termos'), goFaq:()=>this.nav('faq'),
       editEvent:()=>{ window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'edit' }); },
       newEvent:()=>{ window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'new' }); },
       eventoFormTitle:s.eventMode==='new'?'Novo evento':'Editar evento', eventoFormCta:s.eventMode==='new'?'Cadastrar evento':'Salvar alterações', ef,
@@ -1166,6 +1324,7 @@ class Component extends DCLogic {
       setSegExpData:e=>this.setSegExp('segExpData',e.target.value), setSegExpHora:e=>this.setSegExp('segExpHora',e.target.value),
       segExpiraNotice:(s.segExpiraMode==='custom') ? (s.segExpData ? ('O acesso expira em '+s.segExpData.split('-').reverse().join('/')+' às '+(s.segExpHora||'23:59').replace(':','h')+'.') : 'Defina a data e o horário de expiração do acesso.') : 'O acesso expira automaticamente ao fim do evento vinculado (28/08/2026 23h59).',
       segEditOpen:s.segEditOpen, segEditDraft:s.segEditDraft||{nome:'',evento:'',expData:'',expHora:''}, closeSegEdit:()=>this.closeSegEdit(), saveSegEdit:()=>this.saveSegEdit(),
+      segEventosAtivos:(()=>{ const cur=s.segEditDraft&&s.segEditDraft.evento; const list=[{nome:this.eventoAtivo.nome, label:this.eventoAtivo.nome+' · '+this.eventoAtivo.data}]; if(cur && !list.some(e=>e.nome===cur)) list.push({nome:cur, label:cur+' (encerrado)'}); return list; })(),
       setSegEditNome:e=>this.setSegEditField('nome',e.target.value), setSegEditEvento:e=>this.setSegEditField('evento',e.target.value), setSegEditData:e=>this.setSegEditField('expData',e.target.value), setSegEditHora:e=>this.setSegEditField('expHora',e.target.value),
       termos:this.termos.map(d=>({ ...d, open:()=>this.openTermo(d) })),
       kpis:this.kpis, receita, topIndic:this.topIndic, topAssid:this.topAssid, topPont:this.topPont,
@@ -1180,6 +1339,22 @@ class Component extends DCLogic {
       draftNeg:(s.rulesDraft?s.rulesDraft.neg:[]).map((r,i)=>({ ...r, setTexto:e=>this.updateRule('neg',i,'texto',e.target.value), remove:()=>this.removeRule('neg',i) })),
       transacoes:this.transacoes.map(t=>({ ...t, verPerfil:()=>this.openMember(this.membrosRaw.find(m=>m.nome===t.nome) || this.membrosRaw[0]) })),
       rankAdmin:this.rankAdmin.map((r,i)=>({ ...r, pos:(i+1), posCls:i===0?'text-primary':'text-muted-foreground' })),
+      openLogout:()=>this.setState({ confirm:{ kind:'logout', title:'Sair da conta?', body:'Você será desconectado do Painel Administrativo e precisará entrar de novo.', cancel:'Continuar logado', label:'Sair da conta' } }),
+      confirmOpen: !!s.confirm,
+      confirmTitle: s.confirm ? s.confirm.title : '',
+      confirmBody: s.confirm ? s.confirm.body : '',
+      confirmCancel: s.confirm ? s.confirm.cancel : 'Voltar',
+      confirmLabel: s.confirm ? s.confirm.label : 'Confirmar',
+      closeConfirm:()=>this.setState({ confirm:null }),
+      runConfirm:()=>{
+        const c = this.state.confirm||{};
+        if (c.kind==='logout') { this.setState({ confirm:null }); window.location.href = 'Entrar.dc.html'; }
+        else if (c.kind==='deleteFaq') {
+          this.faqs = this.faqs.filter((_,i)=> i!==c.index);
+          this.setState({ confirm:null });
+        }
+        else this.setState({ confirm:null });
+      },
     };
   }
 }
