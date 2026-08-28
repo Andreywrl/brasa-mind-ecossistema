@@ -40,6 +40,7 @@
 <helmet>
   <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
   <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
+  <link rel="stylesheet" href="_ds/brasa-app-shell.css">
   <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
   <script src="_ds/image-slot.js"></script>
   <style>
@@ -62,6 +63,7 @@
         <button onClick="{{ toggleTheme }}" class="font-sans" style="cursor:pointer; border:1px solid rgba(255,255,255,.5); background:rgba(255,255,255,.14); color:#fff; border-radius:9999px; padding:7px 14px; font-size:13px; font-weight:600;">{{ toggleLabel }}</button>
         <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
         <x-import component-from-global-scope="BrasaMindUI.Avatar" hint-size="40px,40px">
+          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="40px,40px"></x-import>
           <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="40px,40px">JS</x-import>
         </x-import>
       </div>
@@ -129,7 +131,7 @@
           <div style="position:relative;">
             <div class="bg-brasa" style="height:104px; width:100%;"></div>
             <div style="position:absolute; left:20px; bottom:-32px; width:80px; height:80px; border-radius:9999px; padding:3px; background:hsl(var(--card));">
-              <image-slot id="membro-joao-foto" focus="face" shape="circle" style="width:74px;height:74px" placeholder="Foto do membro" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot>
+              <image-slot id="membro-joao-foto" focus="face" shape="circle" style="width:74px;height:74px" placeholder="Foto do membro" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
             </div>
             <div style="position:absolute; right:16px; top:16px;">
               <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
@@ -430,7 +432,7 @@
     <section style="display:flex; flex-direction:column; gap:20px;">
       <div style="display:flex; flex-direction:column; gap:4px;">
         <h2 class="font-display" style="font-size:26px; font-weight:800; margin:0;">Ranking</h2>
-        <p class="text-muted-foreground" style="margin:0;">O ranking Top 3 do ecossistema, por presença, indicações e negócios fechados.</p>
+        <p class="text-muted-foreground" style="margin:0;">O ranking Top 3 do ecossistema, por presença, indicações e negócios fechados. No encerramento do ano, o Brasa premia quem performou bem e o Top 3.</p>
       </div>
 
       <x-import component-from-global-scope="BrasaMindUI.Card" hint-size="100%,auto">
@@ -445,11 +447,10 @@
           <div style="display:flex; align-items:flex-end; justify-content:center; gap:16px; padding-top:8px;">
 
             <!-- 2º -->
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
-              <div style="width:64px; height:64px; border-radius:9999px; padding:2px; background:hsl(30 8% 62%);">
-                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px">
-                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">MS</x-import>
-                </x-import>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
+              <div class="om-podium-photo">
+                <image-slot id="demo-rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot>
+                <span class="om-medal om-medal-silver" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
                 <div class="font-display" style="font-weight:800; font-size:15px;">Maria Souza</div>
@@ -461,12 +462,11 @@
             </div>
 
             <!-- 1º -->
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:160px;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:184px;">
               <x-import component-from-global-scope="BrasaMindUI.Badge" class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold transition-colors bg-brasa text-white" hint-size="auto,24px">♛ Fundador</x-import>
-              <div class="glow-ember" style="width:76px; height:76px; border-radius:9999px; padding:2px; background:linear-gradient(135deg, hsl(13 95% 52%), hsl(42 88% 58%));">
-                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:72px;height:72px" hint-size="72px,72px">
-                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="72px,72px">JS</x-import>
-                </x-import>
+              <div class="om-podium-photo om-podium-photo-lg">
+                <image-slot id="demo-rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
+                <span class="om-medal om-medal-gold" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
                 <div class="font-display" style="font-weight:800; font-size:16px;">João da Silva</div>
@@ -478,11 +478,10 @@
             </div>
 
             <!-- 3º -->
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
-              <div style="width:64px; height:64px; border-radius:9999px; padding:2px; background:hsl(24 45% 42%);">
-                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px">
-                  <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">PL</x-import>
-                </x-import>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
+              <div class="om-podium-photo">
+                <image-slot id="demo-rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg"></image-slot>
+                <span class="om-medal om-medal-bronze" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
                 <div class="font-display" style="font-weight:800; font-size:15px;">Pedro Lima</div>
@@ -506,7 +505,7 @@
       </div>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
         <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
-          <div class="font-impact" style="font-size:32px;">BRASA MIND</div>
+          <div class="font-impact" style="font-size:32px;">Brasamind</div>
           <div class="text-muted-foreground" style="margin-top:8px; font-size:13px;">font-impact · Barlow Semi Condensed · herói e logo</div>
         </div>
         <div class="border-border" style="border-width:1px; border-style:solid; border-radius:12px; padding:20px;">
@@ -537,7 +536,7 @@
         <div class="bg-warning text-warning-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Warning<br><span style="font-weight:400; opacity:.85; font-size:13px;">warning</span></div>
         <div class="bg-destructive text-destructive-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Destructive<br><span style="font-weight:400; opacity:.85; font-size:13px;">destructive</span></div>
         <div class="bg-info text-info-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Info<br><span style="font-weight:400; opacity:.85; font-size:13px;">info</span></div>
-        <div class="bg-brasa" style="border-radius:12px; padding:20px; font-weight:600; color:#fff;">Gradiente<br><span style="font-weight:400; opacity:.9; font-size:13px;">.bg-brasa</span></div>
+        <div class="bg-brasa" style="border-radius:12px; padding:20px; font-weight:600; color:#fff;">Brasa<br><span style="font-weight:400; opacity:.9; font-size:13px;">.bg-brasa</span></div>
         <div class="bg-muted text-muted-foreground" style="border-radius:12px; padding:20px; font-weight:600;">Muted<br><span style="font-weight:400; opacity:.85; font-size:13px;">muted</span></div>
       </div>
     </section>

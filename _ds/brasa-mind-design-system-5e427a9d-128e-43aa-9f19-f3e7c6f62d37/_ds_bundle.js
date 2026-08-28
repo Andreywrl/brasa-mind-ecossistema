@@ -9298,7 +9298,7 @@ var BrasaMindUI = (() => {
       /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex flex-col", children: [
         /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("span", { className: "font-impact leading-none", style: { fontSize: size4 * 0.62 }, children: [
           "Brasa",
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "text-primary", children: "Mind" })
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "text-primary", children: "mind" })
         ] }),
         tagline && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
           "span",

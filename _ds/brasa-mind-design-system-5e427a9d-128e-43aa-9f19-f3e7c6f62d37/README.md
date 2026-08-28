@@ -21,9 +21,9 @@ Nunca use hex solto. Componha layout com utilitários que mapeiam nos tokens:
 | Status | `bg-success`, `bg-warning`, `bg-destructive`, `bg-info` (cada um com `text-*-foreground`) |
 
 Utilitários de marca (use com parcimônia, um destaque por tela):
-- `.bg-brasa`: gradiente de fogo para dourado (heróis, headers).
+- `.bg-brasa`: laranja forte da primária (heróis, headers, CTAs).
+- `.text-brasa`: texto na primária.
 - `.glow-ember`: brilho de brasa no CTA principal ou no card do plano Membro.
-- `.text-brasa`: texto com gradiente de fogo.
 
 Fontes: `font-sans` (Inter, corpo/UI), `font-display` (Barlow, títulos), `font-impact` (Barlow Semi Condensed, herói/logo, já uppercase), `font-mono` (JetBrains Mono, valores e dados).
 
@@ -115,7 +115,7 @@ preserved verbatim from upstream. They are declared inside `_ds_bundle.css` (thi
 - `AvatarFallback` - Fallback com iniciais, sobre gradiente de fogo.
 - `AvatarImage`
 - `Badge` - Selo de status ou rtulo curto.
-- `BrasaMindLogo` - Lockup do Brasamind: smbolo + wordmark BRASA MIND (BRASA na cor do texto,
+- `BrasaMindLogo` - Lockup do Brasamind: smbolo + wordmark Brasamind (Brasa na cor do texto,
 - `BrasaMindSymbol` - O smbolo do Brasamind: a chama no hexgono.  a assinatura da marca.
 - `Button` - Boto de ao do Brasamind.
 - `Card` - Superfcie de card: painel com borda e fundo card.

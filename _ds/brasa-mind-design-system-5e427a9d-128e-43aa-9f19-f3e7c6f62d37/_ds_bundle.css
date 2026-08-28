@@ -1244,14 +1244,15 @@ body {
 }
 
 .bg-brasa {
-  background-image: linear-gradient(135deg, hsl(13 95% 50%) 0%, hsl(28 100% 52%) 45%, hsl(42 90% 52%) 100%);
+  background-color: hsl(var(--primary));
+  background-image: none;
 }
 
 .text-brasa {
-  background-image: linear-gradient(135deg, hsl(13 95% 52%) 0%, hsl(42 90% 55%) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background-image: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: hsl(var(--primary));
 }
 
 /* Tokens fora de @layer para o Tailwind nunca purgar o bloco .dark. */

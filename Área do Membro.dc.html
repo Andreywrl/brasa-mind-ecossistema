@@ -97,6 +97,7 @@
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
       <button class="om-nav {{ navCls.perfil }}" onClick="{{ goPerfil }}" style="display:flex; align-items:center; gap:11px; width:100%; padding:9px 10px; border:1px solid hsl(var(--border)); background:transparent; border-radius:12px; cursor:pointer; text-align:left;">
         <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:36px;height:36px" hint-size="36px,36px">
+          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="36px,36px"></x-import>
           <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="36px,36px">JS</x-import>
         </x-import>
         <span style="display:flex; flex-direction:column; line-height:1.2;">
@@ -236,16 +237,15 @@
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 22px;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
               <h3 class="font-display" style="margin:0; font-size:16px; font-weight:800;">Sua posição no ranking</h3>
-              <button onClick="{{ goGame }}" style="background:transparent; border:0; color:hsl(var(--primary)); font-size:13px; font-weight:600; cursor:pointer;">Ver ranking</button>
+              <button onClick="{{ goGame }}" style="background:transparent; border:0; color:hsl(var(--primary)); font-size:13px; font-weight:600; cursor:pointer;">Ver ranking e prêmios</button>
             </div>
+            <p class="text-muted-foreground" style="margin:-6px 0 14px; font-size:13px; line-height:1.45;">No encerramento do ano, o Brasa premia quem performou bem e o Top 3 do ranking.</p>
             <div style="display:flex; flex-direction:column; gap:2px;">
               <sc-for list="{{ rankTop }}" as="r" hint-placeholder-count="4">
                 <div class="{{ r.rowCls }}" style="display:flex; align-items:center; gap:12px; padding:9px 10px; border-radius:10px;">
                   <span class="font-mono {{ r.posCls }}" style="width:22px; font-size:14px; font-weight:700;">{{ r.pos }}</span>
                   <div style="display:flex; align-items:center; gap:16px; flex:1; min-width:0;">
-                    <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:30px;height:30px; flex:none;" hint-size="30px,30px">
-                      <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="30px,30px">{{ r.iniciais }}</x-import>
-                    </x-import>
+                    <img src="{{ r.foto }}" alt="" width="30" height="30" style="width:30px; height:30px; border-radius:50%; object-fit:cover; flex:none;">
                     <span style="font-size:14px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.nome }}</span>
                   </div>
                   <span class="font-mono text-muted-foreground" style="font-size:13px;">{{ r.pontosFmt }}</span>
@@ -302,7 +302,7 @@
             </div>
             <div style="display:flex; align-items:center;">
               <sc-for list="{{ confirmados }}" as="p" hint-placeholder-count="7">
-                <span style="margin-right:-10px; border:2px solid hsl(var(--card)); border-radius:50%;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="34px,34px">{{ p.ini }}</x-import></x-import></span>
+                <span style="margin-right:-10px; border:2px solid hsl(var(--card)); border-radius:50%;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ p.foto }}" hint-size="34px,34px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="34px,34px">{{ p.ini }}</x-import></x-import></span>
               </sc-for>
             </div>
           </div>
@@ -348,6 +348,7 @@
                 <sc-for list="{{ confirmados }}" as="p" hint-placeholder-count="7">
                   <span style="margin-right:-10px; border:2px solid hsl(var(--card)); border-radius:50%;">
                     <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:38px;height:38px" hint-size="38px,38px">
+                      <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ p.foto }}" hint-size="38px,38px"></x-import>
                       <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="38px,38px">{{ p.ini }}</x-import>
                     </x-import>
                   </span>
@@ -614,11 +615,7 @@
           <sc-for list="{{ hubMembers }}" as="m" hint-placeholder-count="9">
             <button class="bg-card om-lift" onClick="{{ m.open }}" style="text-align:left; border:1px solid hsl(var(--border)); border-radius:16px; padding:0; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;">
               <div style="height:56px; position:relative;" class="{{ m.bannerCls }}">
-                <span style="position:absolute; left:16px; top:34px; width:52px; height:52px; border-radius:50%; padding:2px; background:hsl(var(--card));">
-                  <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:48px;height:48px" hint-size="48px,48px">
-                    <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:15px" hint-size="48px,48px">{{ m.iniciais }}</x-import>
-                  </x-import>
-                </span>
+                <span class="om-face om-face-sm" style="position:absolute; left:16px; top:34px;"><image-slot id="hub-foto" shape="circle" focus="face" style="width:52px;height:52px;" placeholder="Foto" src="{{ m.foto }}"></image-slot></span>
                 <span class="{{ m.catCls }}" style="position:absolute; right:12px; top:12px; padding:3px 9px; border-radius:9999px; font-size:11px; font-weight:700;">{{ m.categoria }}</span>
               </div>
               <div style="padding:32px 18px 18px; display:flex; flex-direction:column; gap:10px;">
@@ -648,11 +645,7 @@
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:20px; overflow:hidden;">
           <div style="height:130px; position:relative;" class="{{ profile.bannerCls }}">
-            <span style="position:absolute; left:32px; bottom:-40px; width:104px; height:104px; border-radius:50%; padding:3px; background:hsl(var(--card));">
-              <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:98px;height:98px" hint-size="98px,98px">
-                <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:30px" hint-size="98px,98px">{{ profile.iniciais }}</x-import>
-              </x-import>
-            </span>
+            <span class="om-face om-face-lg" style="position:absolute; left:32px; bottom:-40px;"><image-slot id="perfil-foto" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="{{ profile.foto }}"></image-slot></span>
             <span class="{{ profile.catCls }}" style="position:absolute; right:24px; top:20px; padding:5px 13px; border-radius:9999px; font-size:12px; font-weight:700;">{{ profile.categoria }}</span>
           </div>
           <div style="padding:52px 32px 28px;">
@@ -816,21 +809,73 @@
           <button class="om-chip {{ rankChip.anual }}" onClick="{{ rankAnual }}" style="padding:9px 18px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Anual</button>
         </div>
 
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
+          <div style="padding:18px 22px; border-bottom:1px solid hsl(var(--border)); display:flex; align-items:flex-start; gap:14px;">
+            <span class="bg-secondary" style="width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex:none;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </span>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <h3 class="font-display" style="margin:0; font-size:16px; font-weight:800;">Prêmios do ano</h3>
+                <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Encerramento 2026</x-import>
+              </div>
+              <p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px; line-height:1.5;">Quem performar bem o ano inteiro (presença, indicações e negócios fechados) leva prêmio. O Top 3 do ranking anual também: cada um com um prêmio à parte.</p>
+            </div>
+          </div>
+          <div style="padding:16px 22px 0;">
+            <div style="height:168px; border-radius:12px; overflow:hidden; border:1px solid hsl(var(--border));">
+              <image-slot id="premios-ano" focus="top" radius="0" style="width:100%; height:100%;" placeholder="Foto dos prêmios" src="uploads/imagens-gerais/bairros-do-rio-de-janeiro.jpg"></image-slot>
+            </div>
+          </div>
+          <div class="om-split" style="padding:20px 22px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="font-display" style="font-size:16px; font-weight:800;">Performance do ano</div>
+                <p class="text-muted-foreground" style="margin:4px 0 0; font-size:13px; line-height:1.5;">Não precisa ser o primeiro da lista. Quem conectar, indicar e fechar negócios com consistência entra na disputa dos prêmios de performance.</p>
+              </div>
+              <sc-for list="{{ premiosPerf }}" as="p" hint-placeholder-count="2">
+                <div class="bg-secondary" style="border-radius:10px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start;">
+                  <span class="bg-primary" style="width:8px; height:8px; border-radius:50%; margin-top:6px; flex:none;"></span>
+                  <div>
+                    <div style="font-size:14px; font-weight:700;">{{ p.item }}</div>
+                    <div class="text-muted-foreground" style="font-size:12px; margin-top:3px; line-height:1.45;">{{ p.detalhe }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="font-display" style="font-size:16px; font-weight:800;">Top 3 do ranking anual</div>
+                <p class="text-muted-foreground" style="margin:4px 0 0; font-size:13px; line-height:1.5;">Os três primeiros do ranking anual levam prêmio no último encontro do Brasa, além do reconhecimento na rede.</p>
+              </div>
+              <sc-for list="{{ premiosTop3 }}" as="p" hint-placeholder-count="3">
+                <div class="bg-secondary" style="border-radius:10px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start;">
+                  <span class="om-medal {{ p.medalCls }}" aria-hidden="true" style="width:28px; height:28px; margin-top:2px;"></span>
+                  <div>
+                    <div style="font-size:14px; font-weight:700;">{{ p.titulo }}</div>
+                    <div class="text-muted-foreground" style="font-size:12px; margin-top:3px; line-height:1.45;">{{ p.premio }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
         <!-- Pódio -->
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; padding:28px 24px;">
           <div style="display:flex; align-items:flex-end; justify-content:center; gap:18px;">
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
-              <div style="width:64px; height:64px; border-radius:50%; padding:2px; background:hsl(30 8% 62%);"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">AR</x-import></x-import></div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
+              <div class="om-podium-photo"><image-slot id="rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-mauricio-casas-454804780-18506626.jpg"></image-slot><span class="om-medal om-medal-silver" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">Ana B. Rocha</div><div class="font-mono text-muted-foreground" style="font-size:13px;">2.180 pts</div></div>
               <div style="width:100%; height:96px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(30 8% 30%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:40px; color:hsl(30 8% 66%);">2</span></div>
             </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:164px;">
-              <div class="glow-ember" style="width:78px; height:78px; border-radius:50%; padding:2px; background:linear-gradient(135deg, hsl(13 95% 52%), hsl(42 88% 58%));"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:74px;height:74px" hint-size="74px,74px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="74px,74px">JS</x-import></x-import></div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:184px;">
+              <div class="om-podium-photo om-podium-photo-lg"><image-slot id="rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot><span class="om-medal om-medal-gold" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:16px;">João da Silva</div><div class="font-mono" style="font-size:14px; color:hsl(var(--foreground));">2.310 pts</div></div>
               <div class="bg-brasa" style="width:100%; height:134px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:52px; color:#fff;">1</span></div>
             </div>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px;">
-              <div style="width:64px; height:64px; border-radius:50%; padding:2px; background:hsl(24 45% 42%);"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">MS</x-import></x-import></div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
+              <div class="om-podium-photo"><image-slot id="rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot><span class="om-medal om-medal-bronze" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">Maria Souza</div><div class="font-mono text-muted-foreground" style="font-size:13px;">1.840 pts</div></div>
               <div style="width:100%; height:74px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(24 40% 34%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:36px; color:hsl(24 55% 56%);">3</span></div>
             </div>
@@ -844,7 +889,7 @@
             <sc-for list="{{ rankFull }}" as="r" hint-placeholder-count="6">
               <button onClick="{{ r.open }}" class="{{ r.rowCls }}" style="display:flex; align-items:center; gap:14px; width:100%; padding:12px 20px; border:0; border-bottom:1px solid hsl(var(--border)); background:transparent; color:inherit; text-align:left; cursor:pointer;">
                 <span class="font-mono {{ r.posCls }}" style="width:26px; font-size:14px; font-weight:700;">{{ r.pos }}</span>
-                <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="34px,34px">{{ r.iniciais }}</x-import></x-import>
+                <img src="{{ r.foto }}" alt="" width="34" height="34" style="width:34px; height:34px; border-radius:50%; object-fit:cover; flex:none;">
                 <div style="flex:1; margin-left:4px; min-width:0;"><div style="font-size:14px; font-weight:600;">{{ r.nome }}</div><div class="text-muted-foreground" style="font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.empresa }}</div></div>
                 <span class="font-mono" style="font-size:14px; font-weight:700; color:hsl(var(--foreground));">{{ r.pontosFmt }}</span>
               </button>
@@ -1138,7 +1183,7 @@
               <div style="display:flex; flex-direction:column; gap:12px;">
                 <sc-for list="{{ past.convidados }}" as="cv" hint-placeholder-count="2">
                   <div style="display:flex; align-items:center; gap:12px;">
-                    <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="34px,34px">{{ cv.ini }}</x-import></x-import>
+                    <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ cv.foto }}" hint-size="34px,34px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="34px,34px">{{ cv.ini }}</x-import></x-import>
                     <div style="flex:1;"><div style="font-size:14px; font-weight:600;">{{ cv.nome }}</div><div class="text-muted-foreground" style="font-size:12px;">{{ cv.empresa }}</div></div>
                   </div>
                 </sc-for>
@@ -1159,7 +1204,7 @@
           <div style="position:relative; height:120px;" class="bg-brasa">
             <image-slot id="editar-banner" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do perfil" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
             <span class="om-img-scrim" aria-hidden="true"></span>
-            <span class="om-img-over" style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px; border-radius:50%; padding:3px; background:hsl(var(--card));"><image-slot id="editar-foto" focus="face" shape="circle" style="width:86px;height:86px" placeholder="Foto" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot></span>
+            <span class="om-img-over" style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px;"><image-slot id="editar-foto" focus="face" shape="circle" style="width:92px;height:92px" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot></span>
             <span class="bg-card om-img-over" style="position:absolute; right:20px; bottom:16px; font-size:12px; font-weight:600; padding:7px 12px; border-radius:9px; border:1px solid hsl(var(--border)); cursor:pointer;">Trocar capa</span>
           </div>
           <div style="padding:52px 28px 28px; display:flex; flex-direction:column; gap:18px;">
@@ -1359,31 +1404,31 @@ class Component extends DCLogic {
     { id:'boleto', tag:'BOL', nome:'Boleto bancário', desc:'Boleto enviado por e-mail 5 dias antes do vencimento (dia 05).' },
   ];
   membersRaw = [
-    { nome:'João da Silva', empresa:'Silva Alimentos', especialidade:'Food service', cidade:'Porto Alegre', categoria:'Fundador', pontos:2310, iniciais:'JS', rank:1, eventos:24, convidados:12,
+    { nome:'João da Silva', empresa:'Silva Alimentos', especialidade:'Food service', cidade:'Porto Alegre', categoria:'Fundador', pontos:2310, iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg', rank:1, eventos:24, convidados:12,
       youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U',
       descricao:'Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS' },
-    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', especialidade:'Construção', cidade:'Porto Alegre', categoria:'Fundador', pontos:2180, iniciais:'AR', rank:2, eventos:22, convidados:9,
+    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', especialidade:'Construção', cidade:'Porto Alegre', categoria:'Fundador', pontos:2180, iniciais:'AR', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', rank:2, eventos:22, convidados:9,
       youtube:'https://youtu.be/ysz5S6PUM-U',
       descricao:'Cofundadora do Brasa, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS' },
-    { nome:'Maria Souza', empresa:'Souza Marketing', especialidade:'Marketing', cidade:'Caxias do Sul', categoria:'Patrocinador', pontos:1840, iniciais:'MS', rank:3, eventos:20, convidados:8,
+    { nome:'Maria Souza', empresa:'Souza Marketing', especialidade:'Marketing', cidade:'Caxias do Sul', categoria:'Patrocinador', pontos:1840, iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', rank:3, eventos:20, convidados:8,
       youtube:'https://www.youtube.com/embed/ysz5S6PUM-U',
       descricao:'Patrocinadora do Brasa e dona de uma agência full service na serra. Gosta de fechar parceria de mídia com membros.', whatsapp:'+55 54 97777 2222', instagram:'@souzamkt', site:'souzamarketing.com.br', endereco:'R. Sinimbu, 1500, Caxias do Sul RS' },
-    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', especialidade:'Jurídico', cidade:'Porto Alegre', categoria:'Patrocinador', pontos:1620, iniciais:'RM', rank:4, eventos:18, convidados:6,
+    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', especialidade:'Jurídico', cidade:'Porto Alegre', categoria:'Patrocinador', pontos:1620, iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg', rank:4, eventos:18, convidados:6,
       youtube:'',
       descricao:'Advogado empresarial, patrocina o Brasa e oferece a primeira consultoria gratuita para membros.', whatsapp:'+55 51 96666 3333', instagram:'@menezesadv', site:'menezesadvogados.com.br', endereco:'Av. Carlos Gomes, 700, Porto Alegre RS' },
-    { nome:'Pedro Lima', empresa:'Lima Logística', especialidade:'Logística', cidade:'Novo Hamburgo', categoria:'Membro', pontos:1520, iniciais:'PL', rank:5, eventos:16, convidados:5,
+    { nome:'Pedro Lima', empresa:'Lima Logística', especialidade:'Logística', cidade:'Novo Hamburgo', categoria:'Membro', pontos:1520, iniciais:'PL', foto:'uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg', rank:5, eventos:16, convidados:5,
       youtube:'',
       descricao:'Toca uma transportadora regional. Entrou no Brasa para achar clientes B2B na região metropolitana.', whatsapp:'+55 51 95555 4444', instagram:'@limalog', site:'limalogistica.com.br', endereco:'R. Osvaldo Aranha, 88, Novo Hamburgo RS' },
-    { nome:'Carla Figueiredo', empresa:'Figueiredo Contábil', especialidade:'Contabilidade', cidade:'Pelotas', categoria:'Membro', pontos:1360, iniciais:'CF', rank:6, eventos:14, convidados:4,
+    { nome:'Carla Figueiredo', empresa:'Figueiredo Contábil', especialidade:'Contabilidade', cidade:'Pelotas', categoria:'Membro', pontos:1360, iniciais:'CF', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', rank:6, eventos:14, convidados:4,
       youtube:'',
       descricao:'Contadora com escritório em Pelotas, especialista em abertura e reestruturação de empresas.', whatsapp:'+55 53 94444 5555', instagram:'@figueiredocontabil', site:'figueiredocontabil.com.br', endereco:'R. General Osório, 500, Pelotas RS' },
-    { nome:'Thiago Barros', empresa:'Barros Tech', especialidade:'Tecnologia', cidade:'Porto Alegre', categoria:'Membro', pontos:1180, iniciais:'TB', rank:7, eventos:12, convidados:3,
+    { nome:'Thiago Barros', empresa:'Barros Tech', especialidade:'Tecnologia', cidade:'Porto Alegre', categoria:'Membro', pontos:1180, iniciais:'TB', foto:'uploads/users/pexels-valentin-bogdan-2150176604-31834479.jpg', rank:7, eventos:12, convidados:3,
       youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U',
       descricao:'Desenvolve software sob medida para o varejo gaúcho. Procura parceiros de implantação.', whatsapp:'+55 51 93333 6666', instagram:'@barrostech', site:'barrostech.com.br', endereco:'Av. Ipiranga, 6681, Porto Alegre RS' },
-    { nome:'Juliana Prado', empresa:'Prado Eventos', especialidade:'Eventos', cidade:'Gramado', categoria:'Membro', pontos:1020, iniciais:'JP', rank:8, eventos:10, convidados:3,
+    { nome:'Juliana Prado', empresa:'Prado Eventos', especialidade:'Eventos', cidade:'Gramado', categoria:'Membro', pontos:1020, iniciais:'JP', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', rank:8, eventos:10, convidados:3,
       youtube:'',
       descricao:'Produtora de eventos corporativos na serra. Fecha muita coisa dentro do próprio Brasa.', whatsapp:'+55 54 92222 7777', instagram:'@pradoeventos', site:'pradoeventos.com.br', endereco:'Av. Borges de Medeiros, 2500, Gramado RS' },
-    { nome:'Felipe Andrade', empresa:'Andrade Seguros', especialidade:'Seguros', cidade:'Santa Maria', categoria:'Membro', pontos:860, iniciais:'FA', rank:9, eventos:8, convidados:2,
+    { nome:'Felipe Andrade', empresa:'Andrade Seguros', especialidade:'Seguros', cidade:'Santa Maria', categoria:'Membro', pontos:860, iniciais:'FA', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', rank:9, eventos:8, convidados:2,
       youtube:'',
       descricao:'Corretor de seguros empresariais no centro do estado. Entrou no Brasa há três meses.', whatsapp:'+55 55 91111 8888', instagram:'@andradeseguros', site:'andradeseguros.com.br', endereco:'R. do Acampamento, 100, Santa Maria RS' },
   ];
@@ -1412,10 +1457,10 @@ class Component extends DCLogic {
     { competencia:'Março 2026', vencimento:'05/03/2026', valor:'R$ 97,00', status:'Pago', badgeVar:'success', pendente:false, pago:true },
   ];
   pastEvents = [
-    { nome:'Networking de Inverno', data:'21/06/2026', local:'Gramado RS', participantes:78, status:'Presente', badgeVar:'success', pontos:90, slot:'ev-inverno', foto:'uploads/imagens-gerais/IMG_3921.PNG', g1:'uploads/imagens-gerais/IMG_3914.PNG', g2:'uploads/imagens-gerais/IMG_3908.PNG', g3:'uploads/imagens-gerais/IMG_3927.PNG', g4:'uploads/imagens-gerais/IMG_3915.PNG', g5:'uploads/imagens-gerais/IMG_3922.PNG', g6:'uploads/imagens-gerais/IMG_3926.PNG', checkin:'19h12', convidados:[{nome:'Bruno Carvalho',empresa:'Carvalho Advocacia',ini:'BC'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
+    { nome:'Networking de Inverno', data:'21/06/2026', local:'Gramado RS', participantes:78, status:'Presente', badgeVar:'success', pontos:90, slot:'ev-inverno', foto:'uploads/imagens-gerais/IMG_3921.PNG', g1:'uploads/imagens-gerais/IMG_3914.PNG', g2:'uploads/imagens-gerais/IMG_3908.PNG', g3:'uploads/imagens-gerais/IMG_3927.PNG', g4:'uploads/imagens-gerais/IMG_3915.PNG', g5:'uploads/imagens-gerais/IMG_3922.PNG', g6:'uploads/imagens-gerais/IMG_3926.PNG', checkin:'19h12', convidados:[{nome:'Bruno Carvalho',empresa:'Carvalho Advocacia',ini:'BC',foto:'uploads/users/pexels-amer-khatib-khatib-161193011-10806265.jpg'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA',foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg'}] },
     { nome:'Talk: Escala e Cultura', data:'17/05/2026', local:'Porto Alegre RS', participantes:64, status:'Faltou', badgeVar:'destructive', pontos:0, slot:'ev-escala', foto:'uploads/imagens-gerais/IMG_3914.PNG', g1:'uploads/imagens-gerais/IMG_3915.PNG', g2:'uploads/imagens-gerais/IMG_3922.PNG', g3:'uploads/imagens-gerais/IMG_3926.PNG', g4:'uploads/imagens-gerais/IMG_3920.PNG', g5:'uploads/imagens-gerais/IMG_3912.PNG', g6:'uploads/imagens-gerais/IMG_3908.PNG', checkin:'—', convidados:[] },
-    { nome:'Happy Hour Fundadores', data:'19/04/2026', local:'Bento Gonçalves RS', participantes:42, status:'Presente', badgeVar:'success', pontos:80, slot:'ev-happy', foto:'uploads/imagens-gerais/IMG_3919.PNG', g1:'uploads/imagens-gerais/IMG_3918.PNG', g2:'uploads/imagens-gerais/IMG_3916.PNG', g3:'uploads/imagens-gerais/IMG_3924.PNG', g4:'uploads/imagens-gerais/IMG_3919.PNG', g5:'uploads/imagens-gerais/IMG_3927.PNG', g6:'uploads/imagens-gerais/IMG_3922.PNG', checkin:'20h04', convidados:[{nome:'Lucas Pereira',empresa:'LP Consultoria',ini:'LP'}] },
-    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', local:'Porto Alegre RS', participantes:88, status:'Presente', badgeVar:'success', pontos:110, slot:'ev-abertura', foto:'uploads/imagens-gerais/IMG_3913.PNG', g1:'uploads/imagens-gerais/IMG_3909.PNG', g2:'uploads/imagens-gerais/IMG_3910.PNG', g3:'uploads/imagens-gerais/IMG_3923.PNG', g4:'uploads/imagens-gerais/IMG_3927.PNG', g5:'uploads/imagens-gerais/IMG_3913.PNG', g6:'uploads/imagens-gerais/IMG_3911.PNG', checkin:'12h30', convidados:[{nome:'Marcos Dias',empresa:'Dias Log',ini:'MD'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA'}] },
+    { nome:'Happy Hour Fundadores', data:'19/04/2026', local:'Bento Gonçalves RS', participantes:42, status:'Presente', badgeVar:'success', pontos:80, slot:'ev-happy', foto:'uploads/imagens-gerais/IMG_3919.PNG', g1:'uploads/imagens-gerais/IMG_3918.PNG', g2:'uploads/imagens-gerais/IMG_3916.PNG', g3:'uploads/imagens-gerais/IMG_3924.PNG', g4:'uploads/imagens-gerais/IMG_3919.PNG', g5:'uploads/imagens-gerais/IMG_3927.PNG', g6:'uploads/imagens-gerais/IMG_3922.PNG', checkin:'20h04', convidados:[{nome:'Lucas Pereira',empresa:'LP Consultoria',ini:'LP',foto:'uploads/users/pexels-mahmoud-abdelwahab-3667715-7083673.jpg'}] },
+    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', local:'Porto Alegre RS', participantes:88, status:'Presente', badgeVar:'success', pontos:110, slot:'ev-abertura', foto:'uploads/imagens-gerais/IMG_3913.PNG', g1:'uploads/imagens-gerais/IMG_3909.PNG', g2:'uploads/imagens-gerais/IMG_3910.PNG', g3:'uploads/imagens-gerais/IMG_3923.PNG', g4:'uploads/imagens-gerais/IMG_3927.PNG', g5:'uploads/imagens-gerais/IMG_3913.PNG', g6:'uploads/imagens-gerais/IMG_3911.PNG', checkin:'12h30', convidados:[{nome:'Marcos Dias',empresa:'Dias Log',ini:'MD',foto:'uploads/users/pexels-olly-3823495.jpg'},{nome:'Sofia Almeida',empresa:'Almeida Design',ini:'SA',foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg'}] },
   ];
   conquistas = [
     { nome:'Assíduo', desc:'6 meses seguidos presente', earned:true },
@@ -1425,12 +1470,21 @@ class Component extends DCLogic {
     { nome:'Em dia', desc:'12 meses adimplente', earned:false },
     { nome:'Top do mês', desc:'1º lugar no ranking mensal', earned:true },
   ];
+  premiosPerf = [
+    { item:'Kit Brasamind no último encontro', detalhe:'Quem manter o ritmo de conexão o ano inteiro entra na disputa.' },
+    { item:'Convite extra para um parceiro', detalhe:'Leve alguém da sua confiança para o encerramento e continue indicando.' },
+  ];
+  premiosTop3 = [
+    { pos:'1º', titulo:'Primeiro do ano', premio:'Duas passagens de ida e volta para o Rio de Janeiro.' },
+    { pos:'2º', titulo:'Segundo do ano', premio:'Uma caixa de vinhos.' },
+    { pos:'3º', titulo:'Terceiro do ano', premio:'Kit de churrasco no encerramento do Brasa.' },
+  ];
   faqs = [
     { id:'membro', cat:'membro', catLabel:'Membros', q:'O que é o Brasamind?', a:'O Brasamind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
     { id:'valor', cat:'pagamento', catLabel:'Pagamentos', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
     { id:'ingresso', cat:'evento', catLabel:'Eventos', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
     { id:'convidado', cat:'evento', catLabel:'Eventos', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
-    { id:'pontos', cat:'membro', catLabel:'Membros', q:'Como funcionam os pontos e o ranking?', a:'Você ganha pontos por presença, convites convertidos e adimplência. O ranking mensal, geral e anual mostra quem mais conecta na rede. Medalhas destacam assiduidade e indicações.' },
+    { id:'pontos', cat:'membro', catLabel:'Membros', q:'Como funcionam os pontos e o ranking?', a:'Você ganha pontos por presença, convites convertidos e adimplência. O ranking mensal, geral e anual mostra quem mais conecta na rede. No encerramento, o 1º ganha duas passagens de ida e volta para o Rio de Janeiro, o 2º uma caixa de vinhos e o 3º um kit de churrasco. Quem performar bem o ano inteiro também entra na disputa dos prêmios de performance.' },
     { id:'pagamento', cat:'pagamento', catLabel:'Pagamentos', q:'Como alterar o cartão de cobrança?', a:'Em Financeiro, abra Cartão de cobrança e escolha Alterar cartão. O pagamento continua recorrente via Asaas com a nova forma cadastrada.' },
     { id:'senha', cat:'conta', catLabel:'Conta', q:'Esqueci minha senha. O que faço?', a:'Na tela de Entrar, use Esqueci a senha. Enviamos um token por e-mail para você criar uma nova. Se já estiver logado, altere a senha em Editar perfil.' },
     { id:'perfil', cat:'conta', catLabel:'Conta', q:'Como atualizo meu perfil no hub?', a:'Abra seu perfil, Editar perfil, e atualize foto, descrição, contatos e vídeo do YouTube. Esses dados ajudam outros membros a conectar e indicar você.' },
@@ -1536,7 +1590,7 @@ class Component extends DCLogic {
       hub:['Hub de membros','Cada card é uma empresa da rede.'],
       perfil: isSelf ? ['Meu perfil','Seus dados na rede para conectar, indicar e fechar negócios.'] : [profileBase.nome,'Conecte, indique, feche negócios.'],
       convites:['Meus convites','Traga empresários e ganhe pontos.'],
-      game:['Ranking','Ranking, medalhas e conquistas.'],
+      game:['Ranking','Pontos, medalhas e prêmios no encerramento do ano.'],
       financeiro:['Meu financeiro','Mensalidades, histórico e pendências.'],
       pagarMensalidade:['Pagar mensalidade','Quite a competência em aberto via Asaas.'],
       historico:['Meu histórico','Onde você esteve e quanto pontuou.'],
@@ -1662,8 +1716,10 @@ class Component extends DCLogic {
       mensHasOpen: this.mensalidades.some(m=>m.pendente),
       mensAllPaid: this.mensalidades.every(m=>!m.pendente),
       mensOpenLabel: (()=>{ const n=this.mensalidades.filter(m=>m.pendente).length; return n===1 ? '1 em aberto' : n+' em aberto'; })(),
-      pastEvents:this.pastEvents.map(e=>({ ...e, open:()=>this.openPast(e) })), cronograma:this.cronograma, confirmados:this.confirmados,
+      pastEvents:this.pastEvents.map(e=>({ ...e, open:()=>this.openPast(e) })), cronograma:this.cronograma, confirmados:this.confirmados.map(p=>{ const m=this.membersRaw.find(x=>x.iniciais===p.ini); return { ...p, foto:m&&m.foto }; }),
       conquistas:this.conquistas.map(c=>({ ...c, op:c.earned?'1':'0.45', medalCls:c.earned?'bg-brasa text-white':'bg-secondary text-muted-foreground' })),
+      premiosPerf:this.premiosPerf,
+      premiosTop3:this.premiosTop3.map((p,i)=>({ ...p, medalCls:i===0?'om-medal-gold':i===1?'om-medal-silver':'om-medal-bronze' })),
       notifOpen:s.notifOpen,
       toggleNotif:()=>this.setState(st=>({ notifOpen:!st.notifOpen })),
       closeNotif:()=>this.setState({ notifOpen:false }),

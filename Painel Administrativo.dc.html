@@ -115,7 +115,7 @@
 
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
       <div style="display:flex; align-items:center; gap:11px; padding:9px 10px; border:1px solid hsl(var(--border)); border-radius:12px;">
-        <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:36px;height:36px" hint-size="36px,36px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="36px,36px">CT</x-import></x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:36px;height:36px" hint-size="36px,36px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="uploads/users/pexels-uriel-art-923978-4566871.jpg" hint-size="36px,36px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="36px,36px">CT</x-import></x-import>
         <span style="display:flex; flex-direction:column; line-height:1.2;"><span style="font-size:13px; font-weight:700;">Carla Teixeira</span><span class="text-muted-foreground" style="font-size:11px;">Administradora</span></span>
       </div>
       <button onClick="{{ openLogout }}" class="om-nav text-muted-foreground" style="display:flex; align-items:center; gap:12px; width:100%; padding:9px 12px; border:0; background:transparent; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; text-align:left;">
@@ -266,11 +266,7 @@
           <sc-for list="{{ membros }}" as="m" hint-placeholder-count="9">
             <button class="bg-card om-lift" onClick="{{ m.open }}" style="text-align:left; border:1px solid hsl(var(--border)); border-radius:16px; padding:0; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;">
               <div style="height:56px; position:relative;" class="{{ m.bannerCls }}">
-                <span style="position:absolute; left:16px; top:34px; width:52px; height:52px; border-radius:50%; padding:2px; background:hsl(var(--card));">
-                  <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:48px;height:48px" hint-size="48px,48px">
-                    <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:15px" hint-size="48px,48px">{{ m.iniciais }}</x-import>
-                  </x-import>
-                </span>
+                <span class="om-face om-face-sm" style="position:absolute; left:16px; top:34px;"><image-slot id="admin-hub-foto" shape="circle" focus="face" style="width:52px;height:52px;" placeholder="Foto" src="{{ m.foto }}"></image-slot></span>
                 <span class="{{ m.catCls }}" style="position:absolute; right:12px; top:12px; padding:3px 9px; border-radius:9999px; font-size:11px; font-weight:700;">{{ m.categoria }}</span>
               </div>
               <div style="padding:32px 18px 18px; display:flex; flex-direction:column; gap:10px;">
@@ -431,21 +427,73 @@
           <button class="om-chip {{ rankChip.anual }}" onClick="{{ rankAnual }}" style="padding:9px 18px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Anual</button>
         </div>
 
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
+          <div style="padding:18px 22px; border-bottom:1px solid hsl(var(--border)); display:flex; align-items:flex-start; gap:14px;">
+            <span class="bg-secondary" style="width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex:none;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </span>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <h3 class="font-display" style="margin:0; font-size:16px; font-weight:800;">Prêmios do ano</h3>
+                <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Encerramento 2026</x-import>
+              </div>
+              <p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px; line-height:1.5;">Quem performar bem o ano inteiro leva prêmio. O Top 3 do ranking anual também, cada um com um prêmio à parte. Entrega no último encontro de 2026.</p>
+            </div>
+          </div>
+          <div style="padding:16px 22px 0;">
+            <div style="height:168px; border-radius:12px; overflow:hidden; border:1px solid hsl(var(--border));">
+              <image-slot id="admin-premios-ano" focus="top" radius="0" style="width:100%; height:100%;" placeholder="Foto dos prêmios" src="uploads/imagens-gerais/bairros-do-rio-de-janeiro.jpg"></image-slot>
+            </div>
+          </div>
+          <div class="om-split" style="padding:20px 22px; align-items:start;">
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="font-display" style="font-size:16px; font-weight:800;">Performance do ano</div>
+                <p class="text-muted-foreground" style="margin:4px 0 0; font-size:13px; line-height:1.5;">Premia consistência: presença, indicações e negócios fechados, mesmo fora do pódio.</p>
+              </div>
+              <sc-for list="{{ premiosPerf }}" as="p" hint-placeholder-count="2">
+                <div class="bg-secondary" style="border-radius:10px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start;">
+                  <span class="bg-primary" style="width:8px; height:8px; border-radius:50%; margin-top:6px; flex:none;"></span>
+                  <div>
+                    <div style="font-size:14px; font-weight:700;">{{ p.item }}</div>
+                    <div class="text-muted-foreground" style="font-size:12px; margin-top:3px; line-height:1.45;">{{ p.detalhe }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <div class="font-display" style="font-size:16px; font-weight:800;">Top 3 do ranking anual</div>
+                <p class="text-muted-foreground" style="margin:4px 0 0; font-size:13px; line-height:1.5;">Os três primeiros do ranking anual levam prêmio no encerramento.</p>
+              </div>
+              <sc-for list="{{ premiosTop3 }}" as="p" hint-placeholder-count="3">
+                <div class="bg-secondary" style="border-radius:10px; padding:12px 14px; display:flex; gap:12px; align-items:flex-start;">
+                  <span class="om-medal {{ p.medalCls }}" aria-hidden="true" style="width:28px; height:28px; margin-top:2px;"></span>
+                  <div>
+                    <div style="font-size:14px; font-weight:700;">{{ p.titulo }}</div>
+                    <div class="text-muted-foreground" style="font-size:12px; margin-top:3px; line-height:1.45;">{{ p.premio }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; padding:28px 24px;">
           <div class="font-display" style="text-align:center; font-size:15px; font-weight:800; margin-bottom:20px;">{{ rankPeriodLabel }}</div>
           <div style="display:flex; align-items:flex-end; justify-content:center; gap:18px;">
-            <button onClick="{{ podium2.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
-              <div style="width:64px; height:64px; border-radius:50%; padding:2px; background:hsl(30 8% 62%);"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">{{ podium2.iniciais }}</x-import></x-import></div>
+            <button onClick="{{ podium2.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
+              <div class="om-podium-photo"><image-slot id="admin-rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="{{ podium2.foto }}"></image-slot><span class="om-medal om-medal-silver" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">{{ podium2.nome }}</div><div class="font-mono text-muted-foreground" style="font-size:13px;">{{ podium2.pontos }} pts</div></div>
               <div style="width:100%; height:96px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(30 8% 30%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:40px; color:hsl(30 8% 66%);">2</span></div>
             </button>
-            <button onClick="{{ podium1.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:164px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
-              <div class="glow-ember" style="width:78px; height:78px; border-radius:50%; padding:2px; background:linear-gradient(135deg, hsl(13 95% 52%), hsl(42 88% 58%));"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:74px;height:74px" hint-size="74px,74px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="74px,74px">{{ podium1.iniciais }}</x-import></x-import></div>
+            <button onClick="{{ podium1.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:184px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
+              <div class="om-podium-photo om-podium-photo-lg"><image-slot id="admin-rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="{{ podium1.foto }}"></image-slot><span class="om-medal om-medal-gold" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:16px;">{{ podium1.nome }}</div><div class="font-mono" style="font-size:14px;">{{ podium1.pontos }} pts</div></div>
               <div class="bg-brasa" style="width:100%; height:134px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:52px; color:#fff;">1</span></div>
             </button>
-            <button onClick="{{ podium3.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:150px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
-              <div style="width:64px; height:64px; border-radius:50%; padding:2px; background:hsl(24 45% 42%);"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:60px;height:60px" hint-size="60px,60px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="60px,60px">{{ podium3.iniciais }}</x-import></x-import></div>
+            <button onClick="{{ podium3.open }}" style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px; background:transparent; border:0; cursor:pointer; color:inherit; padding:0;">
+              <div class="om-podium-photo"><image-slot id="admin-rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="{{ podium3.foto }}"></image-slot><span class="om-medal om-medal-bronze" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">{{ podium3.nome }}</div><div class="font-mono text-muted-foreground" style="font-size:13px;">{{ podium3.pontos }} pts</div></div>
               <div style="width:100%; height:74px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(24 40% 34%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:36px; color:hsl(24 55% 56%);">3</span></div>
             </button>
@@ -462,7 +510,7 @@
           <sc-for list="{{ rankAdmin }}" as="r" hint-placeholder-count="6">
             <button onClick="{{ r.open }}" class="om-row" style="display:grid; grid-template-columns:0.5fr 2.2fr 1fr 1fr 1fr; align-items:center; width:100%; padding:13px 22px; border:0; border-bottom:1px solid hsl(var(--border)); background:transparent; font-size:14px; text-align:left; cursor:pointer; color:inherit;">
               <span class="font-mono {{ r.posCls }}" style="font-weight:700;">{{ r.pos }}</span>
-              <div style="display:flex; align-items:center; gap:14px; min-width:0;"><span style="flex:none; display:flex;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:30px;height:30px" hint-size="30px,30px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="30px,30px">{{ r.iniciais }}</x-import></x-import></span><div style="min-width:0;"><div style="font-weight:600;">{{ r.nome }}</div><div class="text-muted-foreground" style="font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.empresa }}</div></div></div>
+              <div style="display:flex; align-items:center; gap:14px; min-width:0;"><img src="{{ r.foto }}" alt="" width="30" height="30" style="width:30px; height:30px; border-radius:50%; object-fit:cover; flex:none;"><div style="min-width:0;"><div style="font-weight:600;">{{ r.nome }}</div><div class="text-muted-foreground" style="font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ r.empresa }}</div></div></div>
               <span class="font-mono">{{ r.presencas }}</span>
               <span class="font-mono">{{ r.indicacoes }}</span>
               <span class="font-mono" style="font-weight:700; color:hsl(var(--ember));">{{ r.pontos }}</span>
@@ -526,7 +574,7 @@
             <div style="display:flex; flex-direction:column; gap:0; margin-top:6px; border:1px solid hsl(var(--border)); border-radius:10px; overflow:hidden; background:hsl(var(--background));">
               <sc-for list="{{ checkHints }}" as="h" hint-placeholder-count="3">
                 <button type="button" onClick="{{ h.open }}" class="om-row" style="display:flex; align-items:center; gap:12px; width:100%; padding:11px 14px; border:0; border-bottom:1px solid hsl(var(--border)); background:transparent; cursor:pointer; text-align:left; color:hsl(var(--foreground));">
-                  <span style="flex:none; display:flex;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:32px;height:32px" hint-size="32px,32px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="32px,32px">{{ h.iniciais }}</x-import></x-import></span>
+                  <span style="flex:none; display:flex;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:32px;height:32px" hint-size="32px,32px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ h.foto }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="32px,32px">{{ h.iniciais }}</x-import></x-import></span>
                   <span style="flex:1; min-width:0;"><span style="display:block; font-size:14px; font-weight:600;">{{ h.nome }}</span><span class="text-muted-foreground" style="display:block; font-size:12px;">{{ h.empresa }}</span></span>
                   <span class="text-muted-foreground" style="font-size:12px; font-weight:600; flex:none;">{{ h.tipo }}</span>
                 </button>
@@ -547,11 +595,7 @@
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:20px; overflow:hidden;">
           <div style="height:130px; position:relative;" class="{{ sel.bannerCls }}">
-            <span style="position:absolute; left:32px; bottom:-40px; width:104px; height:104px; border-radius:50%; padding:3px; background:hsl(var(--card));">
-              <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:98px;height:98px" hint-size="98px,98px">
-                <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:30px" hint-size="98px,98px">{{ sel.iniciais }}</x-import>
-              </x-import>
-            </span>
+            <span class="om-face om-face-lg" style="position:absolute; left:32px; bottom:-40px;"><image-slot id="admin-perfil-foto" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="{{ sel.foto }}"></image-slot></span>
             <span class="{{ sel.catCls }}" style="position:absolute; right:24px; top:20px; padding:5px 13px; border-radius:9999px; font-size:12px; font-weight:700;">{{ sel.categoria }}</span>
           </div>
           <div style="padding:52px 32px 28px;">
@@ -715,7 +759,7 @@
           </div>
           <sc-for list="{{ admins }}" as="a" hint-placeholder-count="4">
             <div class="om-row" style="display:grid; grid-template-columns:2fr 1.4fr 1fr 0.9fr auto; align-items:center; padding:13px 22px; border-bottom:1px solid hsl(var(--border));">
-              <div style="display:flex; align-items:center; gap:12px;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="34px,34px">{{ a.ini }}</x-import></x-import><div><div style="font-size:14px; font-weight:600;">{{ a.nome }}</div><div class="text-muted-foreground" style="font-size:12px;">{{ a.email }}</div></div></div>
+              <div style="display:flex; align-items:center; gap:12px;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ a.foto }}" hint-size="34px,34px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:12px" hint-size="34px,34px">{{ a.ini }}</x-import></x-import><div><div style="font-size:14px; font-weight:600;">{{ a.nome }}</div><div class="text-muted-foreground" style="font-size:12px;">{{ a.email }}</div></div></div>
               <span style="font-size:13px;">{{ a.papel }}</span>
               <span class="font-mono text-muted-foreground" style="font-size:13px;">{{ a.ultimo }}</span>
               <span><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ a.badgeVar }}" hint-size="auto,24px">{{ a.status }}</x-import></span>
@@ -735,7 +779,7 @@
         <button onClick="{{ goAdmins }}" style="align-self:flex-start; background:transparent; border:0; color:hsl(var(--muted-foreground)); font-size:13px; font-weight:600; cursor:pointer;">‹ Voltar aos usuários</button>
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px; display:flex; flex-direction:column; gap:20px;">
           <div style="display:flex; align-items:center; gap:14px;">
-            <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:52px;height:52px" hint-size="52px,52px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:16px" hint-size="52px,52px">{{ adminSel.ini }}</x-import></x-import>
+            <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:52px;height:52px" hint-size="52px,52px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ adminSel.foto }}" hint-size="52px,52px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:16px" hint-size="52px,52px">{{ adminSel.ini }}</x-import></x-import>
             <div style="flex:1;"><h2 class="font-display" style="margin:0; font-size:20px; font-weight:800;">{{ adminSel.nome }}</h2><div class="text-muted-foreground" style="font-size:13px;">{{ adminSel.email }}</div></div>
             <x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ adminSel.badgeVar }}" hint-size="auto,24px">{{ adminSel.status }}</x-import>
           </div>
@@ -968,7 +1012,7 @@
             <div style="display:flex; align-items:center;">
               <sc-for list="{{ confirmadosEv }}" as="p" hint-placeholder-count="7">
                 <span style="margin-right:-10px; border:2px solid hsl(var(--card)); border-radius:50%;">
-                  <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="34px,34px">{{ p.ini }}</x-import></x-import>
+                  <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:34px;height:34px" hint-size="34px,34px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ p.foto }}" hint-size="34px,34px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="34px,34px">{{ p.ini }}</x-import></x-import>
                 </span>
               </sc-for>
               <span class="text-muted-foreground" style="margin-left:18px; font-size:13px;">+{{ evSel.capExtra }} na lista</span>
@@ -1037,7 +1081,7 @@
           </div>
           <sc-for list="{{ evParticipantes }}" as="g" hint-placeholder-count="6">
             <button onClick="{{ g.open }}" class="om-row" style="display:grid; grid-template-columns:1.5fr 1.3fr 0.8fr auto; align-items:center; width:100%; padding:13px 24px; border:0; border-bottom:1px solid hsl(var(--border)); background:transparent; font-size:14px; text-align:left; cursor:{{ g.cursor }}; color:inherit;">
-              <div style="display:flex; align-items:center; gap:12px; min-width:0;"><span style="flex:none; display:flex;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:30px;height:30px" hint-size="30px,30px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="30px,30px">{{ g.iniciais }}</x-import></x-import></span><div style="min-width:0;"><div style="font-weight:600;">{{ g.nome }}</div><div class="text-muted-foreground" style="font-size:12px;">{{ g.empresa }}</div></div></div>
+              <div style="display:flex; align-items:center; gap:12px; min-width:0;"><span style="flex:none; display:flex;"><x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:30px;height:30px" hint-size="30px,30px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ g.foto }}" hint-size="30px,30px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:11px" hint-size="30px,30px">{{ g.iniciais }}</x-import></x-import></span><div style="min-width:0;"><div style="font-weight:600;">{{ g.nome }}</div><div class="text-muted-foreground" style="font-size:12px;">{{ g.empresa }}</div></div></div>
               <span style="display:flex; align-items:center; gap:8px; min-width:0;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ g.tipoColor }}" hint-size="auto,22px">{{ g.tipo }}</x-import><span class="text-muted-foreground" style="font-size:13px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ g.origem }}</span></span>
               <span class="font-mono" style="font-size:13px;">{{ g.ingresso }}</span>
               <span style="display:flex; justify-content:flex-end;"><x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ g.statusColor }}" hint-size="auto,22px">{{ g.status }}</x-import></span>
@@ -1306,7 +1350,7 @@
       </sc-if>
       <sc-if value="{{ checkinFound }}">
       <div style="padding:12px 24px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid hsl(var(--border));">
-        <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:52px;height:52px" hint-size="52px,52px"><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:16px" hint-size="52px,52px">{{ ci.iniciais }}</x-import></x-import>
+        <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:52px;height:52px" hint-size="52px,52px"><x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="{{ ci.foto }}" hint-size="52px,52px"></x-import><x-import component-from-global-scope="BrasaMindUI.AvatarFallback" style="font-size:16px" hint-size="52px,52px">{{ ci.iniciais }}</x-import></x-import>
         <div style="flex:1; min-width:0;"><div class="font-display" style="font-size:17px; font-weight:800;">{{ ci.nome }}</div><div class="text-muted-foreground" style="font-size:13px;">{{ ci.empresa }}</div></div>
         <span class="bg-secondary text-muted-foreground" style="padding:4px 11px; border-radius:9999px; font-size:12px; font-weight:700; flex:none;">{{ ci.tipo }}</span>
       </div>
@@ -1455,12 +1499,12 @@ class Component extends DCLogic {
   }
   checkinPool(){
     const membros = this.membrosRaw.map(m=>({
-      nome:m.nome, empresa:m.empresa, iniciais:m.iniciais, tipo:m.categoria,
+      nome:m.nome, empresa:m.empresa, iniciais:m.iniciais, foto:m.foto, tipo:m.categoria,
       convidadoPor: m.nome==='Pedro Lima' ? 'João da Silva' : '—',
       pagamento: m.status==='Inadimplente' ? 'Pendente' : 'Pago'
     }));
     const conv = this.convidadosEvento.map(g=>({
-      nome:g.nome, empresa:g.empresa, iniciais:g.iniciais, tipo:'Convidado',
+      nome:g.nome, empresa:g.empresa, iniciais:g.iniciais, foto:g.foto, tipo:'Convidado',
       convidadoPor:(g.origem||'').replace(/^por\s+/i,'') || '—',
       pagamento: g.ingresso==='Cortesia' ? 'Cortesia' : 'Pago'
     }));
@@ -1508,15 +1552,15 @@ class Component extends DCLogic {
   topPont = [ {pos:'1',nome:'João da Silva',val:'2.310'},{pos:'2',nome:'Ana B. Rocha',val:'2.180'},{pos:'3',nome:'Maria Souza',val:'1.840'},{pos:'4',nome:'Ricardo Menezes',val:'1.620'} ];
 
   membrosRaw = [
-    { nome:'João da Silva', empresa:'Silva Alimentos', iniciais:'JS', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.310', status:'Em dia', badgeVar:'success', especialidade:'Food service', cidade:'Porto Alegre', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS', eventos:'24', convidados:'12', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.' },
-    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', iniciais:'AR', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.180', status:'Em dia', badgeVar:'success', especialidade:'Construção', cidade:'Porto Alegre', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS', eventos:'22', convidados:'9', youtube:'https://youtu.be/ysz5S6PUM-U', descricao:'Cofundadora do Brasa, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.' },
-    { nome:'Maria Souza', empresa:'Souza Marketing', iniciais:'MS', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.840', status:'Em dia', badgeVar:'success', especialidade:'Marketing', cidade:'Caxias do Sul', whatsapp:'+55 54 97777 2222', instagram:'@souzamkt', site:'souzamarketing.com.br', endereco:'R. Sinimbu, 1500, Caxias do Sul RS', eventos:'20', convidados:'8', youtube:'https://www.youtube.com/embed/ysz5S6PUM-U', descricao:'Patrocinadora do Brasa e dona de uma agência full service na serra. Gosta de fechar parceria de mídia com membros.' },
-    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', iniciais:'RM', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.620', status:'Pendente', badgeVar:'warning', especialidade:'Jurídico', cidade:'Porto Alegre', whatsapp:'+55 51 96666 3333', instagram:'@menezesadv', site:'menezesadvogados.com.br', endereco:'Av. Carlos Gomes, 700, Porto Alegre RS', eventos:'18', convidados:'6', youtube:'', descricao:'Advogado empresarial, patrocina o Brasa e oferece a primeira consultoria gratuita para membros.' },
-    { nome:'Pedro Lima', empresa:'Lima Logística', iniciais:'PL', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.520', status:'Em dia', badgeVar:'success', especialidade:'Logística', cidade:'Novo Hamburgo', whatsapp:'+55 51 95555 4444', instagram:'@limalog', site:'limalogistica.com.br', endereco:'R. Osvaldo Aranha, 88, Novo Hamburgo RS', eventos:'16', convidados:'5', youtube:'', descricao:'Toca uma transportadora regional. Entrou no Brasa para achar clientes B2B na região metropolitana.' },
-    { nome:'Carla Figueiredo', empresa:'Figueiredo Contábil', iniciais:'CF', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.360', status:'Inadimplente', badgeVar:'destructive', especialidade:'Contabilidade', cidade:'Pelotas', whatsapp:'+55 53 94444 5555', instagram:'@figueiredocontabil', site:'figueiredocontabil.com.br', endereco:'R. General Osório, 500, Pelotas RS', eventos:'14', convidados:'4', youtube:'', descricao:'Contadora com escritório em Pelotas, especialista em abertura e reestruturação de empresas.' },
-    { nome:'Thiago Barros', empresa:'Barros Tech', iniciais:'TB', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.180', status:'Em dia', badgeVar:'success', especialidade:'Tecnologia', cidade:'Porto Alegre', whatsapp:'+55 51 93333 6666', instagram:'@barrostech', site:'barrostech.com.br', endereco:'Av. Ipiranga, 6681, Porto Alegre RS', eventos:'12', convidados:'3', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Desenvolve software sob medida para o varejo gaúcho. Procura parceiros de implantação.' },
-    { nome:'Juliana Prado', empresa:'Prado Eventos', iniciais:'JP', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.020', status:'Pendente', badgeVar:'warning', especialidade:'Eventos', cidade:'Gramado', whatsapp:'+55 54 92222 7777', instagram:'@pradoeventos', site:'pradoeventos.com.br', endereco:'Av. Borges de Medeiros, 2500, Gramado RS', eventos:'10', convidados:'3', youtube:'', descricao:'Produtora de eventos corporativos na serra. Fecha muita coisa dentro do próprio Brasa.' },
-    { nome:'Felipe Andrade', empresa:'Andrade Seguros', iniciais:'FA', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'860', status:'Em dia', badgeVar:'success', especialidade:'Seguros', cidade:'Santa Maria', whatsapp:'+55 55 91111 8888', instagram:'@andradeseguros', site:'andradeseguros.com.br', endereco:'R. do Acampamento, 100, Santa Maria RS', eventos:'8', convidados:'2', youtube:'', descricao:'Corretor de seguros empresariais no centro do estado. Entrou no Brasa há três meses.' },
+    { nome:'João da Silva', empresa:'Silva Alimentos', iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.310', status:'Em dia', badgeVar:'success', especialidade:'Food service', cidade:'Porto Alegre', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS', eventos:'24', convidados:'12', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.' },
+    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', iniciais:'AR', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.180', status:'Em dia', badgeVar:'success', especialidade:'Construção', cidade:'Porto Alegre', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS', eventos:'22', convidados:'9', youtube:'https://youtu.be/ysz5S6PUM-U', descricao:'Cofundadora do Brasa, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.' },
+    { nome:'Maria Souza', empresa:'Souza Marketing', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.840', status:'Em dia', badgeVar:'success', especialidade:'Marketing', cidade:'Caxias do Sul', whatsapp:'+55 54 97777 2222', instagram:'@souzamkt', site:'souzamarketing.com.br', endereco:'R. Sinimbu, 1500, Caxias do Sul RS', eventos:'20', convidados:'8', youtube:'https://www.youtube.com/embed/ysz5S6PUM-U', descricao:'Patrocinadora do Brasa e dona de uma agência full service na serra. Gosta de fechar parceria de mídia com membros.' },
+    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.620', status:'Pendente', badgeVar:'warning', especialidade:'Jurídico', cidade:'Porto Alegre', whatsapp:'+55 51 96666 3333', instagram:'@menezesadv', site:'menezesadvogados.com.br', endereco:'Av. Carlos Gomes, 700, Porto Alegre RS', eventos:'18', convidados:'6', youtube:'', descricao:'Advogado empresarial, patrocina o Brasa e oferece a primeira consultoria gratuita para membros.' },
+    { nome:'Pedro Lima', empresa:'Lima Logística', iniciais:'PL', foto:'uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.520', status:'Em dia', badgeVar:'success', especialidade:'Logística', cidade:'Novo Hamburgo', whatsapp:'+55 51 95555 4444', instagram:'@limalog', site:'limalogistica.com.br', endereco:'R. Osvaldo Aranha, 88, Novo Hamburgo RS', eventos:'16', convidados:'5', youtube:'', descricao:'Toca uma transportadora regional. Entrou no Brasa para achar clientes B2B na região metropolitana.' },
+    { nome:'Carla Figueiredo', empresa:'Figueiredo Contábil', iniciais:'CF', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.360', status:'Inadimplente', badgeVar:'destructive', especialidade:'Contabilidade', cidade:'Pelotas', whatsapp:'+55 53 94444 5555', instagram:'@figueiredocontabil', site:'figueiredocontabil.com.br', endereco:'R. General Osório, 500, Pelotas RS', eventos:'14', convidados:'4', youtube:'', descricao:'Contadora com escritório em Pelotas, especialista em abertura e reestruturação de empresas.' },
+    { nome:'Thiago Barros', empresa:'Barros Tech', iniciais:'TB', foto:'uploads/users/pexels-valentin-bogdan-2150176604-31834479.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.180', status:'Em dia', badgeVar:'success', especialidade:'Tecnologia', cidade:'Porto Alegre', whatsapp:'+55 51 93333 6666', instagram:'@barrostech', site:'barrostech.com.br', endereco:'Av. Ipiranga, 6681, Porto Alegre RS', eventos:'12', convidados:'3', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Desenvolve software sob medida para o varejo gaúcho. Procura parceiros de implantação.' },
+    { nome:'Juliana Prado', empresa:'Prado Eventos', iniciais:'JP', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.020', status:'Pendente', badgeVar:'warning', especialidade:'Eventos', cidade:'Gramado', whatsapp:'+55 54 92222 7777', instagram:'@pradoeventos', site:'pradoeventos.com.br', endereco:'Av. Borges de Medeiros, 2500, Gramado RS', eventos:'10', convidados:'3', youtube:'', descricao:'Produtora de eventos corporativos na serra. Fecha muita coisa dentro do próprio Brasa.' },
+    { nome:'Felipe Andrade', empresa:'Andrade Seguros', iniciais:'FA', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'860', status:'Em dia', badgeVar:'success', especialidade:'Seguros', cidade:'Santa Maria', whatsapp:'+55 55 91111 8888', instagram:'@andradeseguros', site:'andradeseguros.com.br', endereco:'R. do Acampamento, 100, Santa Maria RS', eventos:'8', convidados:'2', youtube:'', descricao:'Corretor de seguros empresariais no centro do estado. Entrou no Brasa há três meses.' },
   ];
   categorias = [
     { nome:'Fundador', total:'18', desc:'Sócios fundadores do Brasa. Prioridade máxima no hub e voz nas decisões.', entrada:'Cortesia', chip:'bg-brasa text-white' },
@@ -1524,10 +1568,10 @@ class Component extends DCLogic {
     { nome:'Membro', total:'96', desc:'Membros gerais da rede, com acesso completo à plataforma.', entrada:'R$ 180,00', chip:'bg-secondary text-muted-foreground' },
   ];
   admins = [
-    { nome:'Carla Teixeira', email:'carla@brasamind.com.br', ini:'CT', papel:'Administradora geral', ultimo:'Hoje, 09h12', status:'Ativo', badgeVar:'success' },
-    { nome:'Rafael Munhoz', email:'rafael@brasamind.com.br', ini:'RM', papel:'Financeiro', ultimo:'Ontem, 18h40', status:'Ativo', badgeVar:'success' },
-    { nome:'Beatriz Nunes', email:'beatriz@brasamind.com.br', ini:'BN', papel:'Eventos', ultimo:'22/07, 14h03', status:'Ativo', badgeVar:'success' },
-    { nome:'Diego Alves', email:'diego@brasamind.com.br', ini:'DA', papel:'Somente leitura', ultimo:'10/07, 11h20', status:'Suspenso', badgeVar:'warning' },
+    { nome:'Carla Teixeira', email:'carla@brasamind.com.br', ini:'CT', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', papel:'Administradora geral', ultimo:'Hoje, 09h12', status:'Ativo', badgeVar:'success' },
+    { nome:'Rafael Munhoz', email:'rafael@brasamind.com.br', ini:'RM', foto:'uploads/users/pexels-amer-khatib-khatib-161193011-10806265.jpg', papel:'Financeiro', ultimo:'Ontem, 18h40', status:'Ativo', badgeVar:'success' },
+    { nome:'Beatriz Nunes', email:'beatriz@brasamind.com.br', ini:'BN', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', papel:'Eventos', ultimo:'22/07, 14h03', status:'Ativo', badgeVar:'success' },
+    { nome:'Diego Alves', email:'diego@brasamind.com.br', ini:'DA', foto:'uploads/users/pexels-olly-3823495.jpg', papel:'Somente leitura', ultimo:'10/07, 11h20', status:'Suspenso', badgeVar:'warning' },
   ];
   segUsers = [
     { nome:'Portaria 1', login:'seg-portaria-1', evento:'A mente por trás...', expira:'28/08 23h59', status:'Ativo', badgeVar:'success' },
@@ -1544,7 +1588,7 @@ class Component extends DCLogic {
     { id:'valor', cat:'pagamento', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
     { id:'ingresso', cat:'evento', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
     { id:'convidado', cat:'evento', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
-    { id:'pontos', cat:'membro', q:'Como funcionam os pontos e o ranking?', a:'Você ganha pontos por presença, convites convertidos e adimplência. O ranking mensal, geral e anual mostra quem mais conecta na rede. Medalhas destacam assiduidade e indicações.' },
+    { id:'pontos', cat:'membro', q:'Como funcionam os pontos e o ranking?', a:'Você ganha pontos por presença, convites convertidos e adimplência. O ranking mensal, geral e anual mostra quem mais conecta na rede. No encerramento, o 1º ganha duas passagens de ida e volta para o Rio de Janeiro, o 2º uma caixa de vinhos e o 3º um kit de churrasco. Quem performar bem o ano inteiro também entra na disputa dos prêmios de performance.' },
     { id:'pagamento', cat:'pagamento', q:'Como alterar o cartão de cobrança?', a:'Em Financeiro, abra Cartão de cobrança e escolha Alterar cartão. O pagamento continua recorrente via Asaas com a nova forma cadastrada.' },
     { id:'senha', cat:'conta', q:'Esqueci minha senha. O que faço?', a:'Na tela de Entrar, use Esqueci a senha. Enviamos um token por e-mail para você criar uma nova. Se já estiver logado, altere a senha em Editar perfil.' },
     { id:'perfil', cat:'conta', q:'Como atualizo meu perfil no hub?', a:'Abra seu perfil, Editar perfil, e atualize foto, descrição, contatos e vídeo do YouTube. Esses dados ajudam outros membros a conectar e indicar você.' },
@@ -1558,26 +1602,26 @@ class Component extends DCLogic {
   ];
   confirmadosEv = [{ini:'AR'},{ini:'MS'},{ini:'RM'},{ini:'PL'},{ini:'CF'},{ini:'TB'},{ini:'JP'}];
   convidadosEvento = [
-    { nome:'Rafael Menezes', empresa:'Cortex Logística', iniciais:'RM', tipo:'Convidado', tipoColor:'info', origem:'por Carla Bittencourt', ingresso:'R$ 180', status:'Compareceu', statusColor:'success' },
-    { nome:'Juliana Prado', empresa:'Norte Saúde', iniciais:'JP', tipo:'Convidado', tipoColor:'info', origem:'por Eduardo Lima', ingresso:'R$ 180', status:'Compareceu', statusColor:'success' },
-    { nome:'Tiago Andrade', empresa:'VX Software', iniciais:'TA', tipo:'Convidado', tipoColor:'info', origem:'por Marina Fogaça', ingresso:'Cortesia', status:'Compareceu', statusColor:'success' },
-    { nome:'Priscila Rocha', empresa:'Doce Indústria', iniciais:'PR', tipo:'Convidado', tipoColor:'info', origem:'por Carla Bittencourt', ingresso:'R$ 180', status:'Confirmado', statusColor:'warning' },
-    { nome:'Bruno Sartori', empresa:'Agro Sul', iniciais:'BS', tipo:'Convidado', tipoColor:'info', origem:'por Felipe Nunes', ingresso:'R$ 180', status:'Confirmado', statusColor:'warning' },
-    { nome:'Camila Duarte', empresa:'Studio Base', iniciais:'CD', tipo:'Convidado', tipoColor:'info', origem:'por Eduardo Lima', ingresso:'R$ 180', status:'Não compareceu', statusColor:'destructive' },
+    { nome:'Rafael Menezes', empresa:'Cortex Logística', iniciais:'RM', foto:'uploads/users/pexels-mahmoud-abdelwahab-3667715-7083673.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Carla Bittencourt', ingresso:'R$ 180', status:'Compareceu', statusColor:'success' },
+    { nome:'Juliana Prado', empresa:'Norte Saúde', iniciais:'JP', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Eduardo Lima', ingresso:'R$ 180', status:'Compareceu', statusColor:'success' },
+    { nome:'Tiago Andrade', empresa:'VX Software', iniciais:'TA', foto:'uploads/users/pexels-olly-3823495.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Marina Fogaça', ingresso:'Cortesia', status:'Compareceu', statusColor:'success' },
+    { nome:'Priscila Rocha', empresa:'Doce Indústria', iniciais:'PR', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Carla Bittencourt', ingresso:'R$ 180', status:'Confirmado', statusColor:'warning' },
+    { nome:'Bruno Sartori', empresa:'Agro Sul', iniciais:'BS', foto:'uploads/users/pexels-amer-khatib-khatib-161193011-10806265.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Felipe Nunes', ingresso:'R$ 180', status:'Confirmado', statusColor:'warning' },
+    { nome:'Camila Duarte', empresa:'Studio Base', iniciais:'CD', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', tipo:'Convidado', tipoColor:'info', origem:'por Eduardo Lima', ingresso:'R$ 180', status:'Não compareceu', statusColor:'destructive' },
   ];
   membrosEvento = [
-    { nome:'Carla Bittencourt', empresa:'Bittencourt Contábil', iniciais:'CB', tipo:'Membro', tipoColor:'ember', origem:'Fundador', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
-    { nome:'Eduardo Lima', empresa:'Lima & Co', iniciais:'EL', tipo:'Membro', tipoColor:'ember', origem:'Patrocinador', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
-    { nome:'Marina Fogaça', empresa:'Fogaça Digital', iniciais:'MF', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
-    { nome:'Felipe Nunes', empresa:'Nunes Invest', iniciais:'FN', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Confirmado', statusColor:'warning' },
-    { nome:'Ana Beatriz Souza', empresa:'AB Marketing', iniciais:'AS', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Não compareceu', statusColor:'destructive' },
+    { nome:'Carla Bittencourt', empresa:'Bittencourt Contábil', iniciais:'CB', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', tipo:'Membro', tipoColor:'ember', origem:'Fundador', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
+    { nome:'Eduardo Lima', empresa:'Lima & Co', iniciais:'EL', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg', tipo:'Membro', tipoColor:'ember', origem:'Patrocinador', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
+    { nome:'Marina Fogaça', empresa:'Fogaça Digital', iniciais:'MF', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Compareceu', statusColor:'success' },
+    { nome:'Felipe Nunes', empresa:'Nunes Invest', iniciais:'FN', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Confirmado', statusColor:'warning' },
+    { nome:'Ana Beatriz Souza', empresa:'AB Marketing', iniciais:'AS', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Não compareceu', statusColor:'destructive' },
   ];
   eventoAtivo = { nome:'A mente por trás dos grandes movimentos', data:'28/08/2026', hora:'19h00', vagas:'120', part:'96', receita:'R$ 16,8k', convidados:'22', checkins:'0 / 96', local:'R. Leopoldo Bier, 644, Santana, Porto Alegre RS', localShort:'Espaço Brasa, Porto Alegre RS', descricao:'Uma Small Meeting com muito ASSADO, EMPREENDEDORISMO & NETWORK. Palestra com Eduardo Seibel.', palestrante:'Eduardo Seibel', palestranteBio:'A mente por trás do marketing da Agrofel, Yara e Alibem', ativo:true, cronograma:[{hora:'19h00',item:'Chegada'},{hora:'19h01',item:'Open food e integração do Grupo'},{hora:'20h30',item:'Apresentação individual'},{hora:'21h00',item:'Palestra com Eduardo Seibel'},{hora:'22h30',item:'Perguntas'},{hora:'23h00',item:'Encerramento'}] };
   permissoesBase = [
     { nome:'Membros', desc:'Ver e editar membros e categorias', on:true },
     { nome:'Eventos', desc:'Criar, editar e encerrar eventos', on:true },
     { nome:'Financeiro', desc:'Cobranças, inadimplência e Asaas', on:false },
-    { nome:'Ranking', desc:'Regras de pontos e ranking geral', on:true },
+    { nome:'Ranking', desc:'Regras de pontos, ranking e prêmios', on:true },
     { nome:'Usuários', desc:'Gerenciar usuários administradores', on:false },
     { nome:'Termos e privacidade', desc:'Editar e publicar documentos', on:false },
   ];
@@ -1592,6 +1636,15 @@ class Component extends DCLogic {
   ];
   regras = [ {acao:'Presença no evento',pontos:'90'},{acao:'Assiduidade (3 meses)',pontos:'60'},{acao:'Convite convertido',pontos:'50'},{acao:'Adimplência mensal',pontos:'20'} ];
   regrasNegativas = [ {texto:'Faltar sem avisar com 48h de antecedência'},{texto:'Cancelar presença em cima da hora'},{texto:'Mensalidade em atraso acima de 30 dias'},{texto:'Indicar convidado que não comparece'} ];
+  premiosPerf = [
+    { item:'Kit Brasamind no último encontro', detalhe:'Quem manter o ritmo de conexão o ano inteiro entra na disputa.' },
+    { item:'Convite extra para um parceiro', detalhe:'Leve alguém da sua confiança para o encerramento e continue indicando.' },
+  ];
+  premiosTop3 = [
+    { pos:'1º', titulo:'Primeiro do ano', premio:'Duas passagens de ida e volta para o Rio de Janeiro.' },
+    { pos:'2º', titulo:'Segundo do ano', premio:'Uma caixa de vinhos.' },
+    { pos:'3º', titulo:'Terceiro do ano', premio:'Kit de churrasco no encerramento do Brasa.' },
+  ];
   rankAdmin = [
     { nome:'João da Silva', iniciais:'JS', empresa:'Silva Alimentos', presencas:'24', indicacoes:'12', pontos:'2.310' },
     { nome:'Ana B. Rocha', iniciais:'AR', empresa:'Rocha Incorporadora', presencas:'22', indicacoes:'9', pontos:'2.180' },
@@ -1678,7 +1731,7 @@ class Component extends DCLogic {
       palestranteBio: evSelRaw.palestranteBio || '',
       ...this.mapsUrl(evSelRaw.local),
     };
-    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Regras de pontos e ranking geral.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
+    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Pontos, regras e prêmios do encerramento.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
     const t = titles[s.screen] || ['',''];
     const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', faq:'Exportar relatório do FAQ', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
     const exportLabel = exportLabels[s.screen] || 'Exportar relatório';
@@ -1687,6 +1740,7 @@ class Component extends DCLogic {
       const hit = this.membrosRaw.find(m => m.nome===g.nome || (m.empresa && g.empresa && m.empresa===g.empresa));
       return {
         ...g,
+        foto: g.foto || (hit && hit.foto),
         open: hit ? ()=>this.openMember(hit) : ()=>{},
         cursor: hit ? 'pointer' : 'default',
       };
@@ -1815,7 +1869,7 @@ class Component extends DCLogic {
       editEvent:()=>{ this.setHash('eventoForm'); window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'edit', menuOpen:false }); },
       openNewEvent:()=>{ this.setHash('eventoForm'); window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'new', menuOpen:false }); },
       eventoFormTitle:s.eventMode==='new'?'Novo evento':'Editar evento', eventoFormCta:s.eventMode==='new'?'Cadastrar evento':'Salvar alterações', ef, efPrecos, ea,
-      confirmadosEv:this.confirmadosEv,
+      confirmadosEv:this.confirmadosEv.map(p=>{ const m=this.membrosRaw.find(x=>x.iniciais===p.ini); return { ...p, foto:m&&m.foto }; }),
       evParticipantes, partFiltros,
       evStatusLabel: evSel.isAtivo ? 'Evento ativo' : 'Encerrado', evStatusColor: evSel.isAtivo ? 'fire' : 'success',
       verEventoAtivo:()=>this.verEventoAtivo(),
@@ -1856,6 +1910,8 @@ class Component extends DCLogic {
       mAll:()=>this.setState({mCat:'todos'}), mFund:()=>this.setState({mCat:'fundador'}), mPatr:()=>this.setState({mCat:'patrocinador'}), mInad:()=>this.setState({mCat:'inadimplente'}),
       eventos:this.eventos.map(e=>({ ...e, open:()=>this.openEvento(e) })), regras:this.regras,
       regrasPos:this.regras, regrasNeg:this.regrasNegativas,
+      premiosPerf:this.premiosPerf,
+      premiosTop3:this.premiosTop3.map((p,i)=>({ ...p, medalCls:i===0?'om-medal-gold':i===1?'om-medal-silver':'om-medal-bronze' })),
       rulesEditOpen:s.rulesEditOpen, openRulesEdit:()=>this.openRulesEdit(), closeRulesEdit:()=>this.closeRulesEdit(), saveRules:()=>this.saveRules(),
       addRulePos:()=>this.addRule('pos'), addRuleNeg:()=>this.addRule('neg'),
       draftPos:(s.rulesDraft?s.rulesDraft.pos:[]).map((r,i)=>({ ...r, setTexto:e=>this.updateRule('pos',i,'acao',e.target.value), setPontos:e=>this.updateRule('pos',i,'pontos',e.target.value), remove:()=>this.removeRule('pos',i) })),
@@ -1866,12 +1922,12 @@ class Component extends DCLogic {
       rankMensal:()=>this.setState({ rankPeriod:'mensal' }),
       rankGeral:()=>this.setState({ rankPeriod:'geral' }),
       rankAnual:()=>this.setState({ rankPeriod:'anual' }),
-      podium1: (()=>{ const r=this.rankAdmin[0]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[0]; return { ...r, open:()=>this.openMember(m) }; })(),
-      podium2: (()=>{ const r=this.rankAdmin[1]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[1]||this.membrosRaw[0]; return { ...r, open:()=>this.openMember(m) }; })(),
-      podium3: (()=>{ const r=this.rankAdmin[2]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[2]||this.membrosRaw[0]; return { ...r, open:()=>this.openMember(m) }; })(),
+      podium1: (()=>{ const r=this.rankAdmin[0]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[0]; return { ...r, foto:m.foto, open:()=>this.openMember(m) }; })(),
+      podium2: (()=>{ const r=this.rankAdmin[1]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[1]||this.membrosRaw[0]; return { ...r, foto:m.foto, open:()=>this.openMember(m) }; })(),
+      podium3: (()=>{ const r=this.rankAdmin[2]; if(!r) return { iniciais:'', nome:'', pontos:'', open:()=>{} }; const m=this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[2]||this.membrosRaw[0]; return { ...r, foto:m.foto, open:()=>this.openMember(m) }; })(),
       rankAdmin:this.rankAdmin.map((r,i)=>{
         const m = this.membrosRaw.find(x=>x.iniciais===r.iniciais)||this.membrosRaw[i]||this.membrosRaw[0];
-        return { ...r, pos:(i+1), posCls:i===0?'text-primary':'text-muted-foreground', open:()=>this.openMember(m) };
+        return { ...r, foto:m.foto, pos:(i+1), posCls:i===0?'text-primary':'text-muted-foreground', open:()=>this.openMember(m) };
       }),
       openLogout:()=>this.setState({ confirm:{ kind:'logout', title:'Sair da conta?', body:'Você será desconectado do Painel Administrativo e precisará entrar de novo.', cancel:'Continuar logado', label:'Sair da conta' } }),
       confirmOpen: !!s.confirm,

@@ -61,7 +61,7 @@
     .om-stat { transition: transform .14s ease, border-color .14s ease; }
     .om-stat:hover { transform: translateY(-2px); border-color: hsl(var(--primary)/.4); }
     .om-vsl-play { transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease; cursor:pointer; }
-    .om-vsl-play:hover { transform: scale(1.06); box-shadow: 0 8px 32px hsl(20 85% 42% / .45); }
+    .om-vsl-play:hover { transform: scale(1.06); box-shadow: 0 8px 32px hsl(var(--primary) / .45); }
     .om-chrome-inner {
       max-width: 1100px; margin: 0 auto; width: 100%;
       padding: 0 40px; box-sizing: border-box;
@@ -117,7 +117,7 @@
   <!-- Hero full-bleed -->
   <section style="position:relative; min-height:440px; overflow:hidden;">
     <image-slot id="membro-hero" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
-    <div style="position:absolute; inset:0; background:linear-gradient(135deg, hsl(20 85% 42% / .92) 0%, hsl(20 10% 5% / .88) 100%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(135deg, hsl(var(--primary) / .92) 0%, hsl(20 10% 5% / .88) 100%);"></div>
     <img src="_ds/brand/simbolo-branco.png" alt="" style="position:absolute; right:-40px; bottom:-30px; width:360px; opacity:.1;">
     <div class="om-hero-inner" style="position:relative; max-width:1100px; margin:0 auto; padding:56px 40px; display:flex; flex-direction:column; gap:22px; min-height:440px; justify-content:center;">
       <h1 class="font-impact om-hero-title" style="margin:0; font-size:52px; line-height:1.02; color:#fff; letter-spacing:.01em; max-width:640px;">ENTRE PARA O BRASA</h1>
@@ -143,7 +143,7 @@
       <sc-if value="{{ vslIdle }}">
         <image-slot id="membro-vsl" focus="face" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Thumbnail da VSL" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot>
         <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
-        <button onClick="{{ playVsl }}" aria-label="Assistir vídeo" class="om-vsl-play om-img-over" style="position:absolute; inset:0; margin:auto; width:72px; height:72px; border:0; border-radius:50%; background:hsl(var(--primary)); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px hsl(20 85% 42% / .4);">
+        <button onClick="{{ playVsl }}" aria-label="Assistir vídeo" class="om-vsl-play om-img-over" style="position:absolute; inset:0; margin:auto; width:72px; height:72px; border:0; border-radius:50%; background:hsl(var(--primary)); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px hsl(var(--primary) / .4);">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px;"><path d="M8 5v14l11-7z"/></svg>
         </button>
       </sc-if>
@@ -427,7 +427,7 @@ class Component extends DCLogic {
     { texto:'Acesso ao encontro presencial do mês, com preço de membro' },
     { texto:'Hub de membros: sua empresa visível para a rede toda' },
     { texto:'Convites para levar convidados e ganhar pontos' },
-    { texto:'Ranking, medalhas e pontos por presença' },
+    { texto:'Ranking, medalhas e prêmios no encerramento do ano' },
     { texto:'Preço de ingresso reduzido em todos os eventos' },
   ];
 
