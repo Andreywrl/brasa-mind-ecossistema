@@ -324,3 +324,36 @@ select:focus-visible {
   height: 100%;
   object-fit: cover;
 }
+
+/* Banners de oferta de patrocinadores */
+.om-offer-slot {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.om-offer-slot:hover {
+  transform: translateY(-2px);
+  border-color: hsl(var(--primary) / .45);
+  box-shadow: 0 10px 28px hsl(20 10% 4% / .3);
+}
+.om-offer-img-box {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background: hsl(var(--secondary));
+}
+@media (min-width: 768px) {
+  .om-offer-img-box { height: 168px; }
+}
+.om-offer-img-box image-slot,
+.om-offer-img-box img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+

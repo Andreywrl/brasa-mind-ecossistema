@@ -75,6 +75,10 @@
         <sc-if value="{{ isConvites }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 6 10 7L22 6"></path></svg>Convites
       </button>
+      <button class="om-nav {{ navCls.ofertas }}" onClick="{{ goOfertas }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; min-height:44px; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
+        <sc-if value="{{ isOfertas }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>Ofertas
+      </button>
       <button class="om-nav {{ navCls.game }}" onClick="{{ goGame }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; min-height:44px; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
         <sc-if value="{{ isGame }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 5H4v2a3 3 0 0 0 3 3M17 5h3v2a3 3 0 0 1-3 3"></path></svg>Ranking
@@ -232,6 +236,41 @@
           </button>
         </div>
 
+        <!-- Ofertas da rede -->
+        <sc-if value="{{ hasActiveOfertas }}">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; padding:18px 22px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Oferta</x-import>
+              <span class="text-muted-foreground" style="font-size:13px;">Ofertas da rede: conecte com quem patrocina o Brasa</span>
+            </div>
+            <sc-if value="{{ hasMultipleActiveOfertas }}">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button onClick="{{ prevOferta }}" aria-label="Oferta anterior" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span class="font-mono text-muted-foreground" style="font-size:12px;">{{ ofertaCurrentNum }} / {{ ofertaTotalNum }}</span>
+              <button onClick="{{ nextOferta }}" aria-label="Próxima oferta" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            </sc-if>
+          </div>
+
+          <div onClick="{{ currentOferta.click }}" class="om-offer-slot" style="cursor:pointer;">
+            <div class="om-offer-img-box">
+              <img src="{{ currentOferta.banner }}" alt="{{ currentOferta.titulo }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                <img src="{{ currentOferta.foto }}" alt="" width="36" height="36" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex:none;">
+                <div style="min-width:0;">
+                  <div class="font-display" style="font-size:14px; font-weight:800; line-height:1.3;">{{ currentOferta.titulo }}</div>
+                  <div class="text-muted-foreground" style="font-size:12px; margin-top:2px;">{{ currentOferta.patrocinador }} ({{ currentOferta.destRotulo }})</div>
+                </div>
+              </div>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-9 px-4 border-0 cursor-pointer" style="flex:none;">Aproveitar oferta</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
         <!-- Ranking mini + histórico -->
         <div class="om-split">
           <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 22px;">
@@ -356,6 +395,41 @@
                 <span class="text-muted-foreground" style="margin-left:20px; font-size:13px;">+89 membros</span>
               </div>
             </div>
+
+            <!-- Ofertas da rede no evento -->
+            <sc-if value="{{ hasActiveOfertas }}">
+            <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; padding:18px 22px; display:flex; flex-direction:column; gap:12px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Oferta</x-import>
+                  <span class="text-muted-foreground" style="font-size:13px;">Ofertas da rede: conecte com quem patrocina o Brasa</span>
+                </div>
+                <sc-if value="{{ hasMultipleActiveOfertas }}">
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <button onClick="{{ prevOferta }}" aria-label="Oferta anterior" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                  <span class="font-mono text-muted-foreground" style="font-size:12px;">{{ ofertaCurrentNum }} / {{ ofertaTotalNum }}</span>
+                  <button onClick="{{ nextOferta }}" aria-label="Próxima oferta" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                </div>
+                </sc-if>
+              </div>
+
+              <div onClick="{{ currentOferta.click }}" class="om-offer-slot" style="cursor:pointer;">
+                <div class="om-offer-img-box">
+                  <img src="{{ currentOferta.banner }}" alt="{{ currentOferta.titulo }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+                <div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                  <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                    <img src="{{ currentOferta.foto }}" alt="" width="36" height="36" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex:none;">
+                    <div style="min-width:0;">
+                      <div class="font-display" style="font-size:14px; font-weight:800; line-height:1.3;">{{ currentOferta.titulo }}</div>
+                      <div class="text-muted-foreground" style="font-size:12px; margin-top:2px;">{{ currentOferta.patrocinador }} ({{ currentOferta.destRotulo }})</div>
+                    </div>
+                  </div>
+                  <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-9 px-4 border-0 cursor-pointer" style="flex:none;">Aproveitar oferta</button>
+                </div>
+              </div>
+            </div>
+            </sc-if>
 
             <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
               <h3 class="font-display" style="margin:0 0 14px; font-size:17px; font-weight:800;">Local</h3>
@@ -611,6 +685,41 @@
         </div>
         <div class="text-muted-foreground" style="font-size:13px;">Ordenado por categoria (fundadores, patrocinadores, membros) e pontuação. <span class="font-mono">{{ hubCount }}</span> membros.</div>
 
+        <!-- Ofertas da rede no Hub -->
+        <sc-if value="{{ hasActiveOfertas }}">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; padding:18px 22px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Oferta</x-import>
+              <span class="text-muted-foreground" style="font-size:13px;">Ofertas da rede: conecte com quem patrocina o Brasa</span>
+            </div>
+            <sc-if value="{{ hasMultipleActiveOfertas }}">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button onClick="{{ prevOferta }}" aria-label="Oferta anterior" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span class="font-mono text-muted-foreground" style="font-size:12px;">{{ ofertaCurrentNum }} / {{ ofertaTotalNum }}</span>
+              <button onClick="{{ nextOferta }}" aria-label="Próxima oferta" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            </sc-if>
+          </div>
+
+          <div onClick="{{ currentOferta.click }}" class="om-offer-slot" style="cursor:pointer;">
+            <div class="om-offer-img-box">
+              <img src="{{ currentOferta.banner }}" alt="{{ currentOferta.titulo }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                <img src="{{ currentOferta.foto }}" alt="" width="36" height="36" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex:none;">
+                <div style="min-width:0;">
+                  <div class="font-display" style="font-size:14px; font-weight:800; line-height:1.3;">{{ currentOferta.titulo }}</div>
+                  <div class="text-muted-foreground" style="font-size:12px; margin-top:2px;">{{ currentOferta.patrocinador }} ({{ currentOferta.destRotulo }})</div>
+                </div>
+              </div>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-9 px-4 border-0 cursor-pointer" style="flex:none;">Aproveitar oferta</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
         <div class="om-grid-3">
           <sc-for list="{{ hubMembers }}" as="m" hint-placeholder-count="9">
             <button class="bg-card om-lift" onClick="{{ m.open }}" style="text-align:left; border:1px solid hsl(var(--border)); border-radius:16px; padding:0; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;">
@@ -800,6 +909,120 @@
       </div>
       </sc-if>
 
+      <!-- ================= OFERTAS DO PATROCINADOR ================= -->
+      <sc-if value="{{ isOfertas }}">
+      <div style="display:flex; flex-direction:column; gap:24px;">
+
+        <!-- Intro / Informação para patrocinadores e apoiadores -->
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; padding:22px 26px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+          <div style="display:flex; flex-direction:column; gap:8px; flex:1; min-width:240px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="bg-brasa" style="width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex:none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+              </span>
+              <h3 class="font-display" style="margin:0; font-size:20px; font-weight:800;">Área do Patrocinador e Apoiador</h3>
+            </div>
+            <p class="text-muted-foreground" style="margin:0; font-size:14px; line-height:1.55;">
+              Suba até 3 banners de oferta para a sua empresa. Defina qual oferta fica ativa: ela roda em destaque no Início, no Hub, nos Eventos e no Ranking para toda a rede se conectar direto com você.
+            </p>
+          </div>
+          <button onClick="{{ openNovaOferta }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 border-0 cursor-pointer" style="flex:none;">
+            + Nova oferta
+          </button>
+        </div>
+
+        <!-- KPIs das ofertas -->
+        <div class="om-grid-4">
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Visualizações totais</div>
+            <div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px;">{{ ofertasTotalViews }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">nas telas da rede</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Cliques recebidos</div>
+            <div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px; color:hsl(var(--primary));">{{ ofertasTotalClicks }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">contatos iniciados</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Taxa média (CTR)</div>
+            <div class="font-mono" style="font-size:26px; font-weight:800; margin-top:6px; color:hsl(var(--success));">{{ ofertasAvgCtr }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">conversão por visualização</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Status no ar</div>
+            <div class="font-mono" style="font-size:20px; font-weight:800; margin-top:8px; line-height:1.2;">{{ ofertasStatusBadge }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">{{ ofertasCountLabel }}</div>
+          </div>
+        </div>
+
+        <!-- Lista de ofertas cadastradas -->
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+            <h3 class="font-display" style="margin:0; font-size:18px; font-weight:800;">Minhas ofertas cadastradas</h3>
+            <span class="text-muted-foreground" style="font-size:13px;">{{ ofertasCountLabel }}</span>
+          </div>
+
+          <sc-for list="{{ minhadListaOfertas }}" as="o" hint-placeholder-count="2">
+            <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; overflow:hidden; display:flex; flex-direction:column;">
+              <div style="padding:18px 24px; border-bottom:1px solid hsl(var(--border)); display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                  <span class="{{ o.statusBadgeCls }}" style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:9999px; font-size:12px; font-weight:700;">
+                    <span style="width:7px; height:7px; border-radius:50%; background:currentColor;"></span>
+                    {{ o.statusLabel }}
+                  </span>
+                  <x-import component-from-global-scope="BrasaMindUI.Badge" variant="outline" hint-size="auto,24px">{{ o.tipoDestinoLabel }}</x-import>
+                  <span class="text-muted-foreground" style="font-size:12px;">Criada em {{ o.criadaEm }}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:16px;">
+                  <div style="display:flex; align-items:center; gap:14px; font-size:13px;">
+                    <span><strong class="font-mono" style="font-size:15px;">{{ o.views }}</strong> <span class="text-muted-foreground">views</span></span>
+                    <span><strong class="font-mono text-primary" style="font-size:15px;">{{ o.clicks }}</strong> <span class="text-muted-foreground">cliques</span></span>
+                    <span><strong class="font-mono text-success" style="font-size:15px;">{{ o.ctr }}</strong> <span class="text-muted-foreground">CTR</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding:20px 24px; display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+                  <div style="flex:1; min-width:260px;">
+                    <h4 class="font-display" style="margin:0 0 6px; font-size:17px; font-weight:800; line-height:1.35;">{{ o.titulo }}</h4>
+                    <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+                      <span class="text-muted-foreground">Destino do clique:</span>
+                      <strong class="font-mono text-foreground">{{ o.destRotulo }}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Preview do banner -->
+                <div style="position:relative; width:100%; height:160px; border-radius:12px; overflow:hidden; border:1px solid hsl(var(--border)); background:hsl(var(--secondary));">
+                  <img src="{{ o.banner }}" alt="{{ o.titulo }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+
+                <!-- Ações -->
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-top:4px;">
+                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button onClick="{{ o.toggleAtiva }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold {{ o.toggleBtnCls }} h-10 px-4 cursor-pointer">
+                      {{ o.toggleBtnLabel }}
+                    </button>
+                    <button onClick="{{ o.edit }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-border bg-transparent text-foreground hover:bg-secondary h-10 px-4 cursor-pointer">
+                      Editar
+                    </button>
+                    <button onClick="{{ o.testLink }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-border bg-transparent text-foreground hover:bg-secondary h-10 px-4 cursor-pointer">
+                      Testar link
+                    </button>
+                  </div>
+                  <button onClick="{{ o.remove }}" style="background:transparent; border:0; color:hsl(var(--destructive)); font-size:13px; font-weight:600; cursor:pointer; padding:8px;">
+                    Excluir oferta
+                  </button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+      </div>
+      </sc-if>
+
       <!-- ================= RANKING ================= -->
       <sc-if value="{{ isGame }}">
       <div style="display:flex; flex-direction:column; gap:24px;">
@@ -808,6 +1031,41 @@
           <button class="om-chip {{ rankChip.geral }}" onClick="{{ rankGeral }}" style="padding:9px 18px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Geral</button>
           <button class="om-chip {{ rankChip.anual }}" onClick="{{ rankAnual }}" style="padding:9px 18px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer;">Anual</button>
         </div>
+
+        <!-- Ofertas da rede no Ranking -->
+        <sc-if value="{{ hasActiveOfertas }}">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden; padding:18px 22px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Oferta</x-import>
+              <span class="text-muted-foreground" style="font-size:13px;">Ofertas da rede: conecte com quem patrocina o Brasa</span>
+            </div>
+            <sc-if value="{{ hasMultipleActiveOfertas }}">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <button onClick="{{ prevOferta }}" aria-label="Oferta anterior" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span class="font-mono text-muted-foreground" style="font-size:12px;">{{ ofertaCurrentNum }} / {{ ofertaTotalNum }}</span>
+              <button onClick="{{ nextOferta }}" aria-label="Próxima oferta" style="width:28px; height:28px; border-radius:7px; border:1px solid hsl(var(--border)); background:transparent; color:hsl(var(--foreground)); display:flex; align-items:center; justify-content:center; cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            </sc-if>
+          </div>
+
+          <div onClick="{{ currentOferta.click }}" class="om-offer-slot" style="cursor:pointer;">
+            <div class="om-offer-img-box">
+              <img src="{{ currentOferta.banner }}" alt="{{ currentOferta.titulo }}" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <div style="padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+              <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+                <img src="{{ currentOferta.foto }}" alt="" width="36" height="36" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex:none;">
+                <div style="min-width:0;">
+                  <div class="font-display" style="font-size:14px; font-weight:800; line-height:1.3;">{{ currentOferta.titulo }}</div>
+                  <div class="text-muted-foreground" style="font-size:12px; margin-top:2px;">{{ currentOferta.patrocinador }} ({{ currentOferta.destRotulo }})</div>
+                </div>
+              </div>
+              <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-9 px-4 border-0 cursor-pointer" style="flex:none;">Aproveitar oferta</button>
+            </div>
+          </div>
+        </div>
+        </sc-if>
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
           <div style="padding:18px 22px; border-bottom:1px solid hsl(var(--border)); display:flex; align-items:flex-start; gap:14px;">
@@ -1356,12 +1614,65 @@
     </div>
   </div>
   </sc-if>
+
+  <!-- Modal Nova/Editar Oferta -->
+  <sc-if value="{{ ofertaModalOpen }}">
+  <div onClick="{{ closeOfertaModal }}" class="{{ themeClass }}" style="position:fixed; inset:0; z-index:70; background:hsl(20 10% 3% / .62); display:flex; align-items:center; justify-content:center; padding:24px;">
+    <div onClick="{{ stopProp }}" class="bg-card text-card-foreground" role="dialog" aria-modal="true" style="width:100%; max-width:540px; overflow:hidden; border:1px solid hsl(var(--border)); border-radius:18px; box-shadow:0 24px 60px hsl(20 10% 2% / .5); display:flex; flex-direction:column;">
+      <span class="bg-brasa" style="display:block; height:3px; width:100%;"></span>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:18px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+          <div>
+            <h3 class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">{{ ofertaModalTitle }}</h3>
+            <p class="text-muted-foreground" style="margin:0; font-size:13px;">Banners em formato largo (~16:6) para exibição aos membros.</p>
+          </div>
+          <button onClick="{{ closeOfertaModal }}" class="om-icon-btn" aria-label="Fechar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700;">Título curto da oferta</label>
+            <input type="text" value="{{ ofertaDraftTitle }}" onChange="{{ onDraftTitleChange }}" placeholder="ex: Diagnóstico de marketing gratuito para membros" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid hsl(var(--border)); border-radius:10px; font-size:14px;">
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700;">Destino do clique</label>
+            <div style="display:flex; gap:8px;">
+              <button onClick="{{ setDraftTipoWa }}" class="om-chip {{ draftTipoWaCls }}" style="flex:1; padding:9px 10px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer; text-align:center;">WhatsApp</button>
+              <button onClick="{{ setDraftTipoSite }}" class="om-chip {{ draftTipoSiteCls }}" style="flex:1; padding:9px 10px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer; text-align:center;">Site externo</button>
+              <button onClick="{{ setDraftTipoHub }}" class="om-chip {{ draftTipoHubCls }}" style="flex:1; padding:9px 10px; border-radius:9px; border:1px solid hsl(var(--border)); background:transparent; font-size:13px; font-weight:600; cursor:pointer; text-align:center;">Perfil no Hub</button>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700;">{{ draftDestinoLabel }}</label>
+            <input type="text" value="{{ ofertaDraftDestino }}" onChange="{{ onDraftDestinoChange }}" placeholder="{{ draftDestinoPlaceholder }}" class="bg-secondary text-foreground" style="width:100%; box-sizing:border-box; padding:11px 14px; border:1px solid hsl(var(--border)); border-radius:10px; font-size:14px;">
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700;">Imagem do banner</label>
+            <div style="height:120px; border-radius:10px; overflow:hidden; border:1px solid hsl(var(--border)); background:hsl(var(--secondary));">
+              <img src="{{ ofertaDraftBanner }}" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+            </div>
+            <span class="text-muted-foreground" style="font-size:12px;">Formato recomendado: proporção 16:6 (ex: 1200 × 450 px).</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:6px;">
+          <button onClick="{{ closeOfertaModal }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-border bg-transparent text-foreground hover:bg-secondary h-11 px-6 cursor-pointer">Cancelar</button>
+          <button onClick="{{ salvarOferta }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 border-0 cursor-pointer" style="flex:1;">Salvar oferta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
 </div>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { screen:'dashboard', menuOpen:false, showPwd:false, pwdSaving:false, buyStep:1, buyPayMethod:'pix', hubQuery:'', hubCat:'todas', hubEsp:'todas', hubCidade:'todas', rankPeriod:'mensal', invite:false, profile:null, theme:'dark', hasTicket:false, past:null, termsMember:false, notifOpen:false, payMethodOpen:false, payMethod:'pix', payDraft:'pix', pwdOk:false, confirm:null, payMens:null, payMensStep:1, faqOpen:'membro', faqCat:'todas', inviteCopied:false, recruitCopied:false,
+    ofertaIndex:0, ofertaModalOpen:false, ofertaDraftMode:'new', ofertaDraftId:null, ofertaDraftTitle:'', ofertaDraftTipo:'whatsapp', ofertaDraftDestino:'https://wa.me/5551999990000', ofertaDraftBanner:'uploads/imagens-gerais/IMG_3914.PNG',
     inviteMessage:'Fala! Estou te chamando para o próximo encontro do Brasamind: "A mente por trás dos grandes movimentos", dia 28/08 às 19h, no Espaço Brasa, em Porto Alegre.\n\nÉ empreendedorismo, churrasco e muito network gaúcho. Garanta sua vaga pelo meu convite: brasamind.com.br/convite/joao-da-silva-8f2c',
     inviteMode:'evento',
     recruitMessage:'Fala! Faço parte do Brasamind, um grupo gaúcho de empreendedorismo, churrasco e network, e queria te chamar para fazer parte também.\n\nSão encontros todo mês, uma rede de mais de 120 empresários que fecham negócios juntos e muita indicação de confiança. Acho que é a sua cara. Entra pelo meu convite: brasamind.com.br/membro/joao-da-silva-3a9d',
@@ -1373,16 +1684,19 @@ class Component extends DCLogic {
     ] };
   target = new Date('2026-08-28T19:00:00');
 
-  screens = ['notificacoes','dashboard','evento','compra','hub','perfil','convites','game','financeiro','pagarMensalidade','historico','faq','eventoDetalhe','editar'];
+  screens = ['notificacoes','dashboard','evento','compra','hub','perfil','convites','ofertas','game','financeiro','pagarMensalidade','historico','faq','eventoDetalhe','editar'];
   setHash(s){ try { history.replaceState(null, '', '#'+s); } catch(e) { location.hash = s; } }
   readHash(){
     const h = (location.hash||'').replace(/^#/, '');
-    if (this.screens.indexOf(h) >= 0) this.setState({ screen:h, menuOpen:false });
+    if (this.screens.indexOf(h) >= 0) {
+      this.trackOfferView(h);
+      this.setState({ screen:h, menuOpen:false });
+    }
   }
   componentDidMount() {
     this._t = setInterval(() => this.forceUpdate(), 1000);
     this._onHash = () => this.readHash();
-    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ notifOpen:false, menuOpen:false, confirm:null, payMethodOpen:false }); };
+    this._onKey = (e) => { if (e.key === 'Escape') this.setState({ notifOpen:false, menuOpen:false, confirm:null, payMethodOpen:false, ofertaModalOpen:false }); };
     window.addEventListener('hashchange', this._onHash);
     window.addEventListener('keydown', this._onKey);
     this.readHash();
@@ -1393,7 +1707,22 @@ class Component extends DCLogic {
     window.removeEventListener('keydown', this._onKey);
   }
 
-  nav(s) { window.scrollTo(0,0); this.setHash(s); this.setState({ screen:s, notifOpen:false, menuOpen:false }); }
+  trackOfferView(screen) {
+    if (['dashboard', 'hub', 'evento', 'game'].indexOf(screen) >= 0) {
+      const active = this.ofertas.filter(o => o.ativo);
+      if (active.length > 0) {
+        const idx = this.state.ofertaIndex % active.length;
+        if (active[idx]) active[idx].views = (active[idx].views || 0) + 1;
+      }
+    }
+  }
+
+  nav(s) {
+    window.scrollTo(0,0);
+    this.setHash(s);
+    this.trackOfferView(s);
+    this.setState({ screen:s, notifOpen:false, menuOpen:false });
+  }
   markNotif(id){ this.setState(st=>({ notifs: st.notifs.map(n=> n.id===id ? { ...n, read:true } : n) })); }
   openProfile(m) { window.scrollTo(0,0); this.setHash('perfil'); this.setState({ screen:'perfil', profile:m, menuOpen:false, notifOpen:false }); }
   openPast(e) { window.scrollTo(0,0); this.setHash('eventoDetalhe'); this.setState({ screen:'eventoDetalhe', past:e, menuOpen:false }); }
@@ -1481,6 +1810,7 @@ class Component extends DCLogic {
   ];
   faqs = [
     { id:'membro', cat:'membro', catLabel:'Membros', q:'O que é o Brasamind?', a:'O Brasamind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
+    { id:'ofertas', cat:'membro', catLabel:'Membros', q:'Como funcionam as ofertas de patrocinadores?', a:'Patrocinadores e Apoiadores do Brasamind podem cadastrar até 3 banners de oferta na Área do Membro. Uma oferta fica ativa por vez e roda em destaque no Início, no Hub, nos Eventos e no Ranking, gerando conexões e oportunidades diretas de negócios.' },
     { id:'valor', cat:'pagamento', catLabel:'Pagamentos', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
     { id:'ingresso', cat:'evento', catLabel:'Eventos', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
     { id:'convidado', cat:'evento', catLabel:'Eventos', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
@@ -1490,6 +1820,58 @@ class Component extends DCLogic {
     { id:'perfil', cat:'conta', catLabel:'Conta', q:'Como atualizo meu perfil no hub?', a:'Abra seu perfil, Editar perfil, e atualize foto, descrição, contatos e vídeo do YouTube. Esses dados ajudam outros membros a conectar e indicar você.' },
     { id:'cancelar', cat:'evento', catLabel:'Eventos', q:'Posso cancelar minha presença no evento?', a:'Sim. No painel do ingresso, use Cancelar presença. A vaga é liberada e você pode comprar o ingresso de novo se mudar de ideia.' },
   ];
+
+  ofertas = [
+    { id:1, patrocinador:'Souza Marketing', autor:'Maria Souza', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg',
+      titulo:'Diagnóstico de Marketing B2B gratuito para membros do Brasa',
+      banner:'uploads/imagens-gerais/IMG_3913.PNG',
+      tipoDestino:'whatsapp', destino:'https://wa.me/5554977772222?text=Ol%C3%A1!%20Vi%20a%20oferta%20no%20Brasamind', destRotulo:'WhatsApp (+55 54 97777 2222)',
+      ativo:true, views:428, clicks:36, criadaEm:'12/07/2026' },
+    { id:2, patrocinador:'Menezes Advogados', autor:'Ricardo Menezes', iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg',
+      titulo:'Primeira consultoria jurídica societária e contratual sem custo',
+      banner:'uploads/imagens-gerais/IMG_3915.PNG',
+      tipoDestino:'site', destino:'https://menezesadvogados.com.br', destRotulo:'menezesadvogados.com.br',
+      ativo:false, views:310, clicks:22, criadaEm:'28/07/2026' },
+    { id:3, patrocinador:'Silva Alimentos', autor:'João da Silva', iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg',
+      titulo:'Condição exclusiva em carnes nobres e cortes para eventos corporativos',
+      banner:'uploads/imagens-gerais/IMG_3911.PNG',
+      tipoDestino:'whatsapp', destino:'https://wa.me/5551999990000?text=Ol%C3%A1!%20Quero%20saber%20da%20oferta%20do%20Brasamind', destRotulo:'WhatsApp (+55 51 99999 0000)',
+      ativo:false, views:140, clicks:9, criadaEm:'04/08/2026' }
+  ];
+
+  clickOferta(id) {
+    const o = this.ofertas.find(x => x.id === id);
+    if (o) {
+      o.clicks = (o.clicks || 0) + 1;
+      if (o.tipoDestino === 'perfil') {
+        const m = this.membersRaw.find(x => x.empresa === o.patrocinador || x.nome === o.autor) || this.membersRaw[0];
+        this.openProfile(m);
+      } else if (o.destino && o.destino !== '#') {
+        window.open(o.destino, '_blank');
+      }
+      this.forceUpdate();
+    }
+  }
+
+  toggleOfertaAtiva(id) {
+    const target = this.ofertas.find(o => o.id === id);
+    const willActivate = target ? !target.ativo : false;
+    this.ofertas = this.ofertas.map(o => {
+      if (o.id === id) {
+        return { ...o, ativo: willActivate };
+      }
+      if (willActivate) {
+        return { ...o, ativo: false };
+      }
+      return o;
+    });
+    this.forceUpdate();
+  }
+
+  removerOferta(id) {
+    this.ofertas = this.ofertas.filter(o => o.id !== id);
+    this.forceUpdate();
+  }
 
   fmt(n){ return n.toLocaleString('pt-BR'); }
 
@@ -1590,6 +1972,7 @@ class Component extends DCLogic {
       hub:['Hub de membros','Cada card é uma empresa da rede.'],
       perfil: isSelf ? ['Meu perfil','Seus dados na rede para conectar, indicar e fechar negócios.'] : [profileBase.nome,'Conecte, indique, feche negócios.'],
       convites:['Meus convites','Traga empresários e ganhe pontos.'],
+      ofertas:['Ofertas do Patrocinador','Banners e ofertas da sua empresa para a rede do Brasa.'],
       game:['Ranking','Pontos, medalhas e prêmios no encerramento do ano.'],
       financeiro:['Meu financeiro','Mensalidades, histórico e pendências.'],
       pagarMensalidade:['Pagar mensalidade','Quite a competência em aberto via Asaas.'],
@@ -1600,14 +1983,144 @@ class Component extends DCLogic {
     };
     const t = titles[s.screen] || ['',''];
 
+    const activeOfertas = this.ofertas.filter(o => o.ativo);
+    const totalViews = this.ofertas.reduce((acc,o)=>acc+(o.views||0),0);
+    const totalClicks = this.ofertas.reduce((acc,o)=>acc+(o.clicks||0),0);
+    const avgCtr = totalViews > 0 ? ((totalClicks/totalViews)*100).toFixed(1).replace('.',',') + '%' : '0%';
+    const currentIdx = activeOfertas.length > 0 ? (s.ofertaIndex % activeOfertas.length) : 0;
+    const currentRaw = activeOfertas[currentIdx] || this.ofertas[0];
+    const currentOferta = currentRaw ? {
+      ...currentRaw,
+      click: () => this.clickOferta(currentRaw.id)
+    } : null;
+
+    const minhadListaOfertas = this.ofertas.map(o => {
+      const ctr = o.views > 0 ? ((o.clicks/o.views)*100).toFixed(1).replace('.',',') + '%' : '0%';
+      const tipoMap = { whatsapp:'WhatsApp', site:'Site externo', perfil:'Perfil no Hub' };
+      return {
+        ...o,
+        ctr,
+        tipoDestinoLabel: tipoMap[o.tipoDestino] || 'Link',
+        statusLabel: o.ativo ? 'Ativa na rede' : 'Pausada',
+        statusBadgeCls: o.ativo ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground',
+        toggleBtnLabel: o.ativo ? 'Pausar oferta' : 'Publicar na rede',
+        toggleBtnCls: o.ativo ? 'border border-border bg-transparent text-foreground hover:bg-secondary' : 'bg-primary text-primary-foreground hover:brightness-110 border-0',
+        toggleAtiva: () => this.toggleOfertaAtiva(o.id),
+        edit: () => this.setState({ ofertaModalOpen:true, ofertaDraftMode:'edit', ofertaDraftId:o.id, ofertaDraftTitle:o.titulo, ofertaDraftTipo:o.tipoDestino, ofertaDraftDestino:o.destino, ofertaDraftBanner:o.banner||'uploads/imagens-gerais/IMG_3914.PNG' }),
+        remove: () => this.removerOferta(o.id),
+        testLink: () => {
+          if (o.tipoDestino === 'perfil') {
+            const m = this.membersRaw.find(x => x.empresa === o.patrocinador || x.nome === o.autor) || this.membersRaw[0];
+            this.openProfile(m);
+          } else if (o.destino) {
+            window.open(o.destino, '_blank');
+          }
+        }
+      };
+    });
+
+    const draftTipo = s.ofertaDraftTipo || 'whatsapp';
+    const draftDestinoLabel = draftTipo === 'whatsapp' ? 'Número de WhatsApp (com DDD)' : (draftTipo === 'site' ? 'Link do site da empresa' : 'Nome da empresa no Hub');
+    const draftDestinoPlaceholder = draftTipo === 'whatsapp' ? 'ex: https://wa.me/5551999990000' : (draftTipo === 'site' ? 'ex: https://minhaempresa.com.br' : 'ex: Souza Marketing');
+
     return {
       themeClass: s.theme==='light' ? '' : 'dark',
       isDark: s.theme!=='light', isLight: s.theme==='light',
       lockup: s.theme==='light' ? '_ds/brand/brasamind-lockup-cor-claro.png' : '_ds/brand/brasamind-lockup-branco.png',
       toggleTheme: ()=>this.setState(st=>({ theme: st.theme==='light'?'dark':'light' })),
       isDashboard:s.screen==='dashboard', isEvento:s.screen==='evento', isCompra:s.screen==='compra', isHub:s.screen==='hub',
-      isPerfil:s.screen==='perfil', isConvites:s.screen==='convites', isGame:s.screen==='game', isFinanceiro:s.screen==='financeiro', isHistorico:s.screen==='historico', isFaq:s.screen==='faq',
+      isPerfil:s.screen==='perfil', isConvites:s.screen==='convites', isOfertas:s.screen==='ofertas', isGame:s.screen==='game', isFinanceiro:s.screen==='financeiro', isHistorico:s.screen==='historico', isFaq:s.screen==='faq',
       isEventoDetalhe:s.screen==='eventoDetalhe', isEditar:s.screen==='editar', isNotificacoes:s.screen==='notificacoes', isPagarMensalidade:s.screen==='pagarMensalidade',
+      
+      // Ofertas do patrocinador
+      minhadListaOfertas,
+      ofertasTotalViews: totalViews.toLocaleString('pt-BR'),
+      ofertasTotalClicks: totalClicks.toLocaleString('pt-BR'),
+      ofertasAvgCtr: avgCtr,
+      ofertasStatusBadge: activeOfertas.length > 0 ? (activeOfertas.length + ' ativa' + (activeOfertas.length>1?'s':'')) : 'Nenhuma ativa',
+      ofertasCountLabel: this.ofertas.length + ' de 3 cadastradas',
+      currentOferta,
+      hasActiveOfertas: activeOfertas.length > 0,
+      hasMultipleActiveOfertas: activeOfertas.length > 1,
+      ofertaCurrentNum: currentIdx + 1,
+      ofertaTotalNum: activeOfertas.length,
+      prevOferta: () => {
+        if (activeOfertas.length > 0) {
+          this.setState(st => ({ ofertaIndex: (st.ofertaIndex - 1 + activeOfertas.length) % activeOfertas.length }));
+        }
+      },
+      nextOferta: () => {
+        if (activeOfertas.length > 0) {
+          this.setState(st => ({ ofertaIndex: (st.ofertaIndex + 1) % activeOfertas.length }));
+        }
+      },
+      goOfertas: () => this.nav('ofertas'),
+      openNovaOferta: () => {
+        if (this.ofertas.length >= 3) {
+          alert('Limite de 3 ofertas atingido no v1.');
+          return;
+        }
+        this.setState({
+          ofertaModalOpen: true,
+          ofertaDraftMode: 'new',
+          ofertaDraftId: null,
+          ofertaDraftTitle: '',
+          ofertaDraftTipo: 'whatsapp',
+          ofertaDraftDestino: 'https://wa.me/5551999990000',
+          ofertaDraftBanner: 'uploads/imagens-gerais/IMG_3914.PNG'
+        });
+      },
+      closeOfertaModal: () => this.setState({ ofertaModalOpen: false }),
+      salvarOferta: () => {
+        const title = (this.state.ofertaDraftTitle || '').trim();
+        if (!title) return;
+        const tipo = this.state.ofertaDraftTipo || 'whatsapp';
+        const dest = (this.state.ofertaDraftDestino || '').trim();
+        const destRotulo = tipo === 'whatsapp' ? 'WhatsApp' : (tipo === 'site' ? dest.replace(/^https?:\/\//, '') : 'Perfil no Hub');
+        if (this.state.ofertaDraftMode === 'new') {
+          this.ofertas.push({
+            id: Date.now(),
+            patrocinador: 'Silva Alimentos',
+            autor: 'João da Silva',
+            iniciais: 'JS',
+            foto: 'uploads/users/pexels-filipgrobgaard-26150470.jpg',
+            titulo: title,
+            banner: this.state.ofertaDraftBanner || 'uploads/imagens-gerais/IMG_3914.PNG',
+            tipoDestino: tipo,
+            destino: dest,
+            destRotulo,
+            ativo: false,
+            views: 0,
+            clicks: 0,
+            criadaEm: 'Hoje'
+          });
+        } else {
+          this.ofertas = this.ofertas.map(o => o.id === this.state.ofertaDraftId ? {
+            ...o,
+            titulo: title,
+            tipoDestino: tipo,
+            destino: dest,
+            destRotulo,
+            banner: this.state.ofertaDraftBanner || o.banner
+          } : o);
+        }
+        this.setState({ ofertaModalOpen: false });
+      },
+      ofertaModalOpen: s.ofertaModalOpen,
+      ofertaModalTitle: s.ofertaDraftMode === 'new' ? 'Nova oferta de patrocinador' : 'Editar oferta',
+      ofertaDraftTitle: s.ofertaDraftTitle || '',
+      onDraftTitleChange: (e) => this.setState({ ofertaDraftTitle: e.target.value }),
+      ofertaDraftDestino: s.ofertaDraftDestino || '',
+      onDraftDestinoChange: (e) => this.setState({ ofertaDraftDestino: e.target.value }),
+      ofertaDraftBanner: s.ofertaDraftBanner || 'uploads/imagens-gerais/IMG_3914.PNG',
+      draftDestinoLabel,
+      draftDestinoPlaceholder,
+      draftTipoWaCls: chip(draftTipo === 'whatsapp'),
+      draftTipoSiteCls: chip(draftTipo === 'site'),
+      draftTipoHubCls: chip(draftTipo === 'perfil'),
+      setDraftTipoWa: () => this.setState({ ofertaDraftTipo: 'whatsapp', ofertaDraftDestino: 'https://wa.me/5551999990000' }),
+      setDraftTipoSite: () => this.setState({ ofertaDraftTipo: 'site', ofertaDraftDestino: 'https://silvaalimentos.com.br' }),
+      setDraftTipoHub: () => this.setState({ ofertaDraftTipo: 'perfil', ofertaDraftDestino: 'Hub de membros' }),
       faqs: this.faqs.filter(f => s.faqCat==='todas' || f.cat===s.faqCat).map(f=>({
         ...f,
         isOpen: s.faqOpen===f.id,
@@ -1670,7 +2183,7 @@ class Component extends DCLogic {
       hubEsp:s.hubEsp, hubCidade:s.hubCidade, hubHasFilters,
       setEsp:(v)=>this.setState({hubEsp:v}), setCidade:(v)=>this.setState({hubCidade:v}),
       clearFilters:()=>this.setState({hubEsp:'todas',hubCidade:'todas',hubCat:'todas',hubQuery:''}),
-      navCls:{ dashboard:nav('dashboard'), evento:nav('evento'), hub:nav('hub'), convites:nav('convites'), game:nav('game'), financeiro:nav('financeiro'), historico:nav('historico'), faq:nav('faq'), perfil:nav('perfil') },
+      navCls:{ dashboard:nav('dashboard'), evento:nav('evento'), hub:nav('hub'), convites:nav('convites'), ofertas:nav('ofertas'), game:nav('game'), financeiro:nav('financeiro'), historico:nav('historico'), faq:nav('faq'), perfil:nav('perfil') },
       pageTitle:t[0], pageSub:t[1],
       cdD:pad(d), cdH:pad(h), cdM:pad(mi), cdS:pad(se),
       goDashboard:()=>this.nav('dashboard'), goEvento:()=>this.nav('evento'), goHub:()=>this.nav('hub'),

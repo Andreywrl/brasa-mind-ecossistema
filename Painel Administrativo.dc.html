@@ -89,6 +89,10 @@
         <sc-if value="{{ isCategorias }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h.01M3 5a2 2 0 0 1 2-2h5.5a2 2 0 0 1 1.4.6l8 8a2 2 0 0 1 0 2.8l-5.6 5.6a2 2 0 0 1-2.8 0l-8-8A2 2 0 0 1 3 10.5V5z"/></svg>Categorias
       </button>
+      <button class="om-nav {{ navCls.ofertas }}" onClick="{{ goOfertas }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
+        <sc-if value="{{ isOfertas }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>Ofertas
+      </button>
       <button class="om-nav {{ navCls.admins }}" onClick="{{ goAdmins }}" style="position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:0; background:transparent; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; text-align:left;">
         <sc-if value="{{ isAdmins }}"><span class="bg-primary" style="position:absolute; left:-16px; top:8px; bottom:8px; width:3px; border-radius:0 3px 3px 0;"></span></sc-if>
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>Usuários
@@ -749,6 +753,80 @@
       </div>
       </sc-if>
 
+      <!-- ============ OFERTAS DE PATROCINADORES ============ -->
+      <sc-if value="{{ isOfertas }}">
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div style="max-width:620px;">
+            <h3 class="font-display" style="margin:0 0 4px; font-size:16px; font-weight:800;">Ofertas da Rede de Patrocinadores</h3>
+            <p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">Acompanhe os banners ativos criados por patrocinadores e apoiadores, com métricas consolidadas de visualizações e cliques.</p>
+          </div>
+          <x-import component-from-global-scope="BrasaMindUI.Badge" variant="outline" hint-size="auto,24px">Exibição para toda a rede</x-import>
+        </div>
+
+        <div class="om-grid-4">
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:18px 20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Total de ofertas</div>
+            <div class="font-mono" style="font-size:24px; font-weight:800; margin-top:6px;">{{ adminTotalOfertas }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">cadastradas pelos membros</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:18px 20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Ofertas ativas</div>
+            <div class="font-mono" style="font-size:24px; font-weight:800; margin-top:6px; color:hsl(var(--success));">{{ adminAtivasOfertas }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">em rotação nas telas</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:18px 20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Visualizações</div>
+            <div class="font-mono" style="font-size:24px; font-weight:800; margin-top:6px;">{{ adminViewsOfertas }}</div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">impressões de banner</div>
+          </div>
+          <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:18px 20px;">
+            <div class="text-muted-foreground" style="font-size:12px; text-transform:uppercase; letter-spacing:.05em;">Cliques totais (CTR)</div>
+            <div class="font-mono" style="font-size:24px; font-weight:800; margin-top:6px; color:hsl(var(--primary));">{{ adminClicksOfertas }} <span style="font-size:15px; font-weight:600; color:hsl(var(--muted-foreground));">({{ adminAvgCtrOfertas }})</span></div>
+            <div class="text-muted-foreground" style="font-size:12px; margin-top:4px;">contatos e leads gerados</div>
+          </div>
+        </div>
+
+        <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;">
+          <div style="display:grid; grid-template-columns:1.8fr 2fr 1.3fr 1fr 0.8fr 0.8fr 0.8fr auto; padding:13px 22px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:hsl(var(--muted-foreground)); border-bottom:1px solid hsl(var(--border));">
+            <span>Patrocinador</span><span>Oferta</span><span>Destino</span><span>Banner</span><span>Status</span><span>Views</span><span>Cliques</span><span>Ação</span>
+          </div>
+          <sc-for list="{{ adminOfertasRows }}" as="o" hint-placeholder-count="3">
+            <div class="om-row" style="display:grid; grid-template-columns:1.8fr 2fr 1.3fr 1fr 0.8fr 0.8fr 0.8fr auto; align-items:center; padding:14px 22px; border-bottom:1px solid hsl(var(--border)); font-size:14px;">
+              <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+                <img src="{{ o.foto }}" alt="" width="32" height="32" style="width:32px; height:32px; border-radius:50%; object-fit:cover; flex:none;">
+                <div style="min-width:0;">
+                  <div style="font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ o.patrocinador }}</div>
+                  <div class="text-muted-foreground" style="font-size:12px;">{{ o.autor }}</div>
+                </div>
+              </div>
+              <div style="min-width:0; padding-right:12px;">
+                <div style="font-weight:600; font-size:13px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ o.titulo }}</div>
+                <div class="text-muted-foreground" style="font-size:11px; margin-top:2px;">Criada em {{ o.criadaEm }}</div>
+              </div>
+              <div style="min-width:0;">
+                <div class="font-mono text-foreground" style="font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ o.destRotulo }}</div>
+                <x-import component-from-global-scope="BrasaMindUI.Badge" variant="outline" style="font-size:10px; padding:2px 6px; margin-top:3px;" hint-size="auto,20px">{{ o.tipoDestinoLabel }}</x-import>
+              </div>
+              <div>
+                <div style="width:80px; height:38px; border-radius:6px; overflow:hidden; border:1px solid hsl(var(--border));">
+                  <img src="{{ o.banner }}" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+              </div>
+              <div>
+                <x-import component-from-global-scope="BrasaMindUI.Badge" variant="{{ o.badgeVar }}" hint-size="auto,24px">{{ o.status }}</x-import>
+              </div>
+              <div class="font-mono" style="font-size:13px;">{{ o.views }}</div>
+              <div class="font-mono text-primary" style="font-size:13px; font-weight:700;">{{ o.clicks }}</div>
+              <div style="display:flex; justify-content:flex-end;">
+                <button onClick="{{ o.openLink }}" style="background:transparent; border:1px solid hsl(var(--border)); border-radius:8px; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:hsl(var(--foreground)); white-space:nowrap;">Testar link</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
       <!-- ============ USUÁRIOS ============ -->
       <sc-if value="{{ isAdmins }}">
       <div style="display:flex; flex-direction:column; gap:20px;">
@@ -1401,7 +1479,7 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { screen:'geral', menuOpen:false, mCat:'todos', mQuery:'', theme:'dark', memberSel:null, eventMode:'edit', adminSel:null, termoSel:null, evSel:null, segFormOpen:false, newMemberOpen:false, newMemberCat:'Membro', newMemberInvite:true, galeriaNotificada:false, galeriaTemFoto:true, rulesEditOpen:false, rulesDraft:null, catModalOpen:false, catMode:'edit', catDraft:null, catIndex:-1, catConfirm:false, segExpiraMode:'evento', segExpData:'', segExpHora:'23:59', segEditOpen:false, segEditIndex:-1, segEditDraft:null, confirm:null, faqFilter:'todas', faqModalOpen:false, faqMode:'new', faqIndex:-1, faqDraft:null, checkQuery:'', checkinPerson:null, checkinDone:{}, rankPeriod:'geral' };
-  screens = ['geral','membros','eventos','financeiro','game','seg','segUsers','categorias','admins','termos','faq','membroDetalhe','eventoForm','adminEdit','termosEdit','eventoView','bloqueio'];
+  screens = ['geral','membros','eventos','financeiro','game','seg','segUsers','categorias','ofertas','admins','termos','faq','membroDetalhe','eventoForm','adminEdit','termosEdit','eventoView','bloqueio'];
   setHash(s){ try { history.replaceState(null,'','#'+s); } catch(e){ location.hash=s; } }
   readHash(){ const h=(location.hash||'').replace(/^#/,''); if(this.screens.indexOf(h)>=0) this.setState({ screen:h, menuOpen:false }); }
   componentDidMount(){
@@ -1585,6 +1663,7 @@ class Component extends DCLogic {
   faqCatMap = { membro:'Membros', evento:'Eventos', pagamento:'Pagamentos', conta:'Conta' };
   faqs = [
     { id:'membro', cat:'membro', q:'O que é o Brasamind?', a:'O Brasamind é um grupo gaúcho de networking: um encontro por mês para conectar empresários, indicar parceiros e fechar negócios. Empreendedorismo, churrasco e rede de confiança.' },
+    { id:'ofertas', cat:'membro', q:'Como funcionam as ofertas de patrocinadores?', a:'Patrocinadores e Apoiadores do Brasamind podem cadastrar até 3 banners de oferta na Área do Membro. Uma oferta fica ativa por vez e roda em destaque no Início, no Hub, nos Eventos e no Ranking, gerando conexões e oportunidades diretas de negócios.' },
     { id:'valor', cat:'pagamento', q:'Quanto custa a mensalidade?', a:'A mensalidade é R$ 97,00, cobrada de forma recorrente via Asaas todo dia 05. Você pode pagar com cartão ou PIX quando houver pendência.' },
     { id:'ingresso', cat:'evento', q:'O ingresso do evento está incluso?', a:'Membros compram o ingresso do mês com desconto na Área do Membro. A mensalidade mantém seu acesso à rede; o ingresso garante a vaga no encontro.' },
     { id:'convidado', cat:'evento', q:'Posso levar um convidado?', a:'Sim. Na área de Convites você gera o link do evento, compartilha e acompanha quem confirmou. Convidados que viram membros também entram no seu histórico de indicações.' },
@@ -1593,6 +1672,26 @@ class Component extends DCLogic {
     { id:'senha', cat:'conta', q:'Esqueci minha senha. O que faço?', a:'Na tela de Entrar, use Esqueci a senha. Enviamos um token por e-mail para você criar uma nova. Se já estiver logado, altere a senha em Editar perfil.' },
     { id:'perfil', cat:'conta', q:'Como atualizo meu perfil no hub?', a:'Abra seu perfil, Editar perfil, e atualize foto, descrição, contatos e vídeo do YouTube. Esses dados ajudam outros membros a conectar e indicar você.' },
     { id:'cancelar', cat:'evento', q:'Posso cancelar minha presença no evento?', a:'Sim. No painel do ingresso, use Cancelar presença. A vaga é liberada e você pode comprar o ingresso de novo se mudar de ideia.' },
+  ];
+  ofertasAdmin = [
+    { id:1, patrocinador:'Souza Marketing', autor:'Maria Souza', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg',
+      titulo:'Diagnóstico de Marketing B2B gratuito para membros do Brasa',
+      banner:'uploads/imagens-gerais/IMG_3913.PNG',
+      tipoDestino:'whatsapp', destino:'https://wa.me/5554977772222?text=Ol%C3%A1!%20Vi%20a%20oferta%20no%20Brasamind', destRotulo:'WhatsApp (+55 54 97777 2222)',
+      tipoDestinoLabel:'WhatsApp',
+      status:'Ativa', badgeVar:'success', views:428, clicks:36, criadaEm:'12/07/2026' },
+    { id:2, patrocinador:'Menezes Advogados', autor:'Ricardo Menezes', iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg',
+      titulo:'Primeira consultoria jurídica societária e contratual sem custo',
+      banner:'uploads/imagens-gerais/IMG_3915.PNG',
+      tipoDestino:'site', destino:'https://menezesadvogados.com.br', destRotulo:'menezesadvogados.com.br',
+      tipoDestinoLabel:'Site externo',
+      status:'Pausada', badgeVar:'secondary', views:310, clicks:22, criadaEm:'28/07/2026' },
+    { id:3, patrocinador:'Silva Alimentos', autor:'João da Silva', iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg',
+      titulo:'Condição exclusiva em carnes nobres e cortes para eventos corporativos',
+      banner:'uploads/imagens-gerais/IMG_3911.PNG',
+      tipoDestino:'whatsapp', destino:'https://wa.me/5551999990000?text=Ol%C3%A1!%20Quero%20saber%20da%20oferta%20do%20Brasamind', destRotulo:'WhatsApp (+55 51 99999 0000)',
+      tipoDestinoLabel:'WhatsApp',
+      status:'Pausada', badgeVar:'secondary', views:140, clicks:9, criadaEm:'04/08/2026' }
   ];
   eventos = [
     { nome:'Networking de Inverno', data:'21/06/2026', part:'78', receita:'R$ 14,0k', local:'Gramado RS', convidados:'14', checkins:'71 / 78', slot:'admin-ev-inverno', foto:'uploads/imagens-gerais/IMG_3921.PNG', descricao:'Encontro de inverno na serra, com fondue e rodada de conexões entre membros.', palestrante:'Marina Fogaça', palestranteBio:'Fundadora da Fogaça Digital, especialista em branding B2B.', cronograma:[{hora:'19h00',item:'Recepção'},{hora:'19h30',item:'Jantar'},{hora:'21h00',item:'Rodada de conexões'},{hora:'22h30',item:'Encerramento'}] },
@@ -1731,9 +1830,9 @@ class Component extends DCLogic {
       palestranteBio: evSelRaw.palestranteBio || '',
       ...this.mapsUrl(evSelRaw.local),
     };
-    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Pontos, regras e prêmios do encerramento.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
+    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Pontos, regras e prêmios do encerramento.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], ofertas:['Ofertas de Patrocinadores','Banners ativos e engajamento da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
     const t = titles[s.screen] || ['',''];
-    const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', faq:'Exportar relatório do FAQ', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
+    const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', ofertas:'Exportar relatório de ofertas', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', faq:'Exportar relatório do FAQ', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
     const exportLabel = exportLabels[s.screen] || 'Exportar relatório';
     const _pf = s.partFilter || 'todos';
     const mapPart = g => {
@@ -1777,8 +1876,24 @@ class Component extends DCLogic {
         return { theme };
       }),
       isGeral:s.screen==='geral', isMembros:s.screen==='membros', isEventos:s.screen==='eventos', isFinanceiro:s.screen==='financeiro', isGame:s.screen==='game', isSeg:s.screen==='seg',
-      isSegUsers:s.screen==='segUsers', isCategorias:s.screen==='categorias', isAdmins:s.screen==='admins', isTermos:s.screen==='termos', isFaq:s.screen==='faq', isMembroDetalhe:s.screen==='membroDetalhe', isEventoForm:s.screen==='eventoForm',
+      isSegUsers:s.screen==='segUsers', isCategorias:s.screen==='categorias', isOfertas:s.screen==='ofertas', isAdmins:s.screen==='admins', isTermos:s.screen==='termos', isFaq:s.screen==='faq', isMembroDetalhe:s.screen==='membroDetalhe', isEventoForm:s.screen==='eventoForm',
       isAdminEdit:s.screen==='adminEdit', isTermosEdit:s.screen==='termosEdit', isEventoView:s.screen==='eventoView', isBloqueio:s.screen==='bloqueio',
+      adminOfertasRows: this.ofertasAdmin.map(o => ({
+        ...o,
+        views: (o.views || 0).toLocaleString('pt-BR'),
+        clicks: (o.clicks || 0).toLocaleString('pt-BR'),
+        openLink: () => {
+          if (o.destino && o.destino !== '#') {
+            window.open(o.destino, '_blank');
+          }
+        }
+      })),
+      adminTotalOfertas: String(this.ofertasAdmin.length),
+      adminAtivasOfertas: String(this.ofertasAdmin.filter(o=>o.status==='Ativa').length),
+      adminViewsOfertas: this.ofertasAdmin.reduce((acc,o)=>acc+(o.views||0),0).toLocaleString('pt-BR'),
+      adminClicksOfertas: this.ofertasAdmin.reduce((acc,o)=>acc+(o.clicks||0),0).toLocaleString('pt-BR'),
+      adminAvgCtrOfertas: this.ofertasAdmin.reduce((acc,o)=>acc+(o.views||0),0) > 0 ? ((this.ofertasAdmin.reduce((acc,o)=>acc+(o.clicks||0),0)/this.ofertasAdmin.reduce((acc,o)=>acc+(o.views||0),0))*100).toFixed(1).replace('.',',') + '%' : '0%',
+      goOfertas:()=>this.nav('ofertas'),
       goBloqueio:()=>this.nav('bloqueio'),
       checkQuery: s.checkQuery || '',
       setCheckQuery: e=>this.setCheckQuery(e),
@@ -1853,10 +1968,10 @@ class Component extends DCLogic {
       addFotos: (e)=>{ if(e.target.files && e.target.files.length) this.setState({ galeriaTemFoto:true }); },
       notificarGaleria: ()=>this.setState({ galeriaNotificada:true }),
       permissoes:this.permissoesBase,
-      navCls:{ geral:nav('geral'), membros:nav('membros'), eventos:nav('eventos'), financeiro:nav('financeiro'), game:nav('game'), seg:nav('seg'), segUsers:nav('segUsers'), categorias:nav('categorias'), admins:nav('admins'), termos:nav('termos'), faq:nav('faq') },
+      navCls:{ geral:nav('geral'), membros:nav('membros'), eventos:nav('eventos'), financeiro:nav('financeiro'), game:nav('game'), seg:nav('seg'), segUsers:nav('segUsers'), categorias:nav('categorias'), ofertas:nav('ofertas'), admins:nav('admins'), termos:nav('termos'), faq:nav('faq') },
       pageTitle:t[0], pageSub:t[1], exportLabel, exportReport:()=>this.exportReport(), openNewAdmin:()=>this.openNewAdmin(), openNewTermo:()=>this.openNewTermo(), toggleAdminSel:()=>this.toggleAdmin(adminSel),
       goGeral:()=>this.nav('geral'), goMembros:()=>this.nav('membros'), goEventos:()=>this.nav('eventos'), goFinanceiro:()=>this.nav('financeiro'), goGame:()=>this.nav('game'), goSeg:()=>this.nav('seg'),
-      goSegUsers:()=>this.nav('segUsers'), goCategorias:()=>this.nav('categorias'), goAdmins:()=>this.nav('admins'), goTermos:()=>this.nav('termos'), goFaq:()=>this.nav('faq'),
+      goSegUsers:()=>this.nav('segUsers'), goCategorias:()=>this.nav('categorias'), goOfertas:()=>this.nav('ofertas'), goAdmins:()=>this.nav('admins'), goTermos:()=>this.nav('termos'), goFaq:()=>this.nav('faq'),
       menuOpen: !!s.menuOpen, menuOpenCls: s.menuOpen ? 'is-open' : '',
       openMenu:()=>this.setState({ menuOpen:true }), closeMenu:()=>this.setState({ menuOpen:false }),
       tabCls:{
@@ -1864,7 +1979,7 @@ class Component extends DCLogic {
         membros: (s.screen==='membros'||s.screen==='membroDetalhe')?'is-on':'',
         eventos: (s.screen==='eventos'||s.screen==='eventoView'||s.screen==='eventoForm')?'is-on':'',
         financeiro: s.screen==='financeiro'?'is-on':'',
-        more: ['game','seg','segUsers','categorias','admins','termos','faq','adminEdit','termosEdit','bloqueio'].indexOf(s.screen)>=0?'is-on':'',
+        more: ['game','seg','segUsers','categorias','ofertas','admins','termos','faq','adminEdit','termosEdit','bloqueio'].indexOf(s.screen)>=0?'is-on':'',
       },
       editEvent:()=>{ this.setHash('eventoForm'); window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'edit', menuOpen:false }); },
       openNewEvent:()=>{ this.setHash('eventoForm'); window.scrollTo(0,0); this.setState({ screen:'eventoForm', eventMode:'new', menuOpen:false }); },
