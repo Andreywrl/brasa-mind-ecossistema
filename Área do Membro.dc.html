@@ -7,23 +7,23 @@
 <title>Brasamind | Área do Membro</title>
 <meta name="robots" content="noindex, nofollow">
 
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="_ds/brand/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="_ds/brand/favicon-16x16.png">
-<link rel="apple-touch-icon" href="_ds/brand/apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/_ds/brand/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/_ds/brand/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/_ds/brand/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0e0c0b">
 
-<script src="./support.js"></script>
+<script src="/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-  <link rel="stylesheet" href="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
-  <link rel="stylesheet" href="_ds/brasa-dark-theme.css">
-  <link rel="stylesheet" href="_ds/brasa-app-shell.css">
-  <script src="_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
-  <script src="_ds/image-slot.js"></script>
+  <link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
+  <link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
+  <link rel="stylesheet" href="/_ds/brasa-app-shell.css">
+  <script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+  <script src="/_ds/image-slot.js"></script>
   <style>
     body { margin:0; }
     a { color: hsl(var(--primary)); text-decoration:none; }
@@ -1671,45 +1671,9 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  getOrigin() {
-    try {
-      if (typeof window !== 'undefined' && window.location && window.location.origin) {
-        return window.location.origin;
-      }
-    } catch(e) {}
-    return 'https://brasa-mind-ecossistema.vercel.app';
-  }
-
-  getHost() {
-    try {
-      if (typeof window !== 'undefined' && window.location && window.location.host) {
-        return window.location.host;
-      }
-    } catch(e) {}
-    return 'brasa-mind-ecossistema.vercel.app';
-  }
-
-  getInviteFullLink() {
-    return this.getOrigin() + '/Convite%20do%20Convidado.dc.html';
-  }
-
-  getRecruitFullLink() {
-    return this.getOrigin() + '/Quero%20ser%20Membro.dc.html';
-  }
-
-  buildDefaultInviteMessage() {
-    return 'Fala! Estou te chamando para o próximo encontro do Brasamind: "A mente por trás dos grandes movimentos", dia 28/08 às 19h, no Espaço Brasa, em Porto Alegre.\n\nÉ empreendedorismo, churrasco e muito network gaúcho. Garanta sua vaga pelo meu convite: ' + this.getInviteFullLink();
-  }
-
-  buildDefaultRecruitMessage() {
-    return 'Fala! Faço parte do Brasamind, um grupo gaúcho de empreendedorismo, churrasco e network, e queria te chamar para fazer parte também.\n\nSão encontros todo mês, uma rede de mais de 120 empresários que fecham negócios juntos e muita indicação de confiança. Acho que é a sua cara. Entra pelo meu convite: ' + this.getRecruitFullLink();
-  }
-
-  state = { screen:'dashboard', menuOpen:false, showPwd:false, pwdSaving:false, buyStep:1, buyPayMethod:'pix', hubQuery:'', hubCat:'todas', hubEsp:'todas', hubCidade:'todas', rankPeriod:'mensal', invite:false, profile:null, theme:'dark', hasTicket:false, past:null, termsMember:false, notifOpen:false, payMethodOpen:false, payMethod:'pix', payDraft:'pix', pwdOk:false, confirm:null, payMens:null, payMensStep:1, faqOpen:'membro', faqCat:'todas', inviteCopied:false, recruitCopied:false,
-    ofertaIndex:0, ofertaModalOpen:false, ofertaDraftMode:'new', ofertaDraftId:null, ofertaDraftTitle:'', ofertaDraftTipo:'whatsapp', ofertaDraftDestino:'https://wa.me/5551999990000', ofertaDraftBanner:'uploads/imagens-gerais/IMG_3914.PNG',
-    inviteMessage:'',
+    inviteMessage:'Fala! Estou te chamando para o próximo encontro do Brasamind: "A mente por trás dos grandes movimentos", dia 28/08 às 19h, no Espaço Brasa, em Porto Alegre.\n\nÉ empreendedorismo, churrasco e muito network gaúcho. Garanta sua vaga pelo meu convite: /Convite%20do%20Convidado.dc.html',
     inviteMode:'evento',
-    recruitMessage:'',
+    recruitMessage:'Fala! Faço parte do Brasamind, um grupo gaúcho de empreendedorismo, churrasco e network, e queria te chamar para fazer parte também.\n\nSão encontros todo mês, uma rede de mais de 120 empresários que fecham negócios juntos e muita indicação de confiança. Acho que é a sua cara. Entra pelo meu convite: /Quero%20ser%20Membro.dc.html',
     notifs:[
       { id:1, tipo:'evento', titulo:'Inscrições abertas: A mente por trás dos grandes movimentos', quando:'há 2 horas', read:false },
       { id:2, tipo:'financeiro', titulo:'Sua mensalidade de agosto vence em 05/08', quando:'ontem', read:false },
@@ -1734,12 +1698,6 @@ class Component extends DCLogic {
     window.addEventListener('hashchange', this._onHash);
     window.addEventListener('keydown', this._onKey);
     this.readHash();
-    if (!this.state.inviteMessage || !this.state.recruitMessage) {
-      this.setState({
-        inviteMessage: this.state.inviteMessage || this.buildDefaultInviteMessage(),
-        recruitMessage: this.state.recruitMessage || this.buildDefaultRecruitMessage()
-      });
-    }
   }
   componentWillUnmount() {
     clearInterval(this._t);
@@ -2288,16 +2246,16 @@ class Component extends DCLogic {
       notifUnread: s.notifs.filter(n=>!n.read).length,
       notifItems: s.notifs.map(n=>{ const map={ evento:['Evento','bg-info'], financeiro:['Financeiro','bg-warning'], pontos:['Pontuação','bg-success'], convite:['Convite','bg-secondary'] }; const [cat,dotCls]=map[n.tipo]||['Aviso','bg-secondary']; return { ...n, cat, dotCls, unread:!n.read, itemOp:n.read?'0.55':'1', mark:()=>this.markNotif(n.id) }; }),
       invite:s.invite, inviteGen:s.invite, inviteNotGen:!s.invite,
-      inviteLink: this.getHost() + '/convite/joao-da-silva-8f2c',
-      recruitLink: this.getHost() + '/membro/joao-da-silva-3a9d',
+      inviteLink: '/Convite%20do%20Convidado.dc.html',
+      recruitLink: '/Quero%20ser%20Membro.dc.html',
       inviteCopyLabel: s.inviteCopied ? 'Link copiado ✓' : 'Copiar link',
       recruitCopyLabel: s.recruitCopied ? 'Link copiado ✓' : 'Copiar link',
-      copyInviteLink:()=>{ this.copyText(this.getInviteFullLink()); this.setState({ inviteCopied:true }); },
-      copyRecruitLink:()=>{ this.copyText(this.getRecruitFullLink()); this.setState({ recruitCopied:true }); },
-      shareInviteWa:()=>this.shareWa(s.inviteMessage || this.buildDefaultInviteMessage()),
-      shareRecruitWa:()=>this.shareWa(s.recruitMessage || this.buildDefaultRecruitMessage()),
-      copyInviteMsg:()=>this.copyText(s.inviteMessage || this.buildDefaultInviteMessage()),
-      copyRecruitMsg:()=>this.copyText(s.recruitMessage || this.buildDefaultRecruitMessage()),
+      copyInviteLink:()=>{ this.copyText('/Convite%20do%20Convidado.dc.html'); this.setState({ inviteCopied:true }); },
+      copyRecruitLink:()=>{ this.copyText('/Quero%20ser%20Membro.dc.html'); this.setState({ recruitCopied:true }); },
+      shareInviteWa:()=>this.shareWa(s.inviteMessage),
+      shareRecruitWa:()=>this.shareWa(s.recruitMessage),
+      copyInviteMsg:()=>this.copyText(s.inviteMessage),
+      copyRecruitMsg:()=>this.copyText(s.recruitMessage),
       eventoNome:'A mente por trás dos grandes movimentos', eventoData:'Sex, 28 de agosto · 19h às 23h', eventoLocal:'Espaço Brasa, Porto Alegre RS',
       modeEvento:s.inviteMode==='evento', modeRecrutar:s.inviteMode==='recrutar',
       eventoChevron: s.inviteMode==='evento' ? '180deg' : '0deg',
