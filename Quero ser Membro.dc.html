@@ -32,16 +32,16 @@
 <meta name="twitter:image" content="/_ds/brand/og-image.png">
 <meta name="twitter:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
+<link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.css">
+<link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
+<link rel="stylesheet" href="/_ds/brasa-app-shell.css">
+<script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+<script src="/_ds/image-slot.js"></script>
 <script src="/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-  <link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
-  <link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
-  <link rel="stylesheet" href="/_ds/brasa-app-shell.css">
-  <script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
-  <script src="/_ds/image-slot.js"></script>
   <style>
     body { margin:0; }
     * { text-wrap: pretty; }
@@ -101,10 +101,10 @@
   <header class="om-topbar">
     <div class="om-chrome-inner">
       <div style="display:flex; align-items:center; gap:10px;">
-        <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:28px; width:auto;">
+        <img src="/_ds/brand/simbolo-laranja.png" alt="" style="height:28px; width:auto;">
         <span class="font-impact" style="font-size:19px;">Brasamind</span>
       </div>
-      <a href="index.html" class="text-muted-foreground" style="font-size:13px; font-weight:600;">Já é membro? Entrar</a>
+      <a href="/" class="text-muted-foreground" style="font-size:13px; font-weight:600;">Já é membro? Entrar</a>
     </div>
   </header>
 
@@ -115,15 +115,15 @@
 
   <!-- Hero full-bleed -->
   <section style="position:relative; min-height:440px; overflow:hidden;">
-    <image-slot id="membro-hero" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
+    <image-slot id="membro-hero" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto de um encontro do Brasa" src="/uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
     <div style="position:absolute; inset:0; background:linear-gradient(135deg, hsl(var(--primary) / .92) 0%, hsl(20 10% 5% / .88) 100%);"></div>
-    <img src="_ds/brand/simbolo-branco.png" alt="" style="position:absolute; right:-40px; bottom:-30px; width:360px; opacity:.1;">
+    <img src="/_ds/brand/simbolo-branco.png" alt="" style="position:absolute; right:-40px; bottom:-30px; width:360px; opacity:.1;">
     <div class="om-hero-inner" style="position:relative; max-width:1100px; margin:0 auto; padding:56px 40px; display:flex; flex-direction:column; gap:22px; min-height:440px; justify-content:center;">
       <h1 class="font-impact om-hero-title" style="margin:0; font-size:52px; line-height:1.02; color:#fff; letter-spacing:.01em; max-width:640px;">ENTRE PARA O BRASA</h1>
       <p style="margin:0; font-size:17px; color:rgba(255,255,255,.9); max-width:520px; line-height:1.55;">Empresários gaúchos que conectam, indicam e fecham negócios. Um encontro por mês, rede o ano inteiro. Mensalidade de R$ 97.</p>
       <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
         <a href="#plano" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-brasa text-white glow-ember hover:brightness-105 h-11 px-6" style="text-decoration:none; color:#fff;">Quero ser Membro</a>
-        <a href="index.html" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-white/40 text-white hover:bg-white/10 h-11 px-6" style="text-decoration:none;">Já tenho conta</a>
+        <a href="/" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold border border-white/40 text-white hover:bg-white/10 h-11 px-6" style="text-decoration:none;">Já tenho conta</a>
       </div>
     </div>
   </section>
@@ -140,7 +140,7 @@
         <iframe src="{{ vslUrl }}" title="Vídeo sobre o Brasamind" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </sc-if>
       <sc-if value="{{ vslIdle }}">
-        <image-slot id="membro-vsl" focus="face" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Thumbnail da VSL" src="uploads/imagens-gerais/IMG_3907.PNG"></image-slot>
+        <image-slot id="membro-vsl" focus="face" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Thumbnail da VSL" src="/uploads/imagens-gerais/IMG_3907.PNG"></image-slot>
         <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
         <button onClick="{{ playVsl }}" aria-label="Assistir vídeo" class="om-vsl-play om-img-over" style="position:absolute; inset:0; margin:auto; width:72px; height:72px; border:0; border-radius:50%; background:hsl(var(--primary)); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 24px hsl(var(--primary) / .4);">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px;"><path d="M8 5v14l11-7z"/></svg>
@@ -169,10 +169,10 @@
         <span class="text-muted-foreground" style="font-size:13px;">arraste para o lado</span>
       </div>
       <div class="om-gal" style="display:flex; gap:16px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x mandatory;">
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev1" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário" src="uploads/imagens-gerais/IMG_3920.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev2" focus="upper" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios" src="uploads/imagens-gerais/IMG_3913.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev3" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo" src="uploads/imagens-gerais/IMG_3915.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
-        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev4" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno" src="uploads/imagens-gerais/IMG_3908.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev1" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do encontro de aniversário" src="/uploads/imagens-gerais/IMG_3920.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Mar 2026 · 128 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">4 anos de Brasa</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Encontro de aniversário lotado, com os fundadores e a rede reunida em volta do fogo.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev2" focus="upper" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto da rodada de negócios" src="/uploads/imagens-gerais/IMG_3913.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Abr 2026 · 88 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Churrasco &amp; Vendas B2B</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Rodada estruturada de indicações que rendeu mais de 30 novas conexões entre os membros.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev3" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do painel de varejo" src="/uploads/imagens-gerais/IMG_3915.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jun 2026 · 96 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">A força do varejo gaúcho</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Painel com líderes do varejo do RS, seguido de assado e conversa que virou parceria.</p></div></div>
+        <div class="om-ev bg-card" style="scroll-snap-align:start; flex:0 0 296px; border:1px solid hsl(var(--border)); border-radius:16px; overflow:hidden;"><div style="position:relative; height:168px;"><image-slot id="memb-ev4" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Foto do networking de inverno" src="/uploads/imagens-gerais/IMG_3908.PNG"></image-slot><span class="om-img-scrim" aria-hidden="true"></span><span class="font-mono om-img-over" style="position:absolute; top:12px; left:12px; background:hsl(20 10% 5% / .82); color:#fff; font-size:11px; padding:3px 9px; border-radius:9999px;">Jul 2026 · 104 presentes</span></div><div style="padding:16px;"><div class="font-display" style="font-size:16px; font-weight:800;">Networking de Inverno</div><p class="text-muted-foreground" style="margin:6px 0 0; font-size:13px;">Noite de fogo, chopp e novos negócios fechados no ponto mais alto do ano.</p></div></div>
       </div>
     </section>
 
@@ -321,14 +321,14 @@
             </div>
             <div style="display:flex; align-items:center; gap:6px;">
               <span class="text-muted-foreground" style="font-size:11px;">processado por</span>
-              <img src="_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
+              <img src="/_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-            <img src="_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
-            <img src="_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
-            <img src="_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
-            <img src="_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
+            <img src="/_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
+            <img src="/_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
+            <img src="/_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
+            <img src="/_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
             <span class="text-muted-foreground" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; border:1px solid hsl(var(--border)); border-radius:5px; padding:4px 8px; font-size:11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success))" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>Site Seguro</span>
           </div>
         </div>
@@ -358,7 +358,7 @@
             <div style="display:flex; align-items:flex-start; gap:8px;"><span class="bg-brasa" style="width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex:none; font-size:11px; font-weight:700; color:#fff;">3</span><span>Indique um convidado e ganhe pontos na rede</span></div>
           </div>
         </div>
-        <a href="%C3%81rea%20do%20Membro.dc.html" class="bg-brasa glow-ember" style="display:flex; align-items:center; justify-content:center; border-radius:10px; padding:12px; color:#fff; font-size:14px; font-weight:600;">Ir para minha área</a>
+        <a href="/%C3%81rea%20do%20Membro.dc.html" class="bg-brasa glow-ember" style="display:flex; align-items:center; justify-content:center; border-radius:10px; padding:12px; color:#fff; font-size:14px; font-weight:600;">Ir para minha área</a>
       </div>
       </sc-if>
     </div>
@@ -369,7 +369,7 @@
   <footer style="border-top:1px solid hsl(var(--border));">
     <div style="max-width:960px; margin:0 auto; padding:30px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
       <div style="display:flex; align-items:center; gap:11px;">
-        <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto;">
+        <img src="/_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto;">
         <div>
           <div class="font-impact" style="font-size:16px; line-height:1.15;">Brasamind</div>
           <div class="text-muted-foreground" style="font-size:12px;">Empreendedorismo, churrasco e network gaúcho</div>

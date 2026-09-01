@@ -32,16 +32,16 @@
 <meta name="twitter:image" content="/_ds/brand/og-image.png">
 <meta name="twitter:image:alt" content="Brasamind: conecte, indique, feche negócios.">
 
+<link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.css">
+<link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
+<link rel="stylesheet" href="/_ds/brasa-app-shell.css">
+<script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+<script src="/_ds/image-slot.js"></script>
 <script src="/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-  <link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
-  <link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
-  <link rel="stylesheet" href="/_ds/brasa-app-shell.css">
-  <script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
-  <script src="_ds/image-slot.js"></script>
   <style>
     body { margin: 0; }
     a { color: hsl(var(--primary)); }
@@ -57,12 +57,12 @@
   <!-- HERO -->
   <header class="bg-brasa" style="padding:56px 48px; display:flex; flex-direction:column; gap:24px;">
     <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
-      <img src="_ds/brand/brasamind-lockup-branco.png" alt="Brasamind" style="height:38px; width:auto; display:block;">
+      <img src="/_ds/brand/brasamind-lockup-branco.png" alt="Brasamind" style="height:38px; width:auto; display:block;">
       <div style="display:flex; gap:10px; align-items:center;">
         <button onClick="{{ toggleTheme }}" class="font-sans" style="cursor:pointer; border:1px solid rgba(255,255,255,.5); background:rgba(255,255,255,.14); color:#fff; border-radius:9999px; padding:7px 14px; font-size:13px; font-weight:600;">{{ toggleLabel }}</button>
         <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
         <x-import component-from-global-scope="BrasaMindUI.Avatar" hint-size="40px,40px">
-          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="40px,40px"></x-import>
+          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="40px,40px"></x-import>
           <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="40px,40px">JS</x-import>
         </x-import>
       </div>
@@ -130,7 +130,7 @@
           <div style="position:relative;">
             <div class="bg-brasa" style="height:104px; width:100%;"></div>
             <div style="position:absolute; left:20px; bottom:-32px; width:80px; height:80px; border-radius:9999px; padding:3px; background:hsl(var(--card));">
-              <image-slot id="membro-joao-foto" focus="face" shape="circle" style="width:74px;height:74px" placeholder="Foto do membro" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
+              <image-slot id="membro-joao-foto" focus="face" shape="circle" style="width:74px;height:74px" placeholder="Foto do membro" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
             </div>
             <div style="position:absolute; right:16px; top:16px;">
               <x-import component-from-global-scope="BrasaMindUI.Badge" variant="ember" hint-size="auto,24px">★ Membro</x-import>
@@ -448,7 +448,7 @@
             <!-- 2º -->
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
               <div class="om-podium-photo">
-                <image-slot id="demo-rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot>
+                <image-slot id="demo-rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="/uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot>
                 <span class="om-medal om-medal-silver" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
@@ -464,7 +464,7 @@
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:184px;">
               <x-import component-from-global-scope="BrasaMindUI.Badge" class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold transition-colors bg-brasa text-white" hint-size="auto,24px">♛ Fundador</x-import>
               <div class="om-podium-photo om-podium-photo-lg">
-                <image-slot id="demo-rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
+                <image-slot id="demo-rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot>
                 <span class="om-medal om-medal-gold" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
@@ -479,7 +479,7 @@
             <!-- 3º -->
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
               <div class="om-podium-photo">
-                <image-slot id="demo-rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg"></image-slot>
+                <image-slot id="demo-rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="/uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg"></image-slot>
                 <span class="om-medal om-medal-bronze" aria-hidden="true"></span>
               </div>
               <div style="text-align:center;">
@@ -543,7 +543,7 @@
   </main>
 
   <footer class="border-border text-muted-foreground" style="padding:32px 48px; border-top-width:1px; border-top-style:solid; display:flex; align-items:center; gap:12px;">
-    <img src="_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto; display:block;">
+    <img src="/_ds/brand/simbolo-laranja.png" alt="" style="height:26px; width:auto; display:block;">
     <span>Brasamind Design System, demo de componentes. Tema atual: {{ themeName }}.</span>
   </footer>
 

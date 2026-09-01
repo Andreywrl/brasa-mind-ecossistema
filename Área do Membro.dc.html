@@ -14,16 +14,16 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0e0c0b">
 
+<link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.css">
+<link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
+<link rel="stylesheet" href="/_ds/brasa-app-shell.css">
+<script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
+<script src="/_ds/image-slot.js"></script>
 <script src="/support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-  <link rel="stylesheet" href="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/styles.css">
-  <link rel="stylesheet" href="/_ds/brasa-dark-theme.css">
-  <link rel="stylesheet" href="/_ds/brasa-app-shell.css">
-  <script src="/_ds/brasa-mind-design-system-5e427a9d-128e-43aa-9f19-f3e7c6f62d37/_ds_bundle.js"></script>
-  <script src="/_ds/image-slot.js"></script>
   <style>
     body { margin:0; }
     a { color: hsl(var(--primary)); text-decoration:none; }
@@ -49,7 +49,7 @@
   <aside class="om-sidebar {{ menuOpenCls }}">
     <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:4px 8px;">
       <div style="display:flex; align-items:center; gap:10px;">
-        <img src="_ds/brand/simbolo-laranja.png" alt="Brasamind" style="height:30px; width:auto; display:block;">
+        <img src="/_ds/brand/simbolo-laranja.png" alt="Brasamind" style="height:30px; width:auto; display:block;">
         <span class="font-impact" style="font-size:20px; line-height:1; letter-spacing:.01em;">Brasamind</span>
       </div>
       <button class="om-menu-btn om-icon-btn" onClick="{{ closeMenu }}" aria-label="Fechar menu">
@@ -101,7 +101,7 @@
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:8px;">
       <button class="om-nav {{ navCls.perfil }}" onClick="{{ goPerfil }}" style="display:flex; align-items:center; gap:11px; width:100%; padding:9px 10px; border:1px solid hsl(var(--border)); background:transparent; border-radius:12px; cursor:pointer; text-align:left;">
         <x-import component-from-global-scope="BrasaMindUI.Avatar" style="width:36px;height:36px" hint-size="36px,36px">
-          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="36px,36px"></x-import>
+          <x-import component-from-global-scope="BrasaMindUI.AvatarImage" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg" hint-size="36px,36px"></x-import>
           <x-import component-from-global-scope="BrasaMindUI.AvatarFallback" hint-size="36px,36px">JS</x-import>
         </x-import>
         <span style="display:flex; flex-direction:column; line-height:1.2;">
@@ -209,7 +209,7 @@
               </div>
             </div>
             <div style="position:relative; min-height:230px; border-left:1px solid hsl(var(--border));">
-              <image-slot id="hero-evento" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="uploads/imagens-gerais/IMG_3917.PNG"></image-slot>
+              <image-slot id="hero-evento" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="/uploads/imagens-gerais/IMG_3917.PNG"></image-slot>
             </div>
           </div>
         </div>
@@ -317,12 +317,12 @@
       <sc-if value="{{ isEvento }}">
       <div style="display:flex; flex-direction:column; gap:24px;">
         <div style="position:relative; border-radius:20px; overflow:hidden; border:1px solid hsl(var(--border)); min-height:260px;">
-          <image-slot id="evento-banner" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="uploads/imagens-gerais/IMG_3921.PNG"></image-slot>
+          <image-slot id="evento-banner" focus="faces" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do evento" src="/uploads/imagens-gerais/IMG_3921.PNG"></image-slot>
           <span class="om-img-scrim om-img-scrim--hero" aria-hidden="true"></span>
           <div class="om-img-over" style="position:absolute; left:0; right:0; bottom:0; padding:26px 30px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
             <div>
               <x-import component-from-global-scope="BrasaMindUI.Badge" variant="fire" hint-size="auto,24px">Inscrições abertas</x-import>
-          <h2 class="font-impact om-event-title" style="margin:12px 0 4px; font-size:32px; color:#fff; letter-spacing:.01em;">A MENTE POR TRÁS DOS GRANDES MOVIMENTOS</h2>
+              <h2 class="font-impact om-event-title" style="margin:12px 0 4px; font-size:32px; color:#fff; letter-spacing:.01em;">A MENTE POR TRÁS DOS GRANDES MOVIMENTOS</h2>
               <p style="margin:0 0 10px; font-size:15px; color:rgba(255,255,255,.9);">A mente por trás do marketing da Agrofel, Yara e Alibem.</p>
               <div style="display:flex; gap:20px; flex-wrap:wrap; color:rgba(255,255,255,.9); font-size:14px;">
                 <span>📅 Sex, 28 de agosto de 2026</span>
@@ -358,7 +358,7 @@
             <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:22px 24px;">
               <h3 class="font-display" style="margin:0 0 16px; font-size:17px; font-weight:800;">Palestrante</h3>
               <div style="display:flex; align-items:center; gap:16px;">
-                <div style="width:72px; height:72px; border-radius:50%; overflow:hidden; flex:none; border:2px solid hsl(var(--primary));"><image-slot id="palestrante-eduardo" shape="circle" style="width:100%;height:100%;" placeholder="Rosto de Eduardo Seibel" src="uploads/imagens-gerais/IMG_3912.PNG" focus="face-right"></image-slot></div>
+                <div style="width:72px; height:72px; border-radius:50%; overflow:hidden; flex:none; border:2px solid hsl(var(--primary));"><image-slot id="palestrante-eduardo" shape="circle" style="width:100%;height:100%;" placeholder="Rosto de Eduardo Seibel" src="/uploads/imagens-gerais/IMG_3912.PNG" focus="face-right"></image-slot></div>
                 <div>
                   <div class="font-display" style="font-size:18px; font-weight:800;">Eduardo Seibel</div>
                   <div class="text-muted-foreground" style="font-size:13px; margin-top:2px;">A mente por trás do marketing da Agrofel, Yara e Alibem</div>
@@ -517,7 +517,7 @@
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:16px; padding:24px;">
           <h3 class="font-display" style="margin:0 0 18px; font-size:18px; font-weight:800;">Resumo do pedido</h3>
           <div style="display:flex; gap:16px; padding-bottom:18px; border-bottom:1px solid hsl(var(--border));">
-            <div style="width:84px; height:84px; border-radius:12px; overflow:hidden; flex:none;"><image-slot id="compra-thumb" focus="brand" style="width:100%;height:100%;" placeholder="Evento" src="uploads/imagens-gerais/IMG_3917.PNG"></image-slot></div>
+            <div style="width:84px; height:84px; border-radius:12px; overflow:hidden; flex:none;"><image-slot id="compra-thumb" focus="brand" style="width:100%;height:100%;" placeholder="Evento" src="/uploads/imagens-gerais/IMG_3917.PNG"></image-slot></div>
             <div>
               <div class="font-display" style="font-size:17px; font-weight:800;">A mente por trás dos grandes movimentos</div>
               <div class="text-muted-foreground" style="font-size:13px; margin-top:4px;">Sex, 28 de agosto, 19h às 23h</div>
@@ -586,14 +586,14 @@
               </div>
               <div style="display:flex; align-items:center; gap:6px;">
                 <span class="text-muted-foreground" style="font-size:11px;">processado por</span>
-                <img src="_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
+                <img src="/_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-              <img src="_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
               <span class="text-muted-foreground" style="margin-left:auto; display:inline-flex; align-items:center; gap:5px; border:1px solid hsl(var(--border)); border-radius:5px; padding:4px 8px; font-size:11px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--success))" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>Site Seguro</span>
             </div>
           </div>
@@ -1082,7 +1082,7 @@
           </div>
           <div style="padding:16px 22px 0;">
             <div style="height:168px; border-radius:12px; overflow:hidden; border:1px solid hsl(var(--border));">
-              <image-slot id="premios-ano" focus="top" radius="0" style="width:100%; height:100%;" placeholder="Foto dos prêmios" src="uploads/imagens-gerais/bairros-do-rio-de-janeiro.jpg"></image-slot>
+              <image-slot id="premios-ano" focus="top" radius="0" style="width:100%; height:100%;" placeholder="Foto dos prêmios" src="/uploads/imagens-gerais/bairros-do-rio-de-janeiro.jpg"></image-slot>
             </div>
           </div>
           <div class="om-split" style="padding:20px 22px; align-items:start;">
@@ -1123,17 +1123,17 @@
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; padding:28px 24px;">
           <div style="display:flex; align-items:flex-end; justify-content:center; gap:18px;">
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
-              <div class="om-podium-photo"><image-slot id="rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-mauricio-casas-454804780-18506626.jpg"></image-slot><span class="om-medal om-medal-silver" aria-hidden="true"></span></div>
+              <div class="om-podium-photo"><image-slot id="rank-podium-2" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="/uploads/users/pexels-mauricio-casas-454804780-18506626.jpg"></image-slot><span class="om-medal om-medal-silver" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">Ana B. Rocha</div><div class="font-mono text-muted-foreground" style="font-size:13px;">2.180 pts</div></div>
               <div style="width:100%; height:96px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(30 8% 30%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:40px; color:hsl(30 8% 66%);">2</span></div>
             </div>
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:184px;">
-              <div class="om-podium-photo om-podium-photo-lg"><image-slot id="rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot><span class="om-medal om-medal-gold" aria-hidden="true"></span></div>
+              <div class="om-podium-photo om-podium-photo-lg"><image-slot id="rank-podium-1" shape="circle" focus="face" style="width:128px;height:128px;" placeholder="Foto" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot><span class="om-medal om-medal-gold" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:16px;">João da Silva</div><div class="font-mono" style="font-size:14px; color:hsl(var(--foreground));">2.310 pts</div></div>
               <div class="bg-brasa" style="width:100%; height:134px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:52px; color:#fff;">1</span></div>
             </div>
             <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:168px;">
-              <div class="om-podium-photo"><image-slot id="rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot><span class="om-medal om-medal-bronze" aria-hidden="true"></span></div>
+              <div class="om-podium-photo"><image-slot id="rank-podium-3" shape="circle" focus="face" style="width:104px;height:104px;" placeholder="Foto" src="/uploads/users/pexels-uriel-art-923978-4566871.jpg"></image-slot><span class="om-medal om-medal-bronze" aria-hidden="true"></span></div>
               <div style="text-align:center;"><div class="font-display" style="font-weight:800; font-size:15px;">Maria Souza</div><div class="font-mono text-muted-foreground" style="font-size:13px;">1.840 pts</div></div>
               <div style="width:100%; height:74px; border-radius:12px 12px 0 0; background:hsl(20 8% 14%); border:1px solid hsl(24 40% 34%); border-bottom:0; display:flex; align-items:center; justify-content:center;"><span class="font-impact" style="font-size:36px; color:hsl(24 55% 56%);">3</span></div>
             </div>
@@ -1273,14 +1273,14 @@
               </div>
               <div style="display:flex; align-items:center; gap:6px;">
                 <span class="text-muted-foreground" style="font-size:11px;">processado por</span>
-                <img src="_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
+                <img src="/_ds/payments/asaas.svg" alt="Asaas" style="height:16px; width:auto; display:block;">
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-              <img src="_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
-              <img src="_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/visa.svg" alt="Visa" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/mastercard.svg" alt="Mastercard" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/elo.svg" alt="Elo" style="height:28px; width:auto; display:block; border-radius:5px;">
+              <img src="/_ds/payments/pix.svg" alt="PIX" style="height:28px; width:auto; display:block; border-radius:5px;">
             </div>
           </div>
 
@@ -1460,9 +1460,9 @@
 
         <div class="bg-card" style="border:1px solid hsl(var(--border)); border-radius:18px; overflow:hidden;">
           <div style="position:relative; height:120px;" class="bg-brasa">
-            <image-slot id="editar-banner" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do perfil" src="uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
+            <image-slot id="editar-banner" focus="brand" style="position:absolute; inset:0; width:100%; height:100%;" placeholder="Banner do perfil" src="/uploads/imagens-gerais/IMG_3911.PNG"></image-slot>
             <span class="om-img-scrim" aria-hidden="true"></span>
-            <span class="om-img-over" style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px;"><image-slot id="editar-foto" focus="face" shape="circle" style="width:92px;height:92px" placeholder="Foto" src="uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot></span>
+            <span class="om-img-over" style="position:absolute; left:28px; bottom:-36px; width:92px; height:92px;"><image-slot id="editar-foto" focus="face" shape="circle" style="width:92px;height:92px" placeholder="Foto" src="/uploads/users/pexels-filipgrobgaard-26150470.jpg"></image-slot></span>
             <span class="bg-card om-img-over" style="position:absolute; right:20px; bottom:16px; font-size:12px; font-weight:600; padding:7px 12px; border-radius:9px; border:1px solid hsl(var(--border)); cursor:pointer;">Trocar capa</span>
           </div>
           <div style="padding:52px 28px 28px; display:flex; flex-direction:column; gap:18px;">
@@ -1566,11 +1566,11 @@
         </div>
         <div style="display:flex; align-items:center; gap:8px; padding:12px 14px; border:1px solid hsl(var(--border)); border-radius:12px;">
           <span class="text-muted-foreground" style="font-size:11px;">processado por</span>
-          <img src="_ds/payments/asaas.svg" alt="Asaas" style="height:14px; width:auto; display:block;">
+          <img src="/_ds/payments/asaas.svg" alt="Asaas" style="height:14px; width:auto; display:block;">
           <div style="margin-left:auto; display:flex; align-items:center; gap:6px;">
-            <img src="_ds/payments/visa.svg" alt="Visa" style="height:22px; width:auto; display:block; border-radius:4px;">
-            <img src="_ds/payments/mastercard.svg" alt="Mastercard" style="height:22px; width:auto; display:block; border-radius:4px;">
-            <img src="_ds/payments/elo.svg" alt="Elo" style="height:22px; width:auto; display:block; border-radius:4px;">
+            <img src="/_ds/payments/visa.svg" alt="Visa" style="height:22px; width:auto; display:block; border-radius:4px;">
+            <img src="/_ds/payments/mastercard.svg" alt="Mastercard" style="height:22px; width:auto; display:block; border-radius:4px;">
+            <img src="/_ds/payments/elo.svg" alt="Elo" style="height:22px; width:auto; display:block; border-radius:4px;">
           </div>
         </div>
       </div>
@@ -1589,7 +1589,7 @@
       <div style="padding:24px; display:flex; flex-direction:column; gap:18px;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
           <div style="display:flex; align-items:flex-start; gap:12px; min-width:0;">
-            <span style="flex:none; width:40px; height:40px; border-radius:10px; border:1px solid hsl(var(--border)); background:hsl(var(--secondary)); display:flex; align-items:center; justify-content:center;"><img src="_ds/brand/simbolo-laranja.png" alt="" style="height:22px; width:auto; display:block;"></span>
+            <span style="flex:none; width:40px; height:40px; border-radius:10px; border:1px solid hsl(var(--border)); background:hsl(var(--secondary)); display:flex; align-items:center; justify-content:center;"><img src="/_ds/brand/simbolo-laranja.png" alt="" style="height:22px; width:auto; display:block;"></span>
             <div style="min-width:0;">
               <h3 id="confirm-title" class="font-display" style="margin:0 0 4px; font-size:18px; font-weight:800;">{{ confirmTitle }}</h3>
               <p class="text-muted-foreground" style="margin:0; font-size:13px; line-height:1.5;">{{ confirmBody }}</p>
