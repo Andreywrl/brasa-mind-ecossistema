@@ -1,0 +1,557 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBRO
+  ADMIN
+  PORTARIA
+}
+
+enum MemberCategory {
+  FUNDADOR
+  PATROCINADOR
+  MEMBRO
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PENDING
+  PAST_DUE
+  CANCELED
+  BLOCKED
+}
+
+enum InvoiceKind {
+  MEMBERSHIP
+  EVENT_TICKET
+  GUEST_TICKET
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  REFUNDED
+  CANCELED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  PIX
+  BOLETO
+}
+
+enum RegistrationType {
+  MEMBER
+  GUEST
+}
+
+enum RegistrationStatus {
+  CONFIRMED
+  CHECKED_IN
+  CANCELED
+  NO_SHOW
+  PENDING_PAYMENT
+}
+
+enum OfferDestinationType {
+  WHATSAPP
+  SITE
+  HUB_PROFILE
+}
+
+enum PointAction {
+  PRESENCA
+  ASSIDUIDADE
+  CONVITE_CONVERTIDO
+  ADIMPLENCIA
+  MANUAL
+}
+
+enum FaqCategory {
+  MEMBRO
+  EVENTO
+  PAGAMENTO
+  CONTA
+}
+
+enum LegalDocType {
+  TERMS
+  PRIVACY
+}
+
+enum NotificationType {
+  EVENTO
+  FINANCEIRO
+  CONVITE
+  RANKING
+  SISTEMA
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          Role      @default(MEMBRO)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  profile       MemberProfile?
+  adminPerms    AdminPermission?
+  doorAccess    DoorAccess?
+  notifications Notification[]
+  consents      Consent[]
+  membershipInvitesCreated MembershipInvite[] @relation("MembershipInviteCreator")
+
+  @@index([role])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model MemberProfile {
+  id            String         @id @default(cuid())
+  userId        String         @unique
+  empresa       String
+  cnpj          String?
+  especialidade String?
+  cidade        String?
+  categoria     MemberCategory @default(MEMBRO)
+  whatsapp      String?
+  telefone      String?
+  instagram     String?
+  linkedin      String?
+  site          String?
+  endereco      String?
+  cep           String?
+  addressNumber String?
+  addressComplement String?
+  bairro        String?
+  youtube       String?
+  descricao     String?        @db.Text
+  fotoUrl       String?
+  capaUrl       String?
+  asaasCustomerId String?      @unique
+  cardLast4     String?
+  cardBrand     String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription  Subscription?
+  invoices      Invoice[]
+  registrations Registration[]
+  invitesSent   Invite[]       @relation("InviteHost")
+  offers        Offer[]
+  pointEntries  PointEntry[]
+  achievements  MemberAchievement[]
+
+  @@index([categoria])
+  @@index([cidade])
+  @@index([especialidade])
+  @@index([cep])
+}
+
+model AdminPermission {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  membros    Boolean @default(true)
+  eventos    Boolean @default(true)
+  financeiro Boolean @default(false)
+  ranking    Boolean @default(true)
+  usuarios   Boolean @default(false)
+  termos     Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DoorAccess {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  login     String   @unique
+  eventId   String?
+  expiresAt DateTime
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event? @relation(fields: [eventId], references: [id], onDelete: SetNull)
+
+  @@index([eventId])
+}
+
+model Category {
+  id          String         @id @default(cuid())
+  nome        MemberCategory @unique
+  descricao   String         @db.Text
+  entradaLabel String
+  entradaCents Int
+  chipClass   String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  memberId             String             @unique
+  status               SubscriptionStatus @default(PENDING)
+  amountCents          Int                @default(9700)
+  billingDay           Int                @default(5)
+  asaasSubscriptionId  String?            @unique
+  paymentMethod        PaymentMethod?
+  nextDueDate          DateTime?
+  overdueSince         DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  member MemberProfile @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+model Invoice {
+  id              String        @id @default(cuid())
+  memberId        String?
+  guestId         String?
+  registrationId  String?       @unique
+  kind            InvoiceKind
+  status          InvoiceStatus @default(PENDING)
+  amountCents     Int
+  competencia     String?
+  dueDate         DateTime
+  paidAt          DateTime?
+  paymentMethod   PaymentMethod?
+  asaasPaymentId  String?       @unique
+  boletoUrl       String?
+  pixQrCode       String?       @db.Text
+  pixCopyPaste    String?       @db.Text
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  member       MemberProfile? @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  guest        Guest?         @relation(fields: [guestId], references: [id], onDelete: SetNull)
+  registration Registration?  @relation(fields: [registrationId], references: [id], onDelete: SetNull)
+
+  @@index([memberId])
+  @@index([status])
+  @@index([dueDate])
+  @@index([asaasPaymentId])
+}
+
+model Event {
+  id             String   @id @default(cuid())
+  nome           String
+  data           DateTime
+  hora           String
+  local          String
+  localShort     String?
+  descricao      String?  @db.Text
+  palestrante    String?
+  palestranteBio String?  @db.Text
+  capaUrl        String?
+  vagas          Int      @default(120)
+  ativo          Boolean  @default(false)
+  cronograma     Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  prices        EventPrice[]
+  registrations Registration[]
+  invites       Invite[]
+  doorAccesses  DoorAccess[]
+
+  @@index([ativo])
+  @@index([data])
+}
+
+enum TicketTier {
+  FUNDADOR
+  PATROCINADOR
+  MEMBRO
+  CONVIDADO
+}
+
+model EventPrice {
+  id          String     @id @default(cuid())
+  eventId     String
+  tier        TicketTier
+  amountCents Int
+  label       String
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, tier])
+  @@index([eventId])
+}
+
+model Registration {
+  id           String             @id @default(cuid())
+  eventId      String
+  memberId     String?
+  guestId      String?
+  type         RegistrationType
+  status       RegistrationStatus @default(PENDING_PAYMENT)
+  ticketCents  Int
+  checkinCode  String             @unique
+  checkinAt    DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  event  Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  member MemberProfile? @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  guest  Guest?         @relation(fields: [guestId], references: [id], onDelete: SetNull)
+  invoice Invoice?
+
+  @@index([eventId])
+  @@index([memberId])
+  @@index([guestId])
+  @@index([status])
+  @@index([checkinCode])
+}
+
+model Invite {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  eventId   String
+  hostId    String
+  message   String?  @db.Text
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+
+  event Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  host  MemberProfile @relation("InviteHost", fields: [hostId], references: [id], onDelete: Cascade)
+  guests Guest[]
+
+  @@index([eventId])
+  @@index([hostId])
+}
+
+model Guest {
+  id            String   @id @default(cuid())
+  inviteId      String
+  nome          String
+  empresa       String?
+  email         String
+  whatsapp      String?
+  cpf           String?
+  cep           String?
+  addressNumber String?
+  createdAt     DateTime @default(now())
+
+  invite        Invite         @relation(fields: [inviteId], references: [id], onDelete: Cascade)
+  registrations Registration[]
+  invoices      Invoice[]
+
+  @@index([inviteId])
+  @@index([email])
+}
+
+model MembershipInvite {
+  id          String    @id @default(cuid())
+  token       String    @unique
+  createdById String
+  categoria   MemberCategory @default(MEMBRO)
+  maxUses     Int       @default(1)
+  usedCount   Int       @default(0)
+  expiresAt   DateTime?
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  createdBy User @relation("MembershipInviteCreator", fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([createdById])
+  @@index([active])
+}
+
+model Offer {
+  id              String               @id @default(cuid())
+  memberId        String
+  titulo          String
+  bannerUrl       String?
+  tipoDestino     OfferDestinationType
+  destino         String
+  destRotulo      String?
+  ativo           Boolean              @default(false)
+  views           Int                  @default(0)
+  clicks          Int                  @default(0)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  member MemberProfile @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId])
+  @@index([ativo])
+}
+
+model PointRule {
+  id        String     @id @default(cuid())
+  action    PointAction @unique
+  pontos    Int
+  label     String
+  active    Boolean    @default(true)
+}
+
+model NegativeRule {
+  id     String @id @default(cuid())
+  texto  String
+  order  Int    @default(0)
+}
+
+model PointEntry {
+  id          String      @id @default(cuid())
+  memberId    String
+  action      PointAction
+  pontos      Int
+  note        String?
+  eventId     String?
+  occurredAt  DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+
+  member MemberProfile @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId])
+  @@index([occurredAt])
+  @@index([action])
+}
+
+model Achievement {
+  id          String @id @default(cuid())
+  code        String @unique
+  nome        String
+  descricao   String
+  members     MemberAchievement[]
+}
+
+model MemberAchievement {
+  id            String   @id @default(cuid())
+  memberId      String
+  achievementId String
+  earnedAt      DateTime @default(now())
+
+  member      MemberProfile @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  achievement Achievement   @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, achievementId])
+  @@index([memberId])
+}
+
+model Prize {
+  id       String  @id @default(cuid())
+  kind     String
+  pos      String?
+  titulo   String
+  detalhe  String  @db.Text
+  order    Int     @default(0)
+}
+
+model Faq {
+  id        String      @id @default(cuid())
+  category  FaqCategory
+  question  String
+  answer    String      @db.Text
+  order     Int         @default(0)
+  active    Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([category])
+}
+
+model LegalDocument {
+  id        String       @id @default(cuid())
+  type      LegalDocType
+  nome      String
+  versao    String
+  resumo    String?
+  conteudo  String       @db.Text
+  published Boolean      @default(true)
+  publishedAt DateTime?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  consents Consent[]
+
+  @@index([type])
+}
+
+model Consent {
+  id         String   @id @default(cuid())
+  userId     String
+  documentId String
+  acceptedAt DateTime @default(now())
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document LegalDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, documentId])
+  @@index([userId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  tipo      NotificationType
+  titulo    String
+  body      String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
+}
