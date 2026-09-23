@@ -9,25 +9,28 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 function ResetForm() {
   const params = useSearchParams();
   const token = params.get("token") ?? "";
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
+    setLoading(true);
     try {
       await apiMutate("/api/auth/reset-password", {
         method: "POST",
         body: JSON.stringify({ token, password }),
       });
-      setMsg("Senha atualizada. Você já pode entrar.");
+      toast.success("Senha atualizada. Você já pode entrar.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro");
+      toastActionError(err, "Não foi possível atualizar a senha.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -43,10 +46,8 @@ function ResetForm() {
           minLength={8}
           required
         />
-        {error && <p className="text-sm text-destructive">{error}</p>}
-        {msg && <p className="text-sm text-success">{msg}</p>}
-        <Button type="submit" className="w-full">
-          Salvar senha
+        <Button type="submit" className="w-full" loading={loading}>
+          {loading ? "Salvando…" : "Salvar senha"}
         </Button>
       </form>
       <Link href="/" className="text-sm font-semibold text-primary">

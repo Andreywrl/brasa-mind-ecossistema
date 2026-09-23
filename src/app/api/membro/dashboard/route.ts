@@ -9,7 +9,7 @@ export async function GET() {
   const { profile, session } = result;
   if (!profile) return jsonError("Perfil não encontrado", 404);
 
-  const [event, pontos, rank, openInvoice, recentPoints, activeOffer, notifs] =
+  const [event, pontos, rank, openInvoice, recentPoints, activeOffers, notifs] =
     await Promise.all([
       prisma.event.findFirst({
         where: { ativo: true },
@@ -26,8 +26,9 @@ export async function GET() {
         orderBy: { occurredAt: "desc" },
         take: 5,
       }),
-      prisma.offer.findFirst({
+      prisma.offer.findMany({
         where: { ativo: true },
+        orderBy: { updatedAt: "desc" },
         include: {
           member: { include: { user: { select: { name: true, image: true } } } },
         },
@@ -64,7 +65,8 @@ export async function GET() {
       quando: p.occurredAt,
       valor: `+${p.pontos}`,
     })),
-    activeOffer,
+    activeOffer: activeOffers[0] ?? null,
+    activeOffers,
     notifications: notifs,
     unread: notifs.filter((n) => !n.read).length,
   });

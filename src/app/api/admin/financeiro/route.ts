@@ -29,7 +29,7 @@ export async function GET() {
     },
     transactions: invoices.map((i) => ({
       id: i.id,
-      nome: i.member?.user.name ?? i.guest?.nome ?? "—",
+      nome: i.member?.user.name ?? i.guest?.nome ?? "-",
       tipo:
         i.kind === "MEMBERSHIP"
           ? "Mensalidade"

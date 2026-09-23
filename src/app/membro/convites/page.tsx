@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/input";
 import { labelRegistrationStatus } from "@/lib/labels";
 import { ChevronDown, CalendarDays, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type ConvitesData = {
   event: {
@@ -27,6 +29,7 @@ type ConvitesData = {
     registrations: { status: string }[];
   }[];
   stats: { enviados: number; confirmados: number } | null;
+  recruitLink: string;
 };
 
 const DEFAULT_GROUP_MSG =
@@ -46,42 +49,56 @@ export default function ConvitesPage() {
   );
   const [message, setMessage] = useState("");
   const [groupMsg, setGroupMsg] = useState(DEFAULT_GROUP_MSG);
-  const [copied, setCopied] = useState(false);
-  const [msgCopied, setMsgCopied] = useState(false);
-  const [groupCopied, setGroupCopied] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const [groupOpen, setGroupOpen] = useState(false);
+  const [savingMsg, setSavingMsg] = useState(false);
 
   useEffect(() => {
     if (data?.invite?.message) setMessage(data.invite.message);
   }, [data?.invite?.message]);
 
   async function save() {
-    await apiMutate("/api/membro/convites", {
-      method: "PATCH",
-      body: JSON.stringify({ message }),
-    });
-    await qc.invalidateQueries({ queryKey: ["membro", "convites"] });
+    if (message === (data?.invite?.message ?? "")) return;
+    setSavingMsg(true);
+    try {
+      await apiMutate("/api/membro/convites", {
+        method: "PATCH",
+        body: JSON.stringify({ message }),
+      });
+      toast.success("Mensagem de convite salva.");
+      await qc.invalidateQueries({ queryKey: ["membro", "convites"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível salvar a mensagem.");
+    } finally {
+      setSavingMsg(false);
+    }
   }
 
   async function copyLink() {
     if (!data?.invite?.link) return;
     await navigator.clipboard.writeText(data.invite.link);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    toast.success("Link copiado.");
   }
 
   async function copyInviteMsg() {
     if (!data?.invite?.link) return;
     await navigator.clipboard.writeText(`${message}\n\n${data.invite.link}`);
-    setMsgCopied(true);
-    setTimeout(() => setMsgCopied(false), 2000);
+    toast.success("Mensagem copiada.");
+  }
+
+  async function copyRecruitLink() {
+    if (!data?.recruitLink) return;
+    await navigator.clipboard.writeText(data.recruitLink);
+    toast.success("Link de recrutamento copiado.");
   }
 
   async function copyGroupMsg() {
-    await navigator.clipboard.writeText(groupMsg);
-    setGroupCopied(true);
-    setTimeout(() => setGroupCopied(false), 2000);
+    if (!data?.recruitLink) {
+      await navigator.clipboard.writeText(groupMsg);
+    } else {
+      await navigator.clipboard.writeText(`${groupMsg}\n\n${data.recruitLink}`);
+    }
+    toast.success("Mensagem copiada.");
   }
 
   if (isLoading || !data) {
@@ -163,7 +180,7 @@ export default function ConvitesPage() {
                   {data.invite.link}
                 </code>
                 <Button onClick={copyLink} className="h-11">
-                  {copied ? "Copiado" : "Copiar link"}
+                  Copiar link
                 </Button>
               </div>
             </div>
@@ -177,7 +194,9 @@ export default function ConvitesPage() {
               <Textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                onBlur={save}
+                onBlur={() => {
+                  if (!savingMsg) void save();
+                }}
                 rows={6}
                 className="mt-2"
               />
@@ -193,7 +212,7 @@ export default function ConvitesPage() {
                   </Button>
                 </a>
                 <Button variant="outline" onClick={copyInviteMsg}>
-                  {msgCopied ? "Copiado" : "Copiar mensagem"}
+                  Copiar mensagem
                 </Button>
               </div>
             </div>
@@ -250,6 +269,17 @@ export default function ConvitesPage() {
             </div>
             <div className="border-t border-border px-[26px] py-[22px] space-y-4">
               <div>
+                <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                  Seu link exclusivo de recrutamento
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-2.5">
+                  <div className="font-mono bg-secondary flex-1 min-w-[220px] rounded-[10px] px-3.5 py-2.5 text-[13px] truncate">
+                    {data.recruitLink}
+                  </div>
+                  <Button onClick={copyRecruitLink}>Copiar link</Button>
+                </div>
+              </div>
+              <div>
                 <div className="flex items-center justify-between gap-3">
                   <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
                     Mensagem de convite para o grupo
@@ -264,12 +294,12 @@ export default function ConvitesPage() {
                 />
               </div>
               <p className="text-xs text-muted-foreground m-0">
-                O link oficial de cadastro é gerado no painel administrativo. Compartilhe a
-                mensagem e peça para a pessoa falar com o Brasamind para receber o acesso.
+                Quem se cadastrar por esse link entra ligado a você. Indicações contam pontos
+                e aproximam parceiros de confiança da sua rede.
               </p>
               <div className="flex flex-wrap gap-2.5">
                 <a
-                  href={`https://wa.me/?text=${encodeURIComponent(groupMsg)}`}
+                  href={`https://wa.me/?text=${encodeURIComponent(`${groupMsg}\n\n${data.recruitLink}`)}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -279,7 +309,7 @@ export default function ConvitesPage() {
                   </Button>
                 </a>
                 <Button variant="outline" onClick={copyGroupMsg}>
-                  {groupCopied ? "Copiado" : "Copiar mensagem"}
+                  Copiar mensagem
                 </Button>
               </div>
             </div>
@@ -316,7 +346,7 @@ export default function ConvitesPage() {
           <h2 className="font-display font-extrabold mb-3">Convidados deste evento</h2>
           <ul className="space-y-3">
             {data.guests.map((g) => {
-              const st = g.registrations[0]?.status ?? "—";
+              const st = g.registrations[0]?.status ?? "-";
               return (
                 <li
                   key={g.id}

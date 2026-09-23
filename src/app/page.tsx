@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { BrandMark } from "@/components/brand-mark";
 import { Info } from "lucide-react";
+import toast from "react-hot-toast";
 
 const SUPPORT_WA =
   "https://wa.me/5551999990000?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20Brasamind.";
@@ -34,7 +35,6 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<"login" | "reset">("login");
   const [resetSent, setResetSent] = useState(false);
@@ -45,7 +45,6 @@ function LoginForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setError("");
     const res = await signIn("credentials", {
       email,
       password,
@@ -53,7 +52,7 @@ function LoginForm() {
     });
     setLoading(false);
     if (res?.error) {
-      setError("E-mail ou senha inválidos.");
+      toast.error("E-mail ou senha inválidos.");
       return;
     }
     router.push(pathAfterLogin(email));
@@ -70,6 +69,7 @@ function LoginForm() {
     });
     setLoading(false);
     setResetSent(true);
+    toast.success("Se o e-mail existir, você receberá as instruções.");
   }
 
   return (
@@ -178,14 +178,11 @@ function LoginForm() {
                     </button>
                   </div>
                 </div>
-                {error && (
-                  <p className="text-sm font-medium text-destructive">{error}</p>
-                )}
                 <div className="flex items-stretch gap-2.5">
                   <Button
                     type="submit"
                     className="h-[46px] flex-1 glow-ember"
-                    disabled={loading}
+                    loading={loading}
                   >
                     {loading ? "Entrando…" : "Entrar"}
                   </Button>
@@ -287,7 +284,7 @@ function LoginForm() {
                   configurado, o token fica só no banco.
                 </Card>
               )}
-              <Button type="submit" className="h-[46px] w-full glow-ember" disabled={loading}>
+              <Button type="submit" className="h-[46px] w-full glow-ember" loading={loading}>
                 {loading ? "Enviando…" : "Enviar link por e-mail"}
               </Button>
             </form>

@@ -14,6 +14,8 @@ import {
   labelRegistrationStatus,
   labelRegistrationType,
 } from "@/lib/labels";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type Review = {
   stars: number;
@@ -70,26 +72,35 @@ export default function AdminEventosPage() {
     vagas: 120,
     ativo: true,
   });
+  const [saving, setSaving] = useState(false);
 
   async function create() {
-    await apiMutate("/api/admin/eventos", {
-      method: "POST",
-      body: JSON.stringify(form),
-    });
-    setOpen(false);
-    setForm({
-      nome: "",
-      data: "",
-      hora: "19h00",
-      local: "",
-      localShort: "",
-      descricao: "",
-      palestrante: "",
-      capaUrl: "",
-      vagas: 120,
-      ativo: true,
-    });
-    await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
+    setSaving(true);
+    try {
+      await apiMutate("/api/admin/eventos", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+      toast.success("Evento criado.");
+      setOpen(false);
+      setForm({
+        nome: "",
+        data: "",
+        hora: "19h00",
+        local: "",
+        localShort: "",
+        descricao: "",
+        palestrante: "",
+        capaUrl: "",
+        vagas: 120,
+        ativo: true,
+      });
+      await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível criar o evento.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   if (isLoading || !data) {
@@ -223,7 +234,9 @@ export default function AdminEventosPage() {
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={create}>Salvar</Button>
+            <Button onClick={create} loading={saving}>
+              {saving ? "Salvando…" : "Salvar"}
+            </Button>
           </>
         }
       >

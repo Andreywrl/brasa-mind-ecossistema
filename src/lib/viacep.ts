@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 import { formatCep, onlyDigits } from "@/lib/br";
 
 export type ViaCepResult = {
@@ -15,22 +16,19 @@ export type ViaCepResult = {
 
 export function useViaCep() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const lookup = useCallback(async (cepRaw: string) => {
     const cep = onlyDigits(cepRaw);
     if (cep.length !== 8) {
-      setError("");
       return null;
     }
     setLoading(true);
-    setError("");
     try {
       const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       if (!res.ok) throw new Error("Falha ao consultar CEP");
       const data = (await res.json()) as ViaCepResult;
       if (data.erro) {
-        setError("CEP não encontrado");
+        toast.error("CEP não encontrado.");
         return null;
       }
       return {
@@ -42,12 +40,12 @@ export function useViaCep() {
         complemento: data.complemento || "",
       };
     } catch {
-      setError("Não foi possível consultar o CEP");
+      toast.error("Não foi possível consultar o CEP.");
       return null;
     } finally {
       setLoading(false);
     }
   }, []);
 
-  return { lookup, loading, error, setError };
+  return { lookup, loading };
 }

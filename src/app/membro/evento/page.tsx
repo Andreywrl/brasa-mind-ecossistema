@@ -1,26 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useApiQuery, apiMutate } from "@/lib/api-client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { TicketQr } from "@/components/ticket-qr";
 import { EventMap } from "@/components/event-map";
 import { MemberAvatar } from "@/components/member-avatar";
+import { OfferHighlight } from "@/components/ranking-podium";
 import { labelRegistrationStatus } from "@/lib/labels";
-import {
-  CreditCardFields,
-  emptyCreditCard,
-  type CardFormState,
-} from "@/components/credit-card-fields";
-import { PixResult } from "@/components/pix-result";
 
 type Attendee = {
   nome: string;
   fotoUrl: string | null;
+};
+
+type OfferCard = {
+  id?: string;
+  titulo: string;
+  bannerUrl: string | null;
+  destRotulo?: string | null;
+  destino?: string | null;
+  member?: { user?: { name?: string | null } | null } | null;
 };
 
 type EventoData = {
@@ -53,6 +55,7 @@ type EventoData = {
   } | null;
   priceCents: number | null;
   category: string;
+  activeOffers?: OfferCard[];
 };
 
 function attendeesFrom(data: EventoData): Attendee[] {
@@ -74,52 +77,10 @@ function attendeesFrom(data: EventoData): Attendee[] {
 }
 
 export default function EventoPage() {
-  const qc = useQueryClient();
   const { data, isLoading } = useApiQuery<EventoData>(
     ["membro", "evento"],
     "/api/membro/evento",
   );
-  const [buying, setBuying] = useState(false);
-  const [step, setStep] = useState(0);
-  const [method, setMethod] = useState<"CREDIT_CARD" | "PIX">("PIX");
-  const [card, setCard] = useState<CardFormState>(emptyCreditCard());
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
-  const [pix, setPix] = useState<{ encodedImage?: string; payload?: string } | null>(null);
-
-  async function comprar() {
-    setBuying(true);
-    setError("");
-    setPix(null);
-    try {
-      const res = await apiMutate<{
-        asaasSkipped?: boolean;
-        message?: string;
-        free?: boolean;
-        pix?: { encodedImage?: string; payload?: string };
-      }>("/api/membro/evento/comprar", {
-        method: "POST",
-        body: JSON.stringify({
-          paymentMethod: method,
-          creditCard: method === "CREDIT_CARD" ? card : undefined,
-        }),
-      });
-      setMsg(
-        res.free
-          ? "Ingresso cortesia confirmado."
-          : res.message ?? "Ingresso confirmado.",
-      );
-      if (res.pix) setPix(res.pix);
-      setCard(emptyCreditCard());
-      setStep(0);
-      await qc.invalidateQueries({ queryKey: ["membro", "evento"] });
-      await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Falha no pagamento");
-    } finally {
-      setBuying(false);
-    }
-  }
 
   if (isLoading || !data) {
     return (
@@ -148,7 +109,8 @@ export default function EventoPage() {
     ["CONFIRMED", "CHECKED_IN"].includes(data.registration.status);
   const attendees = attendeesFrom(data);
   const remaining = Math.max(0, e.vagas - e.confirmedCount);
-  const fillPct = e.vagas > 0 ? Math.min(100, Math.round((e.confirmedCount / e.vagas) * 100)) : 0;
+  const fillPct =
+    e.vagas > 0 ? Math.min(100, Math.round((e.confirmedCount / e.vagas) * 100)) : 0;
   const guestPrice = e.prices.find((p) => p.tier === "CONVIDADO");
   const memberPrice = data.priceCents ?? 0;
   const dateLabel = new Date(e.data).toLocaleDateString("pt-BR", {
@@ -160,7 +122,6 @@ export default function EventoPage() {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      {/* Hero com capa */}
       <div className="relative min-h-[260px] overflow-hidden rounded-[20px] border border-border bg-secondary">
         {e.capaUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -193,7 +154,6 @@ export default function EventoPage() {
         </div>
       </div>
 
-      {/* Faixa de participantes */}
       <Card className="flex flex-wrap items-center justify-between gap-4 px-5 py-4">
         <div className="space-y-3">
           <div>
@@ -228,7 +188,10 @@ export default function EventoPage() {
         </div>
       </Card>
 
-      {/* Conteúdo + ingresso */}
+      {data.activeOffers && data.activeOffers.length > 0 && (
+        <OfferHighlight offers={data.activeOffers} />
+      )}
+
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px] items-start">
         <div className="space-y-6">
           {e.descricao && (
@@ -304,7 +267,12 @@ export default function EventoPage() {
               <div className="flex items-center flex-wrap">
                 {attendees.slice(0, 10).map((a, i) => (
                   <span key={`${a.nome}-list-${i}`} className="-mr-2.5">
-                    <MemberAvatar name={a.nome} src={a.fotoUrl} size="sm" className="!h-[38px] !w-[38px]" />
+                    <MemberAvatar
+                      name={a.nome}
+                      src={a.fotoUrl}
+                      size="sm"
+                      className="!h-[38px] !w-[38px]"
+                    />
                   </span>
                 ))}
                 {e.confirmedCount > Math.min(10, attendees.length) && (
@@ -336,11 +304,12 @@ export default function EventoPage() {
           </Card>
         </div>
 
-        {/* Painel sticky do ingresso */}
         <Card className="p-5 sm:p-6 space-y-4 lg:sticky lg:top-[92px]">
           <div className="flex items-center justify-between gap-2">
             <h2 className="font-display text-[17px] font-extrabold">Seu ingresso</h2>
-            <Badge variant="ember">{data.category === "MEMBRO" ? "★ Membro" : data.category}</Badge>
+            <Badge variant="ember">
+              {data.category === "MEMBRO" ? "★ Membro" : data.category}
+            </Badge>
           </div>
 
           {hasTicket && data.registration ? (
@@ -366,7 +335,7 @@ export default function EventoPage() {
                 </Button>
               </Link>
             </>
-          ) : step === 0 ? (
+          ) : (
             <>
               <div className="rounded-[14px] border border-primary p-4 shadow-[0_0_0_3px_hsl(var(--primary)/.12)]">
                 <div className="flex items-baseline gap-2.5">
@@ -386,7 +355,8 @@ export default function EventoPage() {
                   memberPrice > 0 && (
                     <div className="mt-1.5">
                       <Badge variant="success">
-                        Economize {formatCurrency(guestPrice.amountCents - memberPrice)}
+                        Economize{" "}
+                        {formatCurrency(guestPrice.amountCents - memberPrice)}
                       </Badge>
                     </div>
                   )}
@@ -397,7 +367,9 @@ export default function EventoPage() {
                   <div key={p.tier} className="flex justify-between">
                     <span className="text-muted-foreground">{p.label}</span>
                     <span className="font-mono">
-                      {p.amountCents === 0 ? "Cortesia" : formatCurrency(p.amountCents)}
+                      {p.amountCents === 0
+                        ? "Cortesia"
+                        : formatCurrency(p.amountCents)}
                     </span>
                   </div>
                 ))}
@@ -415,50 +387,17 @@ export default function EventoPage() {
                 <div className="bg-brasa h-full" style={{ width: `${fillPct}%` }} />
               </div>
 
-              <Button className="w-full h-11 bg-brasa glow-ember" onClick={() => setStep(1)}>
-                {memberPrice === 0 ? "Garantir cortesia" : "Comprar ingresso"}
-              </Button>
+              <Link href="/membro/evento/comprar" className="block">
+                <Button className="w-full h-11 bg-brasa glow-ember">
+                  {memberPrice === 0 ? "Garantir cortesia" : "Comprar ingresso"}
+                </Button>
+              </Link>
               <Link href="/membro/convites">
                 <Button variant="outline" className="w-full">
                   Trazer um convidado
                 </Button>
               </Link>
             </>
-          ) : (
-            <div className="space-y-3">
-              <div className="flex gap-2">
-                <Button
-                  variant={method === "PIX" ? "default" : "outline"}
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => setMethod("PIX")}
-                >
-                  PIX
-                </Button>
-                <Button
-                  variant={method === "CREDIT_CARD" ? "default" : "outline"}
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => setMethod("CREDIT_CARD")}
-                >
-                  Cartão
-                </Button>
-              </div>
-              {method === "CREDIT_CARD" && (
-                <CreditCardFields value={card} onChange={setCard} />
-              )}
-              {pix && (
-                <PixResult encodedImage={pix.encodedImage} payload={pix.payload} />
-              )}
-              {error && <p className="text-sm text-destructive">{error}</p>}
-              {msg && <p className="text-sm text-success">{msg}</p>}
-              <Button className="w-full" disabled={buying} onClick={comprar}>
-                {buying ? "Processando…" : "Confirmar pagamento"}
-              </Button>
-              <Button variant="ghost" className="w-full" onClick={() => setStep(0)}>
-                Voltar
-              </Button>
-            </div>
           )}
         </Card>
       </div>

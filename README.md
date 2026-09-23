@@ -47,7 +47,7 @@ Antes do deploy:
 2. Env obrigatórios: `DATABASE_URL`, `AUTH_SECRET`, `AUTH_URL`, `NEXT_PUBLIC_APP_URL`
 3. Asaas: `ASAAS_API_KEY`, `ASAAS_API_URL` e **`ASAAS_WEBHOOK_TOKEN` (obrigatório em produção)**
 4. Resend: `RESEND_API_KEY` + `EMAIL_FROM` (sem chave, e-mails não saem; `devToken` de reset **não** é devolvido em produção)
-5. Blob: `BLOB_READ_WRITE_TOKEN` para upload de capas/banners/perfil
+5. Blob: `BLOB_READ_WRITE_TOKEN` (store **privada** serve). Upload grava no Blob e o app entrega em `/api/media/...`
 6. Sentry (opcional): `NEXT_PUBLIC_SENTRY_DSN` (+ org/project/token se for usar upload de sourcemaps)
 
 Smoke operacional (MySQL + Asaas reais): signup por link, pagamento de convidado, check-in na portaria e nota admin em evento passado.
@@ -66,5 +66,5 @@ pnpm smoke:api     # HTTP smoke (servidor em http://localhost:3000)
 - Ingresso: Fundador cortesia, Patrocinador R$ 100, Membro R$ 180, Convidado R$ 200
 - Novos membros só por link do admin
 - Convidados pagam R$ 200, sem limite por evento
-- Imagens de perfil/evento/oferta no Vercel Blob (sem galeria no fim da página)
-- Nota de evento (1–5 estrelas + comentário) é interna do admin, só em eventos anteriores
+- Imagens de perfil/evento/oferta no Vercel Blob privado, servidas em `/api/media/...` (sem galeria no fim da página)
+- Nota de evento (1 a 5 estrelas + comentário) é interna do admin, só em eventos anteriores

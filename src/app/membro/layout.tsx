@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { NotificationBell } from "@/components/notification-bell";
 import { BrandMark } from "@/components/brand-mark";
 import { MemberAvatar } from "@/components/member-avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   CalendarDays,
   CircleHelp,
@@ -79,6 +80,9 @@ function pageMeta(pathname: string, firstName: string): { title: string; sub: st
       sub: "Churrasco, palestra e networking, num lugar só.",
     };
   }
+  if (pathname.startsWith("/membro/evento/comprar")) {
+    return { title: "Comprar ingresso", sub: "Resumo, pagamento e QR Code." };
+  }
   if (pathname.startsWith("/membro/evento")) {
     return { title: "Evento do mês", sub: "Um único evento ativo por mês. Garanta sua vaga." };
   }
@@ -94,7 +98,7 @@ function pageMeta(pathname: string, firstName: string): { title: string; sub: st
   if (pathname.startsWith("/membro/ofertas")) {
     return {
       title: "Ofertas do Patrocinador",
-      sub: "Banners e ofertas da sua empresa para a rede do Brasa.",
+      sub: "Banners e ofertas da sua empresa para a rede do Brasamind.",
     };
   }
   if (pathname.startsWith("/membro/ranking")) {
@@ -112,8 +116,17 @@ function pageMeta(pathname: string, firstName: string): { title: string; sub: st
   if (pathname.startsWith("/membro/faq")) {
     return { title: "FAQ", sub: "Perguntas frequentes e suporte do Brasamind." };
   }
+  if (pathname.startsWith("/membro/notificacoes")) {
+    return {
+      title: "Minhas notificações",
+      sub: "Histórico completo das suas notificações.",
+    };
+  }
   if (pathname.startsWith("/membro/perfil")) {
-    return { title: "Meu perfil", sub: "Seus dados na rede para conectar, indicar e fechar negócios." };
+    return {
+      title: "Editar meu perfil",
+      sub: "Mantenha seus dados atualizados para a rede.",
+    };
   }
   return { title: "Área do Membro", sub: "" };
 }
@@ -171,6 +184,10 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
   const { data: me } = useApiQuery<{
     profile: { categoria: string; fotoUrl: string | null };
   }>(["membro", "me"], "/api/membro/me");
+  const { data: dash } = useApiQuery<{ mensalidadeEmDia: boolean }>(
+    ["membro", "dashboard"],
+    "/api/membro/dashboard",
+  );
 
   const name = session?.user?.name ?? "Membro";
   const firstName = name.split(" ")[0] ?? name;
@@ -285,6 +302,13 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <span className="om-hide-sm">
+                <Badge variant={dash?.mensalidadeEmDia ? "success" : "warning"}>
+                  {dash?.mensalidadeEmDia
+                    ? "Mensalidade em dia"
+                    : "Mensalidade pendente"}
+                </Badge>
+              </span>
               <ThemeToggle />
               <NotificationBell />
             </div>

@@ -46,7 +46,7 @@ export async function GET(
     .filter((r) => r.guestId)
     .map((r) => ({
       id: r.id,
-      nome: r.guest?.nome ?? "—",
+      nome: r.guest?.nome ?? "-",
       empresa: r.guest?.empresa,
       status: r.status,
       fotoUrl: null as string | null,

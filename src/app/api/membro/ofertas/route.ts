@@ -15,21 +15,29 @@ export async function GET() {
     orderBy: { createdAt: "desc" },
   });
 
-  const active = await prisma.offer.findFirst({
+  const activeOffers = await prisma.offer.findMany({
     where: { ativo: true },
+    orderBy: { updatedAt: "desc" },
     include: {
       member: { include: { user: { select: { name: true, image: true } } } },
     },
   });
 
+  const views = mine.reduce((s, o) => s + o.views, 0);
+  const clicks = mine.reduce((s, o) => s + o.clicks, 0);
+  const activeMine = mine.filter((o) => o.ativo).length;
+
   return jsonOk({
     canOffer,
     mine,
-    active,
+    active: activeOffers[0] ?? null,
+    activeOffers,
     totals: {
-      views: mine.reduce((s, o) => s + o.views, 0),
-      clicks: mine.reduce((s, o) => s + o.clicks, 0),
+      views,
+      clicks,
       count: mine.length,
+      ctr: views > 0 ? clicks / views : 0,
+      activeCount: activeMine,
     },
   });
 }

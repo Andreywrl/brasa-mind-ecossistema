@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Card } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MemberAvatar } from "@/components/member-avatar";
@@ -96,6 +96,7 @@ export function RankingPodium({ rank }: { rank: PodiumMember[] }) {
 }
 
 type OfferCard = {
+  id?: string;
   titulo: string;
   bannerUrl?: string | null;
   destRotulo?: string | null;
@@ -103,16 +104,52 @@ type OfferCard = {
   member?: { user?: { name?: string | null } | null } | null;
 };
 
-export function OfferHighlight({ offer }: { offer: OfferCard | null | undefined }) {
-  const [open, setOpen] = useState(true);
-  if (!offer || !open) return null;
+function trackOffer(id: string | undefined, type: "view" | "click") {
+  if (!id) return;
+  void fetch("/api/membro/ofertas/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, type }),
+  }).catch(() => undefined);
+}
+
+export function OfferHighlight({
+  offer,
+  offers,
+}: {
+  offer?: OfferCard | null;
+  offers?: OfferCard[] | null;
+}) {
+  const list = (offers?.length ? offers : offer ? [offer] : []).filter(Boolean);
+  const [index, setIndex] = useState(0);
+  const [dismissed, setDismissed] = useState(false);
+  const current = list[list.length ? index % list.length : 0];
+
+  useEffect(() => {
+    if (current?.id) trackOffer(current.id, "view");
+  }, [current?.id]);
+
+  if (dismissed || !current) return null;
+
+  const multi = list.length > 1;
+  const num = list.length ? (index % list.length) + 1 : 1;
+
+  function go(delta: number) {
+    if (!multi) return;
+    setIndex((i) => (i + delta + list.length) % list.length);
+  }
+
+  function onCta() {
+    trackOffer(current.id, "click");
+    if (!current.destino) setDismissed(true);
+  }
 
   return (
     <Card className="om-offer-slot overflow-hidden p-0">
       <div className="om-offer-img-box relative bg-secondary">
-        {offer.bannerUrl ? (
+        {current.bannerUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={offer.bannerUrl} alt="" className="h-full w-full object-cover" />
+          <img src={current.bannerUrl} alt="" className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
             Oferta da rede
@@ -121,26 +158,54 @@ export function OfferHighlight({ offer }: { offer: OfferCard | null | undefined 
         <Badge variant="ember" className="absolute left-3 top-3 z-[2]">
           ★ Oferta
         </Badge>
+        {multi ? (
+          <div className="absolute right-3 top-3 z-[2] flex items-center gap-1.5 rounded-lg border border-border bg-card/90 px-2 py-1">
+            <button
+              type="button"
+              aria-label="Oferta anterior"
+              className="flex h-7 w-7 items-center justify-center rounded-md border border-border"
+              onClick={() => go(-1)}
+            >
+              ‹
+            </button>
+            <span className="font-mono text-xs text-muted-foreground">
+              {num} / {list.length}
+            </span>
+            <button
+              type="button"
+              aria-label="Próxima oferta"
+              className="flex h-7 w-7 items-center justify-center rounded-md border border-border"
+              onClick={() => go(1)}
+            >
+              ›
+            </button>
+          </div>
+        ) : null}
       </div>
       <div className="space-y-3 p-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Ofertas da rede: conecte com quem patrocina o Brasamind
           </div>
-          <h3 className="font-display text-lg font-extrabold mt-1">{offer.titulo}</h3>
-          {offer.member?.user?.name && (
+          <h3 className="font-display text-lg font-extrabold mt-1">{current.titulo}</h3>
+          {current.member?.user?.name && (
             <p className="text-sm text-muted-foreground mt-1">
-              {offer.member.user.name}
+              {current.member.user.name}
             </p>
           )}
         </div>
         <div className="flex flex-wrap gap-2">
-          {offer.destino ? (
-            <a href={offer.destino} target="_blank" rel="noreferrer">
-              <Button>{offer.destRotulo || "Aproveitar oferta"}</Button>
+          {current.destino ? (
+            <a
+              href={current.destino}
+              target="_blank"
+              rel="noreferrer"
+              onClick={onCta}
+            >
+              <Button>{current.destRotulo || "Aproveitar oferta"}</Button>
             </a>
           ) : (
-            <Button type="button" onClick={() => setOpen(false)}>
+            <Button type="button" onClick={onCta}>
               Aproveitar oferta
             </Button>
           )}

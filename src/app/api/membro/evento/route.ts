@@ -42,6 +42,14 @@ export async function GET() {
     TICKET_PRICES[cat] ??
     TICKET_PRICES.MEMBRO;
 
+  const activeOffers = await prisma.offer.findMany({
+    where: { ativo: true },
+    orderBy: { updatedAt: "desc" },
+    include: {
+      member: { include: { user: { select: { name: true, image: true } } } },
+    },
+  });
+
   return jsonOk({
     event: {
       ...event,
@@ -50,5 +58,6 @@ export async function GET() {
     registration,
     priceCents,
     category: cat,
+    activeOffers,
   });
 }

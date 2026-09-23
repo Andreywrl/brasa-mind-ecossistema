@@ -1209,7 +1209,7 @@
         </div>
         <span class="bg-secondary text-muted-foreground" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:9999px; font-size:12px; font-weight:600;"><span style="width:6px; height:6px; border-radius:50%; background:hsl(var(--success)); display:inline-block;"></span>Pagamento processado via Asaas</span>
         <div style="display:flex; gap:12px; width:100%;">
-          <button onClick="{{ goGeral }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent text-foreground hover:bg-secondary h-11 px-6 cursor-pointer" style="flex:1;">Falar com o Brasa</button>
+          <button onClick="{{ goGeral }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-border bg-transparent text-foreground hover:bg-secondary h-11 px-6 cursor-pointer" style="flex:1;">Falar com o Brasamind</button>
           <button onClick="{{ goGeral }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background bg-primary text-primary-foreground hover:brightness-110 h-11 px-6 cursor-pointer border-0" style="flex:2;">Pagar R$ 194,00 e liberar</button>
         </div>
       </div>
@@ -1493,7 +1493,7 @@ class Component extends DCLogic {
   nav(s){ window.scrollTo(0,0); this.setHash(s); this.setState({ screen:s, menuOpen:false }); }
   openMember(m){ window.scrollTo(0,0); this.setHash('membroDetalhe'); this.setState({ screen:'membroDetalhe', memberSel:m, menuOpen:false }); }
   openAdmin(a){ window.scrollTo(0,0); this.setHash('adminEdit'); this.setState({ screen:'adminEdit', adminSel:a, menuOpen:false }); }
-  openNewAdmin(){ window.scrollTo(0,0); this.setHash('adminEdit'); this.setState({ screen:'adminEdit', adminSel:{ nome:'Novo usuário', email:'', ini:'NU', papel:'Administrador', ultimo:'—', status:'Convite pendente', badgeVar:'warning' }, menuOpen:false }); }
+  openNewAdmin(){ window.scrollTo(0,0); this.setHash('adminEdit'); this.setState({ screen:'adminEdit', adminSel:{ nome:'Novo usuário', email:'', ini:'NU', papel:'Administrador', ultimo:'-', status:'Convite pendente', badgeVar:'warning' }, menuOpen:false }); }
   toggleAdmin(a){
     this.admins = this.admins.map(x => {
       if (x.email !== a.email) return x;
@@ -1525,7 +1525,7 @@ class Component extends DCLogic {
   setCatField(f,v){ this.setState(s=>({ catDraft:{ ...s.catDraft, [f]:v } })); }
   askCatConfirm(){ const d=this.state.catDraft; if(!d || !(d.nome||'').trim()) return; this.setState({ catConfirm:true }); }
   backCatConfirm(){ this.setState({ catConfirm:false }); }
-  saveCat(){ const d=this.state.catDraft; if(!d) return; this.categorias=this.categorias.map((c,i)=> i===this.state.catIndex ? { ...c, nome:d.nome, desc:d.desc, entrada:(d.entrada||'').trim()||'—', chip:d.chip } : c); this.setState({ catModalOpen:false, catConfirm:false }); }
+  saveCat(){ const d=this.state.catDraft; if(!d) return; this.categorias=this.categorias.map((c,i)=> i===this.state.catIndex ? { ...c, nome:d.nome, desc:d.desc, entrada:(d.entrada||'').trim()||'-', chip:d.chip } : c); this.setState({ catModalOpen:false, catConfirm:false }); }
   ytEmbed(url){
     if (!url) return '';
     const s = String(url).trim();
@@ -1544,8 +1544,8 @@ class Component extends DCLogic {
     return digits ? 'https://wa.me/'+digits : '#';
   }
   mapsUrl(local){
-    const raw = (local && String(local).trim()) || 'Espaço Brasa, R. Leopoldo Bier, 644, Santana, Porto Alegre RS';
-    const q = /leopoldo/i.test(raw) && !/espa[cç]o\s*brasa/i.test(raw) ? 'Espaço Brasa, '+raw : raw;
+    const raw = (local && String(local).trim()) || 'Espaço Brasamind, R. Leopoldo Bier, 644, Santana, Porto Alegre RS';
+    const q = /leopoldo/i.test(raw) && !/espa[cç]o\s*brasa/i.test(raw) ? 'Espaço Brasamind, '+raw : raw;
     const enc = encodeURIComponent(q);
     return {
       mapsEmbed: 'https://maps.google.com/maps?q='+enc+'&hl=pt-BR&z=17&output=embed',
@@ -1578,12 +1578,12 @@ class Component extends DCLogic {
   checkinPool(){
     const membros = this.membrosRaw.map(m=>({
       nome:m.nome, empresa:m.empresa, iniciais:m.iniciais, foto:m.foto, tipo:m.categoria,
-      convidadoPor: m.nome==='Pedro Lima' ? 'João da Silva' : '—',
+      convidadoPor: m.nome==='Pedro Lima' ? 'João da Silva' : '-',
       pagamento: m.status==='Inadimplente' ? 'Pendente' : 'Pago'
     }));
     const conv = this.convidadosEvento.map(g=>({
       nome:g.nome, empresa:g.empresa, iniciais:g.iniciais, foto:g.foto, tipo:'Convidado',
-      convidadoPor:(g.origem||'').replace(/^por\s+/i,'') || '—',
+      convidadoPor:(g.origem||'').replace(/^por\s+/i,'') || '-',
       pagamento: g.ingresso==='Cortesia' ? 'Cortesia' : 'Pago'
     }));
     return [...membros, ...conv];
@@ -1630,19 +1630,19 @@ class Component extends DCLogic {
   topPont = [ {pos:'1',nome:'João da Silva',val:'2.310'},{pos:'2',nome:'Ana B. Rocha',val:'2.180'},{pos:'3',nome:'Maria Souza',val:'1.840'},{pos:'4',nome:'Ricardo Menezes',val:'1.620'} ];
 
   membrosRaw = [
-    { nome:'João da Silva', empresa:'Silva Alimentos', iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.310', status:'Em dia', badgeVar:'success', especialidade:'Food service', cidade:'Porto Alegre', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS', eventos:'24', convidados:'12', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Fundador do Brasa. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.' },
-    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', iniciais:'AR', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.180', status:'Em dia', badgeVar:'success', especialidade:'Construção', cidade:'Porto Alegre', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS', eventos:'22', convidados:'9', youtube:'https://youtu.be/ysz5S6PUM-U', descricao:'Cofundadora do Brasa, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.' },
-    { nome:'Maria Souza', empresa:'Souza Marketing', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.840', status:'Em dia', badgeVar:'success', especialidade:'Marketing', cidade:'Caxias do Sul', whatsapp:'+55 54 97777 2222', instagram:'@souzamkt', site:'souzamarketing.com.br', endereco:'R. Sinimbu, 1500, Caxias do Sul RS', eventos:'20', convidados:'8', youtube:'https://www.youtube.com/embed/ysz5S6PUM-U', descricao:'Patrocinadora do Brasa e dona de uma agência full service na serra. Gosta de fechar parceria de mídia com membros.' },
-    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.620', status:'Pendente', badgeVar:'warning', especialidade:'Jurídico', cidade:'Porto Alegre', whatsapp:'+55 51 96666 3333', instagram:'@menezesadv', site:'menezesadvogados.com.br', endereco:'Av. Carlos Gomes, 700, Porto Alegre RS', eventos:'18', convidados:'6', youtube:'', descricao:'Advogado empresarial, patrocina o Brasa e oferece a primeira consultoria gratuita para membros.' },
-    { nome:'Pedro Lima', empresa:'Lima Logística', iniciais:'PL', foto:'uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.520', status:'Em dia', badgeVar:'success', especialidade:'Logística', cidade:'Novo Hamburgo', whatsapp:'+55 51 95555 4444', instagram:'@limalog', site:'limalogistica.com.br', endereco:'R. Osvaldo Aranha, 88, Novo Hamburgo RS', eventos:'16', convidados:'5', youtube:'', descricao:'Toca uma transportadora regional. Entrou no Brasa para achar clientes B2B na região metropolitana.' },
+    { nome:'João da Silva', empresa:'Silva Alimentos', iniciais:'JS', foto:'uploads/users/pexels-filipgrobgaard-26150470.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.310', status:'Em dia', badgeVar:'success', especialidade:'Food service', cidade:'Porto Alegre', whatsapp:'+55 51 99999 0000', instagram:'@silvaalimentos', site:'silvaalimentos.com.br', endereco:'Av. Assis Brasil, 3940, Porto Alegre RS', eventos:'24', convidados:'12', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Fundador do Brasamind. Trabalha com food service há 18 anos e adora conectar quem compra com quem entrega.' },
+    { nome:'Ana Beatriz Rocha', empresa:'Rocha Incorporadora', iniciais:'AR', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Fundador', mensalidade:'R$ 97,00', pontos:'2.180', status:'Em dia', badgeVar:'success', especialidade:'Construção', cidade:'Porto Alegre', whatsapp:'+55 51 98888 1111', instagram:'@rochaincorp', site:'rochaincorporadora.com.br', endereco:'R. Padre Chagas, 210, Porto Alegre RS', eventos:'22', convidados:'9', youtube:'https://youtu.be/ysz5S6PUM-U', descricao:'Cofundadora do Brasamind, toca uma incorporadora com foco em bairros planejados. Sempre em busca de fornecedores locais.' },
+    { nome:'Maria Souza', empresa:'Souza Marketing', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.840', status:'Em dia', badgeVar:'success', especialidade:'Marketing', cidade:'Caxias do Sul', whatsapp:'+55 54 97777 2222', instagram:'@souzamkt', site:'souzamarketing.com.br', endereco:'R. Sinimbu, 1500, Caxias do Sul RS', eventos:'20', convidados:'8', youtube:'https://www.youtube.com/embed/ysz5S6PUM-U', descricao:'Patrocinadora do Brasamind e dona de uma agência full service na serra. Gosta de fechar parceria de mídia com membros.' },
+    { nome:'Ricardo Menezes', empresa:'Menezes Advogados', iniciais:'RM', foto:'uploads/users/pexels-artepixel-prostudio-1289782065-28442318.jpg', categoria:'Patrocinador', mensalidade:'R$ 97,00', pontos:'1.620', status:'Pendente', badgeVar:'warning', especialidade:'Jurídico', cidade:'Porto Alegre', whatsapp:'+55 51 96666 3333', instagram:'@menezesadv', site:'menezesadvogados.com.br', endereco:'Av. Carlos Gomes, 700, Porto Alegre RS', eventos:'18', convidados:'6', youtube:'', descricao:'Advogado empresarial, patrocina o Brasamind e oferece a primeira consultoria gratuita para membros.' },
+    { nome:'Pedro Lima', empresa:'Lima Logística', iniciais:'PL', foto:'uploads/users/pexels-addy-bronzzz-264850064-14564869.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.520', status:'Em dia', badgeVar:'success', especialidade:'Logística', cidade:'Novo Hamburgo', whatsapp:'+55 51 95555 4444', instagram:'@limalog', site:'limalogistica.com.br', endereco:'R. Osvaldo Aranha, 88, Novo Hamburgo RS', eventos:'16', convidados:'5', youtube:'', descricao:'Toca uma transportadora regional. Entrou no Brasamind para achar clientes B2B na região metropolitana.' },
     { nome:'Carla Figueiredo', empresa:'Figueiredo Contábil', iniciais:'CF', foto:'uploads/users/pexels-yusif-iskandarov-2160750281-37890054.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.360', status:'Inadimplente', badgeVar:'destructive', especialidade:'Contabilidade', cidade:'Pelotas', whatsapp:'+55 53 94444 5555', instagram:'@figueiredocontabil', site:'figueiredocontabil.com.br', endereco:'R. General Osório, 500, Pelotas RS', eventos:'14', convidados:'4', youtube:'', descricao:'Contadora com escritório em Pelotas, especialista em abertura e reestruturação de empresas.' },
     { nome:'Thiago Barros', empresa:'Barros Tech', iniciais:'TB', foto:'uploads/users/pexels-valentin-bogdan-2150176604-31834479.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.180', status:'Em dia', badgeVar:'success', especialidade:'Tecnologia', cidade:'Porto Alegre', whatsapp:'+55 51 93333 6666', instagram:'@barrostech', site:'barrostech.com.br', endereco:'Av. Ipiranga, 6681, Porto Alegre RS', eventos:'12', convidados:'3', youtube:'https://www.youtube.com/watch?v=ysz5S6PUM-U', descricao:'Desenvolve software sob medida para o varejo gaúcho. Procura parceiros de implantação.' },
-    { nome:'Juliana Prado', empresa:'Prado Eventos', iniciais:'JP', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.020', status:'Pendente', badgeVar:'warning', especialidade:'Eventos', cidade:'Gramado', whatsapp:'+55 54 92222 7777', instagram:'@pradoeventos', site:'pradoeventos.com.br', endereco:'Av. Borges de Medeiros, 2500, Gramado RS', eventos:'10', convidados:'3', youtube:'', descricao:'Produtora de eventos corporativos na serra. Fecha muita coisa dentro do próprio Brasa.' },
-    { nome:'Felipe Andrade', empresa:'Andrade Seguros', iniciais:'FA', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'860', status:'Em dia', badgeVar:'success', especialidade:'Seguros', cidade:'Santa Maria', whatsapp:'+55 55 91111 8888', instagram:'@andradeseguros', site:'andradeseguros.com.br', endereco:'R. do Acampamento, 100, Santa Maria RS', eventos:'8', convidados:'2', youtube:'', descricao:'Corretor de seguros empresariais no centro do estado. Entrou no Brasa há três meses.' },
+    { nome:'Juliana Prado', empresa:'Prado Eventos', iniciais:'JP', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'1.020', status:'Pendente', badgeVar:'warning', especialidade:'Eventos', cidade:'Gramado', whatsapp:'+55 54 92222 7777', instagram:'@pradoeventos', site:'pradoeventos.com.br', endereco:'Av. Borges de Medeiros, 2500, Gramado RS', eventos:'10', convidados:'3', youtube:'', descricao:'Produtora de eventos corporativos na serra. Fecha muita coisa dentro do próprio Brasamind.' },
+    { nome:'Felipe Andrade', empresa:'Andrade Seguros', iniciais:'FA', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', categoria:'Membro', mensalidade:'R$ 97,00', pontos:'860', status:'Em dia', badgeVar:'success', especialidade:'Seguros', cidade:'Santa Maria', whatsapp:'+55 55 91111 8888', instagram:'@andradeseguros', site:'andradeseguros.com.br', endereco:'R. do Acampamento, 100, Santa Maria RS', eventos:'8', convidados:'2', youtube:'', descricao:'Corretor de seguros empresariais no centro do estado. Entrou no Brasamind há três meses.' },
   ];
   categorias = [
-    { nome:'Fundador', total:'18', desc:'Sócios fundadores do Brasa. Prioridade máxima no hub e voz nas decisões.', entrada:'Cortesia', chip:'bg-brasa text-white' },
-    { nome:'Patrocinador', total:'14', desc:'Empresas que patrocinam o Brasa e recebem destaque nos eventos.', entrada:'R$ 120,00', chip:'bg-secondary text-primary' },
+    { nome:'Fundador', total:'18', desc:'Sócios fundadores do Brasamind. Prioridade máxima no hub e voz nas decisões.', entrada:'Cortesia', chip:'bg-brasa text-white' },
+    { nome:'Patrocinador', total:'14', desc:'Empresas que patrocinam o Brasamind e recebem destaque nos eventos.', entrada:'R$ 120,00', chip:'bg-secondary text-primary' },
     { nome:'Membro', total:'96', desc:'Membros gerais da rede, com acesso completo à plataforma.', entrada:'R$ 180,00', chip:'bg-secondary text-muted-foreground' },
   ];
   admins = [
@@ -1657,7 +1657,7 @@ class Component extends DCLogic {
     { nome:'Apoio recepção', login:'seg-apoio-1', evento:'Networking de Inverno', expira:'21/06 23h59', status:'Expirado', badgeVar:'destructive' },
   ];
   termos = [
-    { nome:'Termos de Uso', versao:'v3.2', desde:'01/07/2026', status:'Publicado', badgeVar:'success', resumo:'Regras de participação, ingressos, convites e conduta nos eventos do Brasa.' },
+    { nome:'Termos de Uso', versao:'v3.2', desde:'01/07/2026', status:'Publicado', badgeVar:'success', resumo:'Regras de participação, ingressos, convites e conduta nos eventos do Brasamind.' },
     { nome:'Política de Privacidade', versao:'v2.1', desde:'01/07/2026', status:'Publicado', badgeVar:'success', resumo:'Como coletamos, usamos e protegemos os dados dos membros e convidados (LGPD).' },
   ];
   faqCatMap = { membro:'Membros', evento:'Eventos', pagamento:'Pagamentos', conta:'Conta' };
@@ -1675,7 +1675,7 @@ class Component extends DCLogic {
   ];
   ofertasAdmin = [
     { id:1, patrocinador:'Souza Marketing', autor:'Maria Souza', iniciais:'MS', foto:'uploads/users/pexels-uriel-art-923978-4566871.jpg',
-      titulo:'Diagnóstico de Marketing B2B gratuito para membros do Brasa',
+      titulo:'Diagnóstico de Marketing B2B gratuito para membros do Brasamind',
       banner:'uploads/imagens-gerais/IMG_3913.PNG',
       tipoDestino:'whatsapp', destino:'https://wa.me/5554977772222?text=Ol%C3%A1!%20Vi%20a%20oferta%20no%20Brasamind', destRotulo:'WhatsApp (+55 54 97777 2222)',
       tipoDestinoLabel:'WhatsApp',
@@ -1696,8 +1696,8 @@ class Component extends DCLogic {
   eventos = [
     { nome:'Networking de Inverno', data:'21/06/2026', part:'78', receita:'R$ 14,0k', local:'Gramado RS', convidados:'14', checkins:'71 / 78', slot:'admin-ev-inverno', foto:'uploads/imagens-gerais/IMG_3921.PNG', descricao:'Encontro de inverno na serra, com fondue e rodada de conexões entre membros.', palestrante:'Marina Fogaça', palestranteBio:'Fundadora da Fogaça Digital, especialista em branding B2B.', cronograma:[{hora:'19h00',item:'Recepção'},{hora:'19h30',item:'Jantar'},{hora:'21h00',item:'Rodada de conexões'},{hora:'22h30',item:'Encerramento'}] },
     { nome:'Talk: Escala e Cultura', data:'17/05/2026', part:'64', receita:'R$ 11,5k', local:'Porto Alegre RS', convidados:'9', checkins:'58 / 64', slot:'admin-ev-escala', foto:'uploads/imagens-gerais/IMG_3914.PNG', descricao:'Talk sobre escalar times mantendo a cultura, com case de membro.', palestrante:'Ricardo Menezes', palestranteBio:'Sócio da Menezes Advogados, mentor de governança.', cronograma:[{hora:'19h00',item:'Abertura'},{hora:'19h30',item:'Talk principal'},{hora:'20h30',item:'Perguntas'},{hora:'21h30',item:'Networking'}] },
-    { nome:'Happy Hour Fundadores', data:'19/04/2026', part:'42', receita:'R$ 7,6k', local:'Bento Gonçalves RS', convidados:'6', checkins:'40 / 42', slot:'admin-ev-happy', foto:'uploads/imagens-gerais/IMG_3919.PNG', descricao:'Happy hour reservado aos fundadores, em vinícola parceira.', palestrante:'João da Silva', palestranteBio:'Fundador do Brasa.', cronograma:[{hora:'18h30',item:'Chegada'},{hora:'19h00',item:'Degustação'},{hora:'21h00',item:'Encerramento'}] },
-    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', part:'88', receita:'R$ 15,8k', local:'Porto Alegre RS', convidados:'22', checkins:'85 / 88', slot:'admin-ev-abertura', foto:'uploads/imagens-gerais/IMG_3913.PNG', descricao:'Churrasco de abertura do ano, com apresentação de todos os membros.', palestrante:'Ana Beatriz Rocha', palestranteBio:'Cofundadora do Brasa, Rocha Incorporadora.', cronograma:[{hora:'12h00',item:'Recepção'},{hora:'13h00',item:'Almoço'},{hora:'15h00',item:'Apresentações'},{hora:'17h00',item:'Encerramento'}] },
+    { nome:'Happy Hour Fundadores', data:'19/04/2026', part:'42', receita:'R$ 7,6k', local:'Bento Gonçalves RS', convidados:'6', checkins:'40 / 42', slot:'admin-ev-happy', foto:'uploads/imagens-gerais/IMG_3919.PNG', descricao:'Happy hour reservado aos fundadores, em vinícola parceira.', palestrante:'João da Silva', palestranteBio:'Fundador do Brasamind.', cronograma:[{hora:'18h30',item:'Chegada'},{hora:'19h00',item:'Degustação'},{hora:'21h00',item:'Encerramento'}] },
+    { nome:'Churrasco de Abertura 2026', data:'15/03/2026', part:'88', receita:'R$ 15,8k', local:'Porto Alegre RS', convidados:'22', checkins:'85 / 88', slot:'admin-ev-abertura', foto:'uploads/imagens-gerais/IMG_3913.PNG', descricao:'Churrasco de abertura do ano, com apresentação de todos os membros.', palestrante:'Ana Beatriz Rocha', palestranteBio:'Cofundadora do Brasamind, Rocha Incorporadora.', cronograma:[{hora:'12h00',item:'Recepção'},{hora:'13h00',item:'Almoço'},{hora:'15h00',item:'Apresentações'},{hora:'17h00',item:'Encerramento'}] },
   ];
   confirmadosEv = [{ini:'AR'},{ini:'MS'},{ini:'RM'},{ini:'PL'},{ini:'CF'},{ini:'TB'},{ini:'JP'}];
   convidadosEvento = [
@@ -1715,7 +1715,7 @@ class Component extends DCLogic {
     { nome:'Felipe Nunes', empresa:'Nunes Invest', iniciais:'FN', foto:'uploads/users/pexels-mohamed-72152375-8495301.jpg', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Confirmado', statusColor:'warning' },
     { nome:'Ana Beatriz Souza', empresa:'AB Marketing', iniciais:'AS', foto:'uploads/users/pexels-mauricio-casas-454804780-18506626.jpg', tipo:'Membro', tipoColor:'ember', origem:'Membro', ingresso:'Incluso', status:'Não compareceu', statusColor:'destructive' },
   ];
-  eventoAtivo = { nome:'A mente por trás dos grandes movimentos', data:'28/08/2026', hora:'19h00', vagas:'120', part:'96', receita:'R$ 16,8k', convidados:'22', checkins:'0 / 96', local:'R. Leopoldo Bier, 644, Santana, Porto Alegre RS', localShort:'Espaço Brasa, Porto Alegre RS', descricao:'Uma Small Meeting com muito ASSADO, EMPREENDEDORISMO & NETWORK. Palestra com Eduardo Seibel.', palestrante:'Eduardo Seibel', palestranteBio:'A mente por trás do marketing da Agrofel, Yara e Alibem', ativo:true, cronograma:[{hora:'19h00',item:'Chegada'},{hora:'19h01',item:'Open food e integração do Grupo'},{hora:'20h30',item:'Apresentação individual'},{hora:'21h00',item:'Palestra com Eduardo Seibel'},{hora:'22h30',item:'Perguntas'},{hora:'23h00',item:'Encerramento'}] };
+  eventoAtivo = { nome:'A mente por trás dos grandes movimentos', data:'28/08/2026', hora:'19h00', vagas:'120', part:'96', receita:'R$ 16,8k', convidados:'22', checkins:'0 / 96', local:'R. Leopoldo Bier, 644, Santana, Porto Alegre RS', localShort:'Espaço Brasamind, Porto Alegre RS', descricao:'Uma Small Meeting com muito ASSADO, EMPREENDEDORISMO & NETWORK. Palestra com Eduardo Seibel.', palestrante:'Eduardo Seibel', palestranteBio:'A mente por trás do marketing da Agrofel, Yara e Alibem', ativo:true, cronograma:[{hora:'19h00',item:'Chegada'},{hora:'19h01',item:'Open food e integração do Grupo'},{hora:'20h30',item:'Apresentação individual'},{hora:'21h00',item:'Palestra com Eduardo Seibel'},{hora:'22h30',item:'Perguntas'},{hora:'23h00',item:'Encerramento'}] };
   permissoesBase = [
     { nome:'Membros', desc:'Ver e editar membros e categorias', on:true },
     { nome:'Eventos', desc:'Criar, editar e encerrar eventos', on:true },
@@ -1742,7 +1742,7 @@ class Component extends DCLogic {
   premiosTop3 = [
     { pos:'1º', titulo:'Primeiro do ano', premio:'Duas passagens de ida e volta para o Rio de Janeiro.' },
     { pos:'2º', titulo:'Segundo do ano', premio:'Uma caixa de vinhos.' },
-    { pos:'3º', titulo:'Terceiro do ano', premio:'Kit de churrasco no encerramento do Brasa.' },
+    { pos:'3º', titulo:'Terceiro do ano', premio:'Kit de churrasco no encerramento do Brasamind.' },
   ];
   rankAdmin = [
     { nome:'João da Silva', iniciais:'JS', empresa:'Silva Alimentos', presencas:'24', indicacoes:'12', pontos:'2.310' },
@@ -1802,7 +1802,7 @@ class Component extends DCLogic {
         capRest: String(Math.max(0, vagas-part)),
       };
     })();
-    const termoConteudo = { 'Termos de Uso':'1. Objeto\nEstes Termos regem a participação de membros e convidados no Brasamind, incluindo ingressos, convites e conduta nos eventos.\n\n2. Mensalidade\nO membro paga mensalidade recorrente processada via Asaas. O atraso pode suspender o acesso à plataforma até a regularização.\n\n3. Convites\nCada membro pode indicar convidados, que ficam vinculados a quem os convidou.\n\n4. Conduta\nEsperamos respeito e boa-fé nas conexões e negócios feitos no Brasa.', 'Política de Privacidade':'1. Dados coletados\nColetamos nome, empresa, contato e dados de participação para operar a plataforma.\n\n2. Uso dos dados\nUsamos os dados para gestão de membros, eventos, cobrança (Asaas) e networking entre membros.\n\n3. LGPD\nO titular pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento.\n\n4. Compartilhamento\nNão vendemos dados. Compartilhamos apenas com parceiros essenciais à operação (ex.: Asaas).' };
+    const termoConteudo = { 'Termos de Uso':'1. Objeto\nEstes Termos regem a participação de membros e convidados no Brasamind, incluindo ingressos, convites e conduta nos eventos.\n\n2. Mensalidade\nO membro paga mensalidade recorrente processada via Asaas. O atraso pode suspender o acesso à plataforma até a regularização.\n\n3. Convites\nCada membro pode indicar convidados, que ficam vinculados a quem os convidou.\n\n4. Conduta\nEsperamos respeito e boa-fé nas conexões e negócios feitos no Brasamind.', 'Política de Privacidade':'1. Dados coletados\nColetamos nome, empresa, contato e dados de participação para operar a plataforma.\n\n2. Uso dos dados\nUsamos os dados para gestão de membros, eventos, cobrança (Asaas) e networking entre membros.\n\n3. LGPD\nO titular pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento.\n\n4. Compartilhamento\nNão vendemos dados. Compartilhamos apenas com parceiros essenciais à operação (ex.: Asaas).' };
     const termoSel = { ...(s.termoSel || this.termos[0]) };
     termoSel.conteudo = termoConteudo[termoSel.nome] || '';
     const adminSel = s.adminSel || this.admins[0];
@@ -1816,11 +1816,11 @@ class Component extends DCLogic {
       cronograma: evSelRaw.cronograma || [],
       hasHora: !!(evSelRaw.hora),
       isAtivo: !!evSelRaw.ativo,
-      localTitle: (evSelRaw.local || '').includes('Leopoldo') ? 'Espaço Brasa' : ((evSelRaw.local || '').split(',')[0] || 'Local do evento'),
-      checkins: evSelRaw.checkins || '—',
-      part: evSelRaw.part || '—',
-      receita: evSelRaw.receita || '—',
-      convidados: evSelRaw.convidados || '—',
+      localTitle: (evSelRaw.local || '').includes('Leopoldo') ? 'Espaço Brasamind' : ((evSelRaw.local || '').split(',')[0] || 'Local do evento'),
+      checkins: evSelRaw.checkins || '-',
+      part: evSelRaw.part || '-',
+      receita: evSelRaw.receita || '-',
+      convidados: evSelRaw.convidados || '-',
       vagas: evSelRaw.vagas || '120',
       showCap: !!evSelRaw.ativo,
       capPct: evCapPct+'%',
@@ -1830,7 +1830,7 @@ class Component extends DCLogic {
       palestranteBio: evSelRaw.palestranteBio || '',
       ...this.mapsUrl(evSelRaw.local),
     };
-    const titles = { geral:['Visão geral','Indicadores do Brasa em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Pontos, regras e prêmios do encerramento.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], ofertas:['Ofertas de Patrocinadores','Banners ativos e engajamento da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
+    const titles = { geral:['Visão geral','Indicadores do Brasamind em julho de 2026.'], membros:['Membros','128 empresas na rede.'], eventos:['Eventos','Um evento ativo por mês.'], financeiro:['Financeiro','Recorrência, eventos e inadimplência.'], game:['Ranking','Pontos, regras e prêmios do encerramento.'], seg:['Check-in','Acesso restrito da equipe de segurança.'], segUsers:['Usuários de segurança','Acessos temporários de check-in.'], categorias:['Categorias','Níveis de participação da rede.'], ofertas:['Ofertas de Patrocinadores','Banners ativos e engajamento da rede.'], admins:['Usuários','Quem administra a plataforma.'], termos:['Termos e privacidade','Documentos legais e aceites.'], faq:['FAQ','Perguntas frequentes da Área do Membro.'], membroDetalhe:[sel.nome,'Perfil do membro.'], eventoForm:[s.eventMode==='new'?'Novo evento':'Editar evento','Configure o evento do mês.'], adminEdit:[adminSel.nome,'Editar usuário e permissões.'], termosEdit:[termoSel.nome,'Editar documento legal.'], eventoView:[evSel.nome,'Detalhes do evento.'], bloqueio:['Acesso bloqueado','Regularize sua mensalidade.'] };
     const t = titles[s.screen] || ['',''];
     const exportLabels = { geral:'Exportar relatório geral', membros:'Exportar relatório de membros', eventos:'Exportar relatório de eventos', financeiro:'Exportar relatório financeiro', game:'Exportar relatório do ranking', seg:'Exportar relatório de check-in', segUsers:'Exportar relatório de acessos', categorias:'Exportar relatório de categorias', ofertas:'Exportar relatório de ofertas', admins:'Exportar relatório de usuários', termos:'Exportar relatório de termos', faq:'Exportar relatório do FAQ', membroDetalhe:'Exportar relatório do membro', eventoForm:'Exportar relatório de eventos', eventoView:'Exportar relatório do evento', adminEdit:'Exportar relatório de usuários', termosEdit:'Exportar relatório de termos', bloqueio:'Exportar relatório' };
     const exportLabel = exportLabels[s.screen] || 'Exportar relatório';

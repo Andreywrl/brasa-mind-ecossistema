@@ -103,7 +103,7 @@ export default function AdminHomePage() {
               </p>
             </div>
             <div className="font-mono text-lg font-extrabold">
-              {data?.kpis.find((k) => k.label === "MRR")?.value ?? "—"}
+              {data?.kpis.find((k) => k.label === "MRR")?.value ?? "-"}
             </div>
           </div>
           {isLoading || !data ? (

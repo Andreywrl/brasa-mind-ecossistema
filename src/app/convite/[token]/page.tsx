@@ -2,6 +2,8 @@
 
 import { use, useState } from "react";
 import { useApiQuery, apiMutate } from "@/lib/api-client";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
@@ -76,12 +78,10 @@ export default function ConvitePage({
   const [card, setCard] = useState<CardFormState>(emptyCreditCard());
   const [code, setCode] = useState("");
   const [pix, setPix] = useState<{ encodedImage?: string; payload?: string } | null>(null);
-  const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function pay() {
     setLoading(true);
-    setErr("");
     try {
       const res = await apiMutate<{
         code: string;
@@ -96,12 +96,13 @@ export default function ConvitePage({
             form.paymentMethod === "CREDIT_CARD" ? card : undefined,
         }),
       });
+      toast.success("Presença confirmada.");
       setCode(res.code);
       if (res.pix) setPix(res.pix);
       setCard(emptyCreditCard());
       setStep(3);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Erro");
+      toastActionError(e, "Não foi possível confirmar o pagamento.");
     } finally {
       setLoading(false);
     }
@@ -365,12 +366,11 @@ export default function ConvitePage({
                   Asaas desligado: confirmação local.
                 </p>
               )}
-              {err && <p className="text-sm text-destructive">{err}</p>}
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(1)}>
                   Voltar
                 </Button>
-                <Button className="flex-1" disabled={loading} onClick={pay}>
+                <Button className="flex-1" loading={loading} onClick={pay}>
                   {loading ? "Confirmando…" : "Confirmar pagamento"}
                 </Button>
               </div>

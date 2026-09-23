@@ -40,7 +40,7 @@ function mapReg(r: {
   return {
     id: r.id,
     tipo: labelRegistrationType(r.type),
-    nome: r.member?.user.name ?? r.guest?.nome ?? "—",
+    nome: r.member?.user.name ?? r.guest?.nome ?? "-",
     empresa: r.member?.empresa ?? r.guest?.empresa ?? "",
     email: r.member?.user.email ?? r.guest?.email ?? "",
     fotoUrl: r.member?.fotoUrl ?? r.member?.user.image,

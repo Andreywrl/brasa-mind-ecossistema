@@ -30,12 +30,21 @@ type Dashboard = {
   activity: { titulo: string; quando: string; valor: string }[];
   rankTop: { id?: string; nome: string; pontos: number; fotoUrl: string | null; rank: number }[];
   activeOffer: {
+    id?: string;
     titulo: string;
     bannerUrl: string | null;
     destRotulo?: string | null;
     destino?: string | null;
     member?: { user?: { name?: string | null } | null } | null;
   } | null;
+  activeOffers?: {
+    id?: string;
+    titulo: string;
+    bannerUrl: string | null;
+    destRotulo?: string | null;
+    destino?: string | null;
+    member?: { user?: { name?: string | null } | null } | null;
+  }[];
 };
 
 export default function MembroDashboardPage() {
@@ -75,7 +84,7 @@ export default function MembroDashboardPage() {
             <CountdownGrid target={data.event.data} />
             <div className="flex flex-wrap items-center gap-3.5">
               <Link
-                href="/membro/evento"
+                href="/membro/evento/comprar"
                 className="inline-flex h-11 items-center justify-center rounded-md bg-brasa px-6 text-sm font-semibold text-white glow-ember"
               >
                 Comprar ingresso
@@ -165,7 +174,7 @@ export default function MembroDashboardPage() {
                 {data.confirmedCount}
               </div>
               <p className="text-sm text-muted-foreground mt-1">
-                confirmados no evento · {data.event?.vagas ?? "—"} vagas
+                confirmados no evento · {data.event?.vagas ?? "-"} vagas
               </p>
               <span className="mt-3 inline-block text-sm font-semibold text-primary">
                 Ver convites
@@ -175,7 +184,11 @@ export default function MembroDashboardPage() {
         </div>
       )}
 
-      {data?.activeOffer && <OfferHighlight offer={data.activeOffer} />}
+      {data?.activeOffers?.length ? (
+        <OfferHighlight offers={data.activeOffers} />
+      ) : data?.activeOffer ? (
+        <OfferHighlight offer={data.activeOffer} />
+      ) : null}
 
       <div className="grid lg:grid-cols-5 gap-4">
         <Card className="lg:col-span-2 p-5">

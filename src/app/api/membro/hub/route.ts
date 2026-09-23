@@ -56,12 +56,20 @@ export async function GET(req: Request) {
   ] as string[];
   const cidades = [...new Set(all.map((a) => a.cidade).filter(Boolean))] as string[];
 
-  const offer = await prisma.offer.findFirst({
+  const activeOffers = await prisma.offer.findMany({
     where: { ativo: true },
+    orderBy: { updatedAt: "desc" },
     include: {
       member: { include: { user: { select: { name: true, image: true } } } },
     },
   });
 
-  return jsonOk({ members, especialidades, cidades, offer, total: members.length });
+  return jsonOk({
+    members,
+    especialidades,
+    cidades,
+    offer: activeOffers[0] ?? null,
+    activeOffers,
+    total: members.length,
+  });
 }

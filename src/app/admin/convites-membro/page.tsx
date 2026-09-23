@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { ActionMenu } from "@/components/ui/action-menu";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type InvitesData = {
   invites: {
@@ -35,38 +37,51 @@ export default function AdminConvitesMembroPage() {
   const [emailTo, setEmailTo] = useState("");
   const [msg, setMsg] = useState("");
   const [emailNote, setEmailNote] = useState("");
+  const [saving, setSaving] = useState(false);
 
   async function create() {
-    const res = await apiMutate<{
-      invite: { link: string };
-      emailSent?: boolean;
-    }>("/api/admin/membership-invites", {
-      method: "POST",
-      body: JSON.stringify({
-        categoria,
-        maxUses,
-        emailTo: emailTo.trim() || undefined,
-      }),
-    });
-    setMsg(res.invite.link);
-    setEmailNote(
-      emailTo.trim()
+    setSaving(true);
+    try {
+      const res = await apiMutate<{
+        invite: { link: string };
+        emailSent?: boolean;
+      }>("/api/admin/membership-invites", {
+        method: "POST",
+        body: JSON.stringify({
+          categoria,
+          maxUses,
+          emailTo: emailTo.trim() || undefined,
+        }),
+      });
+      setMsg(res.invite.link);
+      const note = emailTo.trim()
         ? res.emailSent
           ? `E-mail enviado para ${emailTo}.`
           : "Link gerado. E-mail não enviado (Resend desligado ou falha)."
-        : "",
-    );
-    setEmailTo("");
-    setFormOpen(false);
-    await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
+        : "";
+      setEmailNote(note);
+      toast.success(note || "Link de cadastro gerado.");
+      setEmailTo("");
+      setFormOpen(false);
+      await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível gerar o link.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function toggle(id: string, active: boolean) {
-    await apiMutate("/api/admin/membership-invites", {
-      method: "PATCH",
-      body: JSON.stringify({ id, active: !active }),
-    });
-    await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
+    try {
+      await apiMutate("/api/admin/membership-invites", {
+        method: "PATCH",
+        body: JSON.stringify({ id, active: !active }),
+      });
+      toast.success(active ? "Link desativado." : "Link reativado.");
+      await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível atualizar o link.");
+    }
   }
 
   return (
@@ -100,7 +115,9 @@ export default function AdminConvitesMembroPage() {
             <Button variant="outline" onClick={() => setFormOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={create}>Gerar link</Button>
+            <Button onClick={create} loading={saving}>
+              {saving ? "Gerando…" : "Gerar link"}
+            </Button>
           </>
         }
       >

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import toast from "react-hot-toast";
 
 type BarcodeDetectorLike = {
   detect: (source: ImageBitmapSource) => Promise<{ rawValue: string }[]>;
@@ -25,7 +26,6 @@ export function CheckinCodeForm({
 }) {
   const [code, setCode] = useState("");
   const [scanning, setScanning] = useState(false);
-  const [scanError, setScanError] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
@@ -43,9 +43,8 @@ export function CheckinCodeForm({
   }
 
   async function startScan() {
-    setScanError("");
     if (!window.BarcodeDetector) {
-      setScanError(
+      toast.error(
         "Seu navegador não lê QR pela câmera. Digite o código ou use Chrome/Edge.",
       );
       return;
@@ -85,7 +84,7 @@ export function CheckinCodeForm({
       };
       rafRef.current = requestAnimationFrame(tick);
     } catch {
-      setScanError("Não foi possível abrir a câmera.");
+      toast.error("Não foi possível abrir a câmera.");
       stopScan();
     }
   }
@@ -106,7 +105,8 @@ export function CheckinCodeForm({
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
-          disabled={loading || !code.trim()}
+          loading={loading}
+          disabled={!code.trim()}
           onClick={() => onSubmit(code.trim())}
         >
           {loading ? "Confirmando…" : "Confirmar por código"}
@@ -121,7 +121,6 @@ export function CheckinCodeForm({
           </Button>
         )}
       </div>
-      {scanError && <p className="text-sm text-destructive">{scanError}</p>}
       {scanning && (
         <video
           ref={videoRef}

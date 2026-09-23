@@ -67,15 +67,15 @@ export default function PublicMemberPage({
   if (!m) return <p>Membro não encontrado.</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="mx-auto flex max-w-3xl flex-col gap-[22px]">
       <Link
         href="/membro/hub"
-        className="inline-flex text-sm font-semibold text-muted-foreground no-underline hover:text-foreground"
+        className="inline-flex self-start text-[13px] font-semibold text-muted-foreground no-underline hover:text-foreground"
       >
         Voltar ao hub
       </Link>
 
-      <Card className="overflow-hidden p-0">
+      <Card className="overflow-hidden rounded-[20px] p-0">
         <div
           className={cn("relative h-[130px]", memberBannerClass(m.categoria))}
           style={
@@ -96,114 +96,132 @@ export default function PublicMemberPage({
           >
             {labelCategory(m.categoria)}
           </span>
-        </div>
-        <div className="relative px-6 pb-6">
-          <div className="-mt-[52px] mb-3">
+          <div className="absolute left-8 -bottom-10">
             <MemberAvatar
               name={m.nome}
               src={m.fotoUrl}
               size="lg"
-              className="ring-4"
+              className="ring-4 ring-card"
             />
           </div>
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h1 className="font-display text-2xl font-bold leading-tight">{m.nome}</h1>
-              <p className="text-sm text-muted-foreground">{m.empresa}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {[m.especialidade, m.cidade].filter(Boolean).join(" · ")}
-              </p>
-            </div>
-            {mine ? (
-              <Link
-                href="/membro/perfil"
-                className="inline-flex h-9 items-center rounded-md bg-secondary px-4 text-xs font-semibold no-underline"
-              >
-                Editar perfil
-              </Link>
-            ) : null}
-          </div>
+        </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {wa ? (
-              <a
-                href={wa}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-9 items-center rounded-md bg-[#25D366] px-3 text-sm font-bold text-white no-underline"
-              >
-                WhatsApp
-              </a>
-            ) : null}
-            {ig ? (
-              <a
-                href={ig}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-9 items-center rounded-md bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] px-3 text-sm font-bold text-white no-underline"
-              >
-                Instagram
-              </a>
-            ) : null}
-            {web ? (
-              <a
-                href={web}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-9 items-center rounded-md border border-border bg-background px-3 text-sm font-bold no-underline"
-              >
-                Site
-              </a>
-            ) : null}
+        <div className="px-8 pb-7 pt-[52px]">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <h1 className="font-display m-0 text-[26px] font-extrabold leading-tight">
+                {m.nome}
+              </h1>
+              <p className="m-0 mt-0.5 text-[15px] text-muted-foreground">
+                {[m.empresa, m.especialidade].filter(Boolean).join(", ")}
+              </p>
+              {m.cidade ? (
+                <p className="m-0 mt-0.5 text-sm text-muted-foreground">{m.cidade}</p>
+              ) : null}
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              {mine ? (
+                <Link
+                  href="/membro/perfil"
+                  className="inline-flex h-11 items-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground no-underline"
+                >
+                  Editar perfil
+                </Link>
+              ) : (
+                <>
+                  {wa ? (
+                    <a
+                      href={wa}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-11 items-center gap-2 rounded-md bg-[#25D366] px-4 text-sm font-semibold text-white no-underline"
+                    >
+                      WhatsApp
+                    </a>
+                  ) : null}
+                  {ig ? (
+                    <a
+                      href={ig}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-11 items-center rounded-md border border-border bg-transparent px-4 text-sm font-semibold no-underline"
+                    >
+                      Instagram
+                    </a>
+                  ) : null}
+                  {web ? (
+                    <a
+                      href={web}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex h-11 items-center rounded-md border border-border bg-transparent px-4 text-sm font-semibold no-underline"
+                    >
+                      Site
+                    </a>
+                  ) : null}
+                </>
+              )}
+            </div>
           </div>
 
           {m.descricao ? (
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-[18px] max-w-[640px] text-sm leading-relaxed text-muted-foreground">
               {m.descricao}
             </p>
           ) : null}
-        </div>
-      </Card>
 
-      {yt ? (
-        <Card className="overflow-hidden p-0">
-          <div className="relative aspect-video w-full">
-            <iframe
-              src={yt}
-              title={`Vídeo de ${m.nome}`}
-              className="absolute inset-0 h-full w-full border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
+          <div className="mt-6">
+            <div className="font-display mb-2.5 text-sm font-extrabold">
+              Vídeo de apresentação
+            </div>
+            {yt ? (
+              <div className="relative aspect-video overflow-hidden rounded-[14px] border border-border bg-[hsl(20_10%_5%)]">
+                <iframe
+                  src={yt}
+                  title={`Vídeo de ${m.nome}`}
+                  className="absolute inset-0 h-full w-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <div className="flex aspect-video flex-col items-center justify-center gap-2 rounded-[14px] border border-dashed border-border bg-secondary px-6 text-center">
+                <span className="text-[13px] text-muted-foreground">
+                  Sem vídeo de apresentação ainda
+                </span>
+              </div>
+            )}
           </div>
-        </Card>
-      ) : (
-        <Card className="p-6 text-sm text-muted-foreground">
-          Este membro ainda não publicou um vídeo no perfil.
-        </Card>
-      )}
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Kpi label="Pontos" value={formatPoints(m.pontos)} />
-        <Kpi label="Ranking" value={`${m.rank}º`} />
-        <Kpi label="Eventos" value={String(m.eventos ?? 0)} />
-        <Kpi label="Convidados" value={String(m.convidados ?? 0)} />
-      </div>
+          <div className="om-grid-4 mt-6">
+            <Kpi label="Pontuação" value={formatPoints(m.pontos)} />
+            <Kpi label="Ranking" value={`${m.rank}º`} />
+            <Kpi label="Eventos" value={String(m.eventos ?? 0)} />
+            <Kpi label="Convidados" value={String(m.convidados ?? 0)} />
+          </div>
 
-      <Card className="space-y-2 p-4 text-sm">
-        {m.email ? <ContactRow label="E-mail" value={m.email} href={`mailto:${m.email}`} /> : null}
-        {m.telefone ? <ContactRow label="Telefone" value={m.telefone} href={`tel:${m.telefone}`} /> : null}
-        {m.whatsapp ? (
-          <ContactRow label="WhatsApp" value={m.whatsapp} href={wa || undefined} />
-        ) : null}
-        {m.instagram ? (
-          <ContactRow label="Instagram" value={m.instagram} href={ig || undefined} />
-        ) : null}
-        {m.linkedin ? (
-          <ContactRow label="LinkedIn" value={m.linkedin} href={li || undefined} />
-        ) : null}
-        {m.site ? <ContactRow label="Site" value={m.site} href={web || undefined} /> : null}
-        {m.endereco ? <ContactRow label="Endereço" value={m.endereco} /> : null}
+          <div className="om-split mt-5 text-sm">
+            {m.whatsapp ? (
+              <ContactLink href={wa} label={m.whatsapp} />
+            ) : null}
+            {m.email ? (
+              <ContactLink href={`mailto:${m.email}`} label={m.email} />
+            ) : null}
+            {m.instagram ? (
+              <ContactLink href={ig} label={m.instagram} />
+            ) : null}
+            {m.site ? <ContactLink href={web} label={m.site} /> : null}
+            {m.linkedin ? (
+              <ContactLink href={li} label={m.linkedin} />
+            ) : null}
+            {m.endereco ? (
+              <span className="text-muted-foreground">{m.endereco}</span>
+            ) : null}
+            {m.telefone ? (
+              <ContactLink href={`tel:${m.telefone}`} label={m.telefone} />
+            ) : null}
+          </div>
+        </div>
       </Card>
     </div>
   );
@@ -211,34 +229,32 @@ export default function PublicMemberPage({
 
 function Kpi({ label, value }: { label: string; value: string }) {
   return (
-    <Card className="p-3 text-center">
-      <p className="font-display text-lg font-bold">{value}</p>
-      <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-        {label}
-      </p>
-    </Card>
+    <div className="rounded-[14px] border border-border p-4">
+      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="font-mono mt-1 text-xl font-bold">{value}</div>
+    </div>
   );
 }
 
-function ContactRow({
-  label,
-  value,
+function ContactLink({
   href,
+  label,
 }: {
+  href?: string | null;
   label: string;
-  value: string;
-  href?: string;
 }) {
-  const inner = (
-    <div className="flex justify-between gap-3 border-b border-border py-2 last:border-0">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="text-right font-medium">{value}</span>
-    </div>
-  );
-  if (!href) return inner;
+  if (!href) {
+    return <span>{label}</span>;
+  }
+  const external = href.startsWith("http");
   return (
-    <a href={href} target={href.startsWith("mailto") || href.startsWith("tel") ? undefined : "_blank"} rel="noreferrer" className="block no-underline text-inherit">
-      {inner}
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
+      className="min-w-0 truncate text-foreground no-underline hover:underline"
+    >
+      {label}
     </a>
   );
 }

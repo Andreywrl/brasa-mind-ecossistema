@@ -122,7 +122,7 @@ export default function HistoricoDetalhePage() {
                   hour: "2-digit",
                   minute: "2-digit",
                 })
-              : "—"}
+              : "-"}
           </div>
         </Card>
         <Card className="rounded-[14px] p-4">

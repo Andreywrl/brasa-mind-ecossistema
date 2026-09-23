@@ -22,7 +22,7 @@ export function AddressFields({
   onChange: (next: AddressForm) => void;
   showCity?: boolean;
 }) {
-  const { lookup, loading, error } = useViaCep();
+  const { lookup, loading } = useViaCep();
 
   async function onCep(cep: string) {
     onChange({ ...value, cep });
@@ -57,7 +57,6 @@ export function AddressFields({
       {loading && (
         <p className="text-xs text-muted-foreground">Buscando endereço…</p>
       )}
-      {error && <p className="text-xs text-destructive">{error}</p>}
       <div className="space-y-1">
         <Label>Endereço *</Label>
         <Input

@@ -155,7 +155,7 @@ export default function AdminMembroDetalhePage() {
         <Card className="p-4">
           <div className="text-xs text-muted-foreground uppercase">Ranking</div>
           <div className="font-mono text-xl font-extrabold mt-1">
-            {m.rank ? `${m.rank}º` : "—"}
+            {m.rank ? `${m.rank}º` : "-"}
           </div>
         </Card>
         <Card className="p-4">
@@ -299,7 +299,7 @@ export default function AdminMembroDetalhePage() {
                   <span className="font-semibold">{g.nome}</span>
                   <span className="text-muted-foreground">
                     {" "}
-                    · {g.empresa ?? "—"} · {g.eventNome}
+                    · {g.empresa ?? "-"} · {g.eventNome}
                   </span>
                 </li>
               ))}

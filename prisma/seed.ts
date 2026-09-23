@@ -211,7 +211,7 @@ async function main() {
       data: new Date("2026-08-28T19:00:00"),
       hora: "19h00",
       local: "R. Leopoldo Bier, 644, Santana, Porto Alegre RS",
-      localShort: "Espaço Brasa, Porto Alegre RS",
+      localShort: "Espaço Brasamind, Porto Alegre RS",
       descricao:
         "Small Meeting com assado, empreendedorismo e network. Palestra com Eduardo Seibel.",
       palestrante: "Eduardo Seibel",
@@ -250,7 +250,7 @@ async function main() {
       eventId: activeEvent.id,
       hostId: joao.id,
       message:
-        "Te chamo para o próximo encontro do Brasamind, dia 28/08 às 19h no Espaço Brasa.",
+        "Te chamo para o próximo encontro do Brasamind, dia 28/08 às 19h no Espaço Brasamind.",
     },
   });
 

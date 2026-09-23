@@ -5,6 +5,7 @@ import { Bell } from "lucide-react";
 import { apiMutate, useApiQuery } from "@/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
+import { toastActionError } from "@/lib/action-toast";
 
 type Notif = {
   id: string;
@@ -37,21 +38,29 @@ export function NotificationBell() {
   }, []);
 
   async function markAll() {
-    await apiMutate("/api/membro/notifications", {
-      method: "PATCH",
-      body: JSON.stringify({ all: true }),
-    });
-    await qc.invalidateQueries({ queryKey: ["membro", "notifications"] });
-    await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
+    try {
+      await apiMutate("/api/membro/notifications", {
+        method: "PATCH",
+        body: JSON.stringify({ all: true }),
+      });
+      await qc.invalidateQueries({ queryKey: ["membro", "notifications"] });
+      await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível atualizar as notificações.");
+    }
   }
 
   async function markOne(id: string) {
-    await apiMutate("/api/membro/notifications", {
-      method: "PATCH",
-      body: JSON.stringify({ id }),
-    });
-    await qc.invalidateQueries({ queryKey: ["membro", "notifications"] });
-    await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
+    try {
+      await apiMutate("/api/membro/notifications", {
+        method: "PATCH",
+        body: JSON.stringify({ id }),
+      });
+      await qc.invalidateQueries({ queryKey: ["membro", "notifications"] });
+      await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível atualizar a notificação.");
+    }
   }
 
   const unread = data?.unread ?? 0;
@@ -91,7 +100,7 @@ export function NotificationBell() {
                 Nada por aqui ainda.
               </li>
             ) : (
-              data!.notifications.map((n) => (
+              data!.notifications.slice(0, 8).map((n) => (
                 <li key={n.id}>
                   <button
                     type="button"
@@ -129,6 +138,13 @@ export function NotificationBell() {
               ))
             )}
           </ul>
+          <a
+            href="/membro/notificacoes"
+            className="block w-full border-t border-border px-4 py-3 text-center text-[13px] font-semibold text-primary hover:bg-secondary/40"
+            onClick={() => setOpen(false)}
+          >
+            Ver histórico de notificações
+          </a>
         </div>
       )}
     </div>

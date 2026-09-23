@@ -2,6 +2,8 @@
 
 import { use, useState } from "react";
 import { useApiQuery, apiMutate } from "@/lib/api-client";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
@@ -85,13 +87,11 @@ export default function QueroSerMembroPage({
   const [card, setCard] = useState<CardFormState>(emptyCreditCard());
   const [terms, setTerms] = useState(false);
   const [msg, setMsg] = useState("");
-  const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
   const [pix, setPix] = useState<{ encodedImage?: string; payload?: string } | null>(null);
 
   async function submit() {
     setLoading(true);
-    setErr("");
     try {
       const res = await apiMutate<{
         asaasSkipped?: boolean;
@@ -105,11 +105,11 @@ export default function QueroSerMembroPage({
             form.paymentMethod === "CREDIT_CARD" ? card : undefined,
         }),
       });
-      setMsg(
-        res.asaasSkipped
-          ? "Conta criada em modo local (Asaas desligado)."
-          : "Assinatura iniciada. Entrando…",
-      );
+      const nextMsg = res.asaasSkipped
+        ? "Conta criada em modo local (Asaas desligado)."
+        : "Assinatura iniciada. Entrando…";
+      setMsg(nextMsg);
+      toast.success(nextMsg);
       if (res.pix) setPix(res.pix);
       setCard(emptyCreditCard());
       setStep(4);
@@ -119,7 +119,7 @@ export default function QueroSerMembroPage({
         redirect: false,
       });
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Erro no cadastro");
+      toastActionError(e, "Não foi possível concluir o cadastro.");
     } finally {
       setLoading(false);
     }
@@ -416,14 +416,14 @@ export default function QueroSerMembroPage({
                   , e autorizo a cobrança recorrente mensal.
                 </span>
               </label>
-              {err && <p className="text-sm text-destructive">{err}</p>}
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(2)}>
                   Voltar
                 </Button>
                 <Button
                   className="flex-1"
-                  disabled={!terms || loading}
+                  disabled={!terms}
+                  loading={loading}
                   onClick={submit}
                 >
                   {loading ? "Assinando…" : "Assinar e entrar no Brasamind"}

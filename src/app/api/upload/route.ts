@@ -1,6 +1,11 @@
-import { put } from "@vercel/blob";
 import { jsonError, jsonOk, requireSession } from "@/lib/api";
-import { blobConfigured } from "@/lib/blob";
+import {
+  blobConfigured,
+  isAllowedFolder,
+  sanitizeUploadName,
+  uploadBlob,
+  validateImageFile,
+} from "@/lib/blob";
 
 export async function POST(req: Request) {
   const result = await requireSession(["MEMBRO", "ADMIN"]);
@@ -17,12 +22,20 @@ export async function POST(req: Request) {
   const file = form.get("file");
   const folder = String(form.get("folder") ?? "uploads");
   if (!(file instanceof File)) return jsonError("Arquivo obrigatório");
+  if (!isAllowedFolder(folder)) return jsonError("Pasta inválida");
 
-  const pathname = `${folder}/${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
-  const blob = await put(pathname, file, {
-    access: "public",
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-  });
+  const invalid = validateImageFile(file);
+  if (invalid) return jsonError(invalid);
 
-  return jsonOk({ url: blob.url });
+  const name = sanitizeUploadName(file.name);
+  if (!name) return jsonError("Formato de imagem não suportado.");
+
+  const uploaded = await uploadBlob(
+    `${folder}/${Date.now()}-${name}`,
+    file,
+    file.type || undefined,
+  );
+  if (!uploaded.ok) return jsonError(uploaded.error, 503);
+
+  return jsonOk({ url: uploaded.url });
 }

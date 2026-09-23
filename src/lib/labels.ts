@@ -13,7 +13,7 @@ export function labelRegistrationStatus(status: string) {
     case "CANCELED":
       return "Cancelado";
     default:
-      return status === "—" ? "Sem inscrição" : status;
+      return status === "-" ? "Sem inscrição" : status;
   }
 }
 

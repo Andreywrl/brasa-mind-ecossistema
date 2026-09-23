@@ -7,6 +7,8 @@ import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type Users = {
   admins: {
@@ -45,15 +47,24 @@ export default function AdminUsuariosPage() {
     password: "",
     login: "",
   });
+  const [saving, setSaving] = useState(false);
 
   async function createDoor() {
-    await apiMutate("/api/admin/usuarios", {
-      method: "POST",
-      body: JSON.stringify({ type: "door", ...doorForm }),
-    });
-    setDoorForm({ name: "", email: "", password: "", login: "" });
-    setDoorOpen(false);
-    await qc.invalidateQueries({ queryKey: ["admin", "usuarios"] });
+    setSaving(true);
+    try {
+      await apiMutate("/api/admin/usuarios", {
+        method: "POST",
+        body: JSON.stringify({ type: "door", ...doorForm }),
+      });
+      toast.success("Acesso de portaria gerado.");
+      setDoorForm({ name: "", email: "", password: "", login: "" });
+      setDoorOpen(false);
+      await qc.invalidateQueries({ queryKey: ["admin", "usuarios"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível gerar o acesso.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -128,7 +139,9 @@ export default function AdminUsuariosPage() {
             <Button variant="outline" onClick={() => setDoorOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={createDoor}>Gerar acesso</Button>
+            <Button onClick={createDoor} loading={saving}>
+              {saving ? "Gerando…" : "Gerar acesso"}
+            </Button>
           </>
         }
       >

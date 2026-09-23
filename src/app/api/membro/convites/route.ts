@@ -5,11 +5,45 @@ import { nanoid } from "nanoid";
 export async function GET() {
   const result = await requireMember();
   if (!result.ok) return result.error;
-  const { profile } = result;
+  const { profile, session } = result;
   if (!profile) return jsonError("Perfil não encontrado", 404);
 
   const event = await prisma.event.findFirst({ where: { ativo: true } });
-  if (!event) return jsonOk({ event: null, invite: null, guests: [], stats: null });
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? "";
+
+  // Link de recrutamento pessoal (cadastro de membro)
+  let membershipInvite = await prisma.membershipInvite.findFirst({
+    where: {
+      createdById: session.user.id,
+      active: true,
+      OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (!membershipInvite) {
+    membershipInvite = await prisma.membershipInvite.create({
+      data: {
+        token: nanoid(20),
+        createdById: session.user.id,
+        categoria: "MEMBRO",
+        maxUses: 50,
+        active: true,
+      },
+    });
+  }
+
+  const recruitLink = `${base}/quero-ser-membro/${membershipInvite.token}`;
+
+  if (!event) {
+    return jsonOk({
+      event: null,
+      invite: null,
+      guests: [],
+      stats: null,
+      recruitLink,
+    });
+  }
 
   let invite = await prisma.invite.findFirst({
     where: { eventId: event.id, hostId: profile.id },
@@ -43,8 +77,6 @@ export async function GET() {
     ),
   ).length;
 
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "";
-
   return jsonOk({
     event,
     invite: {
@@ -56,6 +88,7 @@ export async function GET() {
       enviados: guests.length,
       confirmados: confirmed,
     },
+    recruitLink,
   });
 }
 

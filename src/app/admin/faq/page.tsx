@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { Modal } from "@/components/ui/modal";
 import { ActionMenu } from "@/components/ui/action-menu";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type FaqData = {
   faqs: { id: string; category: string; question: string; answer: string }[];
@@ -23,21 +25,39 @@ export default function AdminFaqPage() {
     answer: "",
   });
   const [removeId, setRemoveId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [removing, setRemoving] = useState(false);
 
   async function create() {
-    await apiMutate("/api/admin/faq", {
-      method: "POST",
-      body: JSON.stringify(form),
-    });
-    setForm({ category: "MEMBRO", question: "", answer: "" });
-    setFormOpen(false);
-    await qc.invalidateQueries({ queryKey: ["faq"] });
+    setSaving(true);
+    try {
+      await apiMutate("/api/admin/faq", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+      toast.success("Pergunta publicada.");
+      setForm({ category: "MEMBRO", question: "", answer: "" });
+      setFormOpen(false);
+      await qc.invalidateQueries({ queryKey: ["faq"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível salvar a pergunta.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function remove(id: string) {
-    await apiMutate(`/api/admin/faq?id=${id}`, { method: "DELETE" });
-    setRemoveId(null);
-    await qc.invalidateQueries({ queryKey: ["faq"] });
+    setRemoving(true);
+    try {
+      await apiMutate(`/api/admin/faq?id=${id}`, { method: "DELETE" });
+      toast.success("Pergunta excluída.");
+      setRemoveId(null);
+      await qc.invalidateQueries({ queryKey: ["faq"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível excluir a pergunta.");
+    } finally {
+      setRemoving(false);
+    }
   }
 
   return (
@@ -94,7 +114,9 @@ export default function AdminFaqPage() {
             <Button variant="outline" onClick={() => setFormOpen(false)}>
               Cancelar
             </Button>
-            <Button onClick={create}>Salvar</Button>
+            <Button onClick={create} loading={saving}>
+              {saving ? "Salvando…" : "Salvar"}
+            </Button>
           </>
         }
       >
@@ -135,9 +157,10 @@ export default function AdminFaqPage() {
             </Button>
             <Button
               variant="destructive"
+              loading={removing}
               onClick={() => removeId && remove(removeId)}
             >
-              Excluir
+              {removing ? "Excluindo…" : "Excluir"}
             </Button>
           </>
         }

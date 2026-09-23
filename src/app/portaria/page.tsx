@@ -11,6 +11,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { BrandMark } from "@/components/brand-mark";
 import { signOut, useSession } from "next-auth/react";
 import { labelRegistrationStatus } from "@/lib/labels";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type CheckinData = {
   event: { nome: string } | null;
@@ -28,9 +30,8 @@ type CheckinData = {
 export default function PortariaPage() {
   const { data: session } = useSession();
   const [q, setQ] = useState("");
-  const [msg, setMsg] = useState("");
-  const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
+  const [checkingId, setCheckingId] = useState<string | null>(null);
   const qc = useQueryClient();
   const { data, isLoading } = useApiQuery<CheckinData>(
     ["portaria", "checkin", q],
@@ -38,20 +39,23 @@ export default function PortariaPage() {
   );
 
   async function checkin(id: string) {
-    setErr("");
-    setMsg("");
-    await apiMutate("/api/admin/checkin", {
-      method: "POST",
-      body: JSON.stringify({ registrationId: id }),
-    });
-    setMsg("Entrada registrada.");
-    await qc.invalidateQueries({ queryKey: ["portaria", "checkin"] });
+    setCheckingId(id);
+    try {
+      await apiMutate("/api/admin/checkin", {
+        method: "POST",
+        body: JSON.stringify({ registrationId: id }),
+      });
+      toast.success("Entrada registrada.");
+      await qc.invalidateQueries({ queryKey: ["portaria", "checkin"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível registrar a entrada.");
+    } finally {
+      setCheckingId(null);
+    }
   }
 
   async function checkinByCode(code: string) {
     setBusy(true);
-    setErr("");
-    setMsg("");
     try {
       const res = await apiMutate<{ message?: string; nome?: string; already?: boolean }>(
         "/api/admin/checkin",
@@ -60,14 +64,14 @@ export default function PortariaPage() {
           body: JSON.stringify({ code }),
         },
       );
-      setMsg(
+      toast.success(
         res.already
           ? `${res.nome ?? "Participante"} já tinha check-in.`
           : `${res.message ?? "Entrada registrada"}${res.nome ? `: ${res.nome}` : ""}`,
       );
       await qc.invalidateQueries({ queryKey: ["portaria", "checkin"] });
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Falha no check-in");
+      toastActionError(e, "Falha no check-in.");
     } finally {
       setBusy(false);
     }
@@ -95,8 +99,6 @@ export default function PortariaPage() {
           {data?.event?.nome ?? "Portaria"}
         </h1>
         <CheckinCodeForm onSubmit={checkinByCode} loading={busy} />
-        {msg && <p className="text-sm text-success">{msg}</p>}
-        {err && <p className="text-sm text-destructive">{err}</p>}
         <div className="border-t border-border pt-3">
           <Input
             placeholder="Buscar por nome ou empresa"
@@ -133,8 +135,12 @@ export default function PortariaPage() {
                   {labelRegistrationStatus(r.status)}
                 </Badge>
                 {r.status === "CONFIRMED" && (
-                  <Button size="sm" onClick={() => checkin(r.id)}>
-                    Registrar entrada
+                  <Button
+                    size="sm"
+                    loading={checkingId === r.id}
+                    onClick={() => checkin(r.id)}
+                  >
+                    {checkingId === r.id ? "Registrando…" : "Registrar entrada"}
                   </Button>
                 )}
               </div>

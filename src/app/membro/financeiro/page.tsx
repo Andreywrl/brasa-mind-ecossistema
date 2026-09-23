@@ -15,6 +15,8 @@ import { PixResult } from "@/components/pix-result";
 import { PaymentTrust } from "@/components/payment-trust";
 import { labelInvoiceStatus, labelPaymentMethod } from "@/lib/labels";
 import { Modal } from "@/components/ui/modal";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type FinData = {
   emDia: boolean;
@@ -40,35 +42,35 @@ export default function FinanceiroPage() {
     "/api/membro/financeiro",
   );
   const [paying, setPaying] = useState<string | null>(null);
+  const [savingCard, setSavingCard] = useState(false);
+  const [confirmingPay, setConfirmingPay] = useState(false);
   const [editCard, setEditCard] = useState(false);
   const [cardForm, setCardForm] = useState<CardFormState>(emptyCreditCard());
   const [payCard, setPayCard] = useState<CardFormState>(emptyCreditCard());
   const [method, setMethod] = useState<"PIX" | "CREDIT_CARD" | "BOLETO">("PIX");
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
   const [pix, setPix] = useState<{ encodedImage?: string; payload?: string } | null>(null);
   const [boletoUrl, setBoletoUrl] = useState<string | null>(null);
 
   async function salvarCartao() {
-    setError("");
-    setMsg("");
+    setSavingCard(true);
     try {
       const res = await apiMutate<{ message?: string; cardLast4?: string }>(
         "/api/membro/financeiro/cartao",
         { method: "PATCH", body: JSON.stringify({ creditCard: cardForm }) },
       );
-      setMsg(res.message ?? `Cartão final ${res.cardLast4} salvo.`);
+      toast.success(res.message ?? `Cartão final ${res.cardLast4} salvo.`);
       setCardForm(emptyCreditCard());
       setEditCard(false);
       await qc.invalidateQueries({ queryKey: ["membro", "financeiro"] });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erro");
+      toastActionError(e, "Não foi possível salvar o cartão.");
+    } finally {
+      setSavingCard(false);
     }
   }
 
   async function pagar(invoiceId: string) {
-    setError("");
-    setMsg("");
+    setConfirmingPay(true);
     setPix(null);
     setBoletoUrl(null);
     try {
@@ -86,7 +88,7 @@ export default function FinanceiroPage() {
           creditCard: method === "CREDIT_CARD" ? payCard : undefined,
         }),
       });
-      setMsg(res.message ?? (res.paid ? "Pagamento confirmado." : "Pagamento processado."));
+      toast.success(res.message ?? (res.paid ? "Pagamento confirmado." : "Pagamento processado."));
       if (res.pix) setPix(res.pix);
       if (res.boletoUrl) setBoletoUrl(res.boletoUrl);
       setPayCard(emptyCreditCard());
@@ -94,7 +96,9 @@ export default function FinanceiroPage() {
       await qc.invalidateQueries({ queryKey: ["membro", "financeiro"] });
       await qc.invalidateQueries({ queryKey: ["membro", "dashboard"] });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erro");
+      toastActionError(e, "Não foi possível processar o pagamento.");
+    } finally {
+      setConfirmingPay(false);
     }
   }
 
@@ -201,15 +205,15 @@ export default function FinanceiroPage() {
             <Button variant="outline" onClick={() => setEditCard(false)}>
               Cancelar
             </Button>
-            <Button onClick={salvarCartao}>Salvar</Button>
+            <Button onClick={salvarCartao} loading={savingCard}>
+              {savingCard ? "Salvando…" : "Salvar"}
+            </Button>
           </>
         }
       >
         <div className="flex flex-col gap-3">
           <CreditCardFields value={cardForm} onChange={setCardForm} />
           <PaymentTrust />
-          {error ? <p className="text-sm text-destructive">{error}</p> : null}
-          {msg ? <p className="text-sm text-success">{msg}</p> : null}
         </div>
       </Modal>
 
@@ -222,7 +226,12 @@ export default function FinanceiroPage() {
             <Button variant="outline" onClick={() => setPaying(null)}>
               Fechar
             </Button>
-            <Button onClick={() => paying && pagar(paying)}>Confirmar</Button>
+            <Button
+              onClick={() => paying && pagar(paying)}
+              loading={confirmingPay}
+            >
+              {confirmingPay ? "Processando…" : "Confirmar"}
+            </Button>
           </>
         }
       >
@@ -254,8 +263,6 @@ export default function FinanceiroPage() {
                 Abrir boleto
               </a>
             )}
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            {msg && <p className="text-sm text-success">{msg}</p>}
         </div>
       </Modal>
     </div>

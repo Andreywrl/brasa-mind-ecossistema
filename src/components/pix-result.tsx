@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 export function PixResult({
   encodedImage,
@@ -10,14 +10,12 @@ export function PixResult({
   encodedImage?: string | null;
   payload?: string | null;
 }) {
-  const [copied, setCopied] = useState(false);
   if (!encodedImage && !payload) return null;
 
   async function copy() {
     if (!payload) return;
     await navigator.clipboard.writeText(payload);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    toast.success("Código PIX copiado.");
   }
 
   return (
@@ -41,7 +39,7 @@ export function PixResult({
         <div className="space-y-2">
           <p className="text-xs text-muted-foreground break-all font-mono">{payload}</p>
           <Button type="button" variant="outline" className="w-full" onClick={copy}>
-            {copied ? "Copiado" : "Copiar código PIX"}
+            Copiar código PIX
           </Button>
         </div>
       )}

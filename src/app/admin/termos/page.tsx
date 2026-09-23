@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
+import toast from "react-hot-toast";
+import { toastActionError } from "@/lib/action-toast";
 
 type Termos = {
   docs: {
@@ -33,13 +35,22 @@ export default function AdminTermosPage() {
     conteudo: "",
     published: true,
   });
+  const [publishing, setPublishing] = useState(false);
 
   async function publish() {
-    await apiMutate("/api/admin/termos", {
-      method: "POST",
-      body: JSON.stringify(form),
-    });
-    await qc.invalidateQueries({ queryKey: ["admin", "termos"] });
+    setPublishing(true);
+    try {
+      await apiMutate("/api/admin/termos", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+      toast.success("Versão publicada.");
+      await qc.invalidateQueries({ queryKey: ["admin", "termos"] });
+    } catch (e) {
+      toastActionError(e, "Não foi possível publicar.");
+    } finally {
+      setPublishing(false);
+    }
   }
 
   return (
@@ -101,7 +112,9 @@ export default function AdminTermosPage() {
           value={form.conteudo}
           onChange={(e) => setForm({ ...form, conteudo: e.target.value })}
         />
-        <Button onClick={publish}>Publicar</Button>
+        <Button onClick={publish} loading={publishing}>
+          {publishing ? "Publicando…" : "Publicar"}
+        </Button>
       </Card>
     </div>
   );
