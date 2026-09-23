@@ -12,7 +12,7 @@ O protótipo estático anterior (HTML DC) está em [`prototype/`](prototype/).
 - Asaas (opcional até configurar a chave)
 - Vercel Blob, Sentry e Analytics (opcionais)
 - Resend (e-mails transacionais opcionais)
-- pnpm · funções em `gru1` (`vercel.js`)
+- pnpm · funções em `gru1` (`vercel.json`)
 
 ## Setup local
 
@@ -31,6 +31,8 @@ pnpm dev
 Sem `DATABASE_URL` válido o schema continua pronto e o seed espera a conexão. Sem Asaas/Blob/Sentry/Google/e-mail, essas integrações ficam desligadas.
 
 ### Contas do seed
+
+Seed mínimo (não é dump de produção):
 
 - Membro: `joao@silvaalimentos.com.br` / `membro123`
 - Admin: `carla@brasamind.com.br` / `admin123`
