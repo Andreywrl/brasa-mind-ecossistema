@@ -288,10 +288,10 @@ async function main() {
 
   await prisma.pointRule.createMany({
     data: [
-      { action: PointAction.PRESENCA, pontos: 90, label: "Presença no evento" },
-      { action: PointAction.ASSIDUIDADE, pontos: 60, label: "Assiduidade (3 meses)" },
-      { action: PointAction.CONVITE_CONVERTIDO, pontos: 50, label: "Convite convertido" },
-      { action: PointAction.ADIMPLENCIA, pontos: 20, label: "Adimplência mensal" },
+      { action: PointAction.PRESENCA, pontos: 90, label: "Presença no encontro" },
+      { action: PointAction.ASSIDUIDADE, pontos: 60, label: "Assiduidade" },
+      { action: PointAction.CONVITE_CONVERTIDO, pontos: 50, label: "Indicação que virou membro" },
+      { action: PointAction.ADIMPLENCIA, pontos: 20, label: "Mensalidade em dia" },
     ],
   });
 

@@ -90,6 +90,23 @@ export function labelInvoiceKind(kind: string) {
   }
 }
 
+export function labelPointAction(action: string) {
+  switch (action) {
+    case "PRESENCA":
+      return "Presença no encontro";
+    case "ASSIDUIDADE":
+      return "Assiduidade";
+    case "CONVITE_CONVERTIDO":
+      return "Indicação que virou membro";
+    case "ADIMPLENCIA":
+      return "Mensalidade em dia";
+    case "MANUAL":
+      return "Pontos extras";
+    default:
+      return action;
+  }
+}
+
 export function labelPaymentMethod(method: string) {
   switch (method) {
     case "CREDIT_CARD":

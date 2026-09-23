@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { apiMutate, useApiQuery } from "@/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -9,10 +9,12 @@ import { toastActionError } from "@/lib/action-toast";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
+import { Modal } from "@/components/ui/modal";
+import { Camera, Loader2, Lock } from "lucide-react";
 import { formatPoints, cn, memberBannerClass } from "@/lib/utils";
 import { MaskedInput } from "@/components/masked-input";
 import { AddressFields, type AddressForm } from "@/components/address-fields";
-import { ImageUploadField } from "@/components/image-upload-field";
+import { uploadImageFile } from "@/components/image-upload-field";
 import { MemberAvatar } from "@/components/member-avatar";
 import { labelCategory } from "@/lib/labels";
 import { formatCnpj, formatPhoneBr, formatCep } from "@/lib/br";
@@ -74,13 +76,16 @@ export default function PerfilPage() {
     cidade: "",
   });
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState<"foto" | "capa" | null>(null);
+  const fotoRef = useRef<HTMLInputElement>(null);
+  const capaRef = useRef<HTMLInputElement>(null);
   const [pwd, setPwd] = useState({
     currentPassword: "",
     password: "",
     confirm: "",
   });
   const [savingPwd, setSavingPwd] = useState(false);
-  const [pwdOk, setPwdOk] = useState(false);
+  const [pwdOpen, setPwdOpen] = useState(false);
 
   useEffect(() => {
     if (!data) return;
@@ -114,6 +119,30 @@ export default function PerfilPage() {
     });
   }, [data]);
 
+  async function uploadImage(kind: "foto" | "capa", file: File | undefined) {
+    if (!file || uploading) return;
+    setUploading(kind);
+    try {
+      const url = await uploadImageFile(
+        file,
+        kind === "foto" ? "members/fotos" : "members/capas",
+      );
+      setForm((prev) => ({
+        ...prev,
+        [kind === "foto" ? "fotoUrl" : "capaUrl"]: url,
+      }));
+      toast.success(
+        kind === "foto"
+          ? "Foto enviada. Salve o perfil para publicar."
+          : "Capa enviada. Salve o perfil para publicar.",
+      );
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Erro no upload");
+    } finally {
+      setUploading(null);
+    }
+  }
+
   async function save() {
     setSaving(true);
     try {
@@ -132,13 +161,17 @@ export default function PerfilPage() {
     }
   }
 
+  const closePassword = useCallback(() => {
+    setPwdOpen(false);
+    setPwd({ currentPassword: "", password: "", confirm: "" });
+  }, []);
+
   async function savePassword() {
     if (pwd.password !== pwd.confirm) {
       toast.error("A confirmação não bate com a nova senha.");
       return;
     }
     setSavingPwd(true);
-    setPwdOk(false);
     try {
       await apiMutate("/api/membro/perfil", {
         method: "PATCH",
@@ -148,8 +181,7 @@ export default function PerfilPage() {
         }),
       });
       toast.success("Senha atualizada. Use a nova senha no próximo acesso.");
-      setPwd({ currentPassword: "", password: "", confirm: "" });
-      setPwdOk(true);
+      closePassword();
     } catch (e) {
       toastActionError(e, "Não foi possível atualizar a senha.");
     } finally {
@@ -213,15 +245,74 @@ export default function PerfilPage() {
               : undefined
           }
         >
-          <span className="om-img-scrim" aria-hidden />
-          <div className="absolute left-7 -bottom-9 z-[2]">
-            <MemberAvatar
-              name={displayName}
-              src={form.fotoUrl}
-              size="lg"
-              className="!h-[92px] !w-[92px] ring-4 ring-card"
+          <button
+            type="button"
+            className="group absolute inset-0 z-1 cursor-pointer border-0 bg-transparent p-0 disabled:cursor-wait"
+            aria-label="Alterar capa do perfil"
+            disabled={uploading === "capa"}
+            onClick={() => capaRef.current?.click()}
+          >
+            <span className="om-img-scrim" aria-hidden />
+            <span
+              className="pointer-events-none absolute inset-0 z-2 bg-black/0 transition-colors group-hover:bg-black/30 group-focus-visible:bg-black/30"
+              aria-hidden
             />
+            <span className="pointer-events-none absolute right-3 top-3 z-3 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white">
+              {uploading === "capa" ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+              ) : (
+                <Camera className="h-3.5 w-3.5" aria-hidden />
+              )}
+              {uploading === "capa" ? "Enviando…" : "Alterar capa"}
+            </span>
+          </button>
+          <div className="absolute -bottom-9 left-7 z-3">
+            <button
+              type="button"
+              className="group relative cursor-pointer rounded-full border-0 bg-transparent p-0 disabled:cursor-wait"
+              aria-label="Alterar foto de perfil"
+              disabled={uploading === "foto"}
+              onClick={() => fotoRef.current?.click()}
+            >
+              <MemberAvatar
+                name={displayName}
+                src={form.fotoUrl}
+                size="lg"
+                className="!h-[92px] !w-[92px] ring-4 ring-card"
+              />
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+                aria-hidden
+              />
+              <span className="pointer-events-none absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-brasa text-white ring-2 ring-card">
+                {uploading === "foto" ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+                ) : (
+                  <Camera className="h-3.5 w-3.5" aria-hidden />
+                )}
+              </span>
+            </button>
           </div>
+          <input
+            ref={capaRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            className="hidden"
+            onChange={(e) => {
+              void uploadImage("capa", e.target.files?.[0]);
+              e.target.value = "";
+            }}
+          />
+          <input
+            ref={fotoRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            className="hidden"
+            onChange={(e) => {
+              void uploadImage("foto", e.target.files?.[0]);
+              e.target.value = "";
+            }}
+          />
         </div>
 
         <form
@@ -330,49 +421,47 @@ export default function PerfilPage() {
 
           <AddressFields value={address} onChange={setAddress} />
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <ImageUploadField
-              label="Foto de perfil"
-              value={form.fotoUrl}
-              onChange={(fotoUrl) => setForm({ ...form, fotoUrl })}
-              folder="members/fotos"
-            />
-            <ImageUploadField
-              label="Capa do perfil"
-              value={form.capaUrl}
-              onChange={(capaUrl) => setForm({ ...form, capaUrl })}
-              folder="members/capas"
-            />
-          </div>
-
-          <div className="flex flex-wrap justify-end gap-3 border-t border-border pt-4">
-            <Link href={`/membro/membros/${data.profile.id}`}>
-              <Button type="button" variant="outline">
-                Cancelar
-              </Button>
-            </Link>
-            <Button type="submit" className="bg-brasa glow-ember" loading={saving}>
-              {saving ? "Salvando…" : "Salvar alterações"}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setPwdOpen(true)}
+            >
+              <Lock size={18} aria-hidden />
+              Alterar senha
             </Button>
+            <div className="flex flex-wrap gap-3">
+              <Link href={`/membro/membros/${data.profile.id}`}>
+                <Button type="button" variant="outline">
+                  Cancelar
+                </Button>
+              </Link>
+              <Button type="submit" className="bg-brasa glow-ember" loading={saving}>
+                {saving ? "Salvando…" : "Salvar alterações"}
+              </Button>
+            </div>
           </div>
         </form>
       </Card>
 
-      <Card className="flex flex-col gap-[18px] rounded-[18px] p-7">
-        <div>
-          <h2 className="font-display m-0 text-lg font-extrabold">Alterar senha</h2>
-          <p className="m-0 mt-1 text-[13px] text-muted-foreground">
-            Confirme a senha atual e defina uma nova para o seu acesso ao Brasamind.
-          </p>
-        </div>
-
-        {pwdOk && (
-          <div className="flex items-center gap-2.5 rounded-xl border border-success/35 bg-success/12 px-3.5 py-3 text-[13px] font-semibold">
-            Senha atualizada. Use a nova senha no próximo acesso.
-          </div>
-        )}
-
+      <Modal
+        open={pwdOpen}
+        onClose={closePassword}
+        title="Alterar senha"
+        description="Confirme a senha atual e defina uma nova para o seu acesso ao Brasamind."
+        footer={
+          <>
+            <Button type="button" variant="outline" onClick={closePassword}>
+              Cancelar
+            </Button>
+            <Button type="submit" form="alterar-senha" loading={savingPwd}>
+              {savingPwd ? "Salvando…" : "Salvar nova senha"}
+            </Button>
+          </>
+        }
+      >
         <form
+          id="alterar-senha"
           className="flex flex-col gap-4"
           onSubmit={(e) => {
             e.preventDefault();
@@ -380,44 +469,45 @@ export default function PerfilPage() {
           }}
         >
           <div className="flex flex-col gap-1.5">
-            <Label>Senha atual</Label>
+            <Label htmlFor="pwd-atual">Senha atual</Label>
             <Input
+              id="pwd-atual"
               type="password"
               value={pwd.currentPassword}
               onChange={(e) =>
                 setPwd({ ...pwd, currentPassword: e.target.value })
               }
               autoComplete="current-password"
+              required
             />
           </div>
-          <div className="om-split">
-            <div className="flex flex-col gap-1.5">
-              <Label>Nova senha</Label>
-              <Input
-                type="password"
-                value={pwd.password}
-                onChange={(e) => setPwd({ ...pwd, password: e.target.value })}
-                autoComplete="new-password"
-                placeholder="Mínimo 8 caracteres"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label>Confirmar nova senha</Label>
-              <Input
-                type="password"
-                value={pwd.confirm}
-                onChange={(e) => setPwd({ ...pwd, confirm: e.target.value })}
-                autoComplete="new-password"
-              />
-            </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="pwd-nova">Nova senha</Label>
+            <Input
+              id="pwd-nova"
+              type="password"
+              value={pwd.password}
+              onChange={(e) => setPwd({ ...pwd, password: e.target.value })}
+              autoComplete="new-password"
+              placeholder="Mínimo 8 caracteres"
+              minLength={8}
+              required
+            />
           </div>
-          <div className="flex justify-end border-t border-border pt-4">
-            <Button type="submit" loading={savingPwd}>
-              {savingPwd ? "Salvando…" : "Salvar nova senha"}
-            </Button>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="pwd-conf">Confirmar nova senha</Label>
+            <Input
+              id="pwd-conf"
+              type="password"
+              value={pwd.confirm}
+              onChange={(e) => setPwd({ ...pwd, confirm: e.target.value })}
+              autoComplete="new-password"
+              minLength={8}
+              required
+            />
           </div>
         </form>
-      </Card>
+      </Modal>
     </div>
   );
 }

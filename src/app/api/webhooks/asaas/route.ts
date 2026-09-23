@@ -86,7 +86,7 @@ export async function POST(req: Request) {
               memberId: guest.invite.hostId,
               action: "CONVITE_CONVERTIDO",
               pontos: 50,
-              note: `Convidado convertido, ${guest.nome}`,
+              note: `Indicação de ${guest.nome}`,
               eventId: reg.eventId,
             },
           });

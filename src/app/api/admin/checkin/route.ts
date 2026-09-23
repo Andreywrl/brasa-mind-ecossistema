@@ -164,7 +164,7 @@ export async function POST(req: Request) {
         memberId: reg.memberId,
         action: "PRESENCA",
         pontos: rule?.pontos ?? 90,
-        note: "Entrada no evento",
+        note: "Presença no encontro",
         eventId: reg.eventId,
       },
     });

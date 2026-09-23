@@ -5,6 +5,18 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 
+export async function uploadImageFile(file: File, folder: string) {
+  const fd = new FormData();
+  fd.set("file", file);
+  fd.set("folder", folder);
+  const res = await fetch("/api/upload", { method: "POST", body: fd });
+  const data = (await res.json()) as { url?: string; error?: string };
+  if (!res.ok || !data.url) {
+    throw new Error(data.error ?? "Falha no upload");
+  }
+  return data.url;
+}
+
 export function ImageUploadField({
   label,
   value,
@@ -23,15 +35,8 @@ export function ImageUploadField({
     if (!file) return;
     setBusy(true);
     try {
-      const fd = new FormData();
-      fd.set("file", file);
-      fd.set("folder", folder);
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      const data = (await res.json()) as { url?: string; error?: string };
-      if (!res.ok || !data.url) {
-        throw new Error(data.error ?? "Falha no upload");
-      }
-      onChange(data.url);
+      const url = await uploadImageFile(file, folder);
+      onChange(url);
       toast.success("Imagem enviada.");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Erro no upload");

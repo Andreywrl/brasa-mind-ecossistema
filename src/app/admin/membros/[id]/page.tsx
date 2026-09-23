@@ -9,6 +9,7 @@ import {
   labelCategory,
   labelInvoiceKind,
   labelInvoiceStatus,
+  labelPointAction,
   labelRegistrationStatus,
   labelSubscriptionStatus,
 } from "@/lib/labels";
@@ -247,7 +248,7 @@ export default function AdminMembroDetalhePage() {
             {m.pointEntries.map((p) => (
               <li key={p.id} className="flex justify-between text-sm gap-2">
                 <span className="text-muted-foreground truncate">
-                  {p.note ?? p.action}
+                  {p.note?.trim() || labelPointAction(p.action)}
                 </span>
                 <span className="font-mono font-semibold">{p.label}</span>
               </li>

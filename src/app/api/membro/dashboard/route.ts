@@ -1,6 +1,7 @@
 import { jsonError, jsonOk, requireMember } from "@/lib/api";
 import { prisma } from "@/lib/db";
 import { memberPointsTotal, rankingForPeriod } from "@/lib/ranking";
+import { labelPointAction } from "@/lib/labels";
 import { formatCurrency } from "@/lib/utils";
 
 export async function GET() {
@@ -61,7 +62,7 @@ export async function GET() {
     subscriptionStatus: profile.subscription?.status ?? "PENDING",
     nextDue: profile.subscription?.nextDueDate,
     activity: recentPoints.map((p) => ({
-      titulo: p.note ?? p.action,
+      titulo: p.note?.trim() || labelPointAction(p.action),
       quando: p.occurredAt,
       valor: `+${p.pontos}`,
     })),

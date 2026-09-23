@@ -130,7 +130,7 @@ export async function POST(
         memberId: invite.hostId,
         action: "CONVITE_CONVERTIDO",
         pontos: 50,
-        note: `Convidado convertido, ${guest.nome}`,
+        note: `Indicação de ${guest.nome}`,
         eventId: invite.eventId,
       },
     });
@@ -221,7 +221,7 @@ export async function POST(
         memberId: invite.hostId,
         action: "CONVITE_CONVERTIDO",
         pontos: 50,
-        note: `Convidado convertido, ${guest.nome}`,
+        note: `Indicação de ${guest.nome}`,
         eventId: invite.eventId,
       },
     });
