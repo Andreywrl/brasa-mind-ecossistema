@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 
@@ -17,12 +18,10 @@ export function ImageUploadField({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
 
   async function onFile(file: File | undefined) {
     if (!file) return;
     setBusy(true);
-    setError("");
     try {
       const fd = new FormData();
       fd.set("file", file);
@@ -33,8 +32,9 @@ export function ImageUploadField({
         throw new Error(data.error ?? "Falha no upload");
       }
       onChange(data.url);
+      toast.success("Imagem enviada.");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erro no upload");
+      toast.error(e instanceof Error ? e.message : "Erro no upload");
     } finally {
       setBusy(false);
     }
@@ -56,7 +56,7 @@ export function ImageUploadField({
           type="button"
           variant="outline"
           size="sm"
-          disabled={busy}
+          loading={busy}
           onClick={() => inputRef.current?.click()}
         >
           {busy ? "Enviando…" : "Enviar imagem"}
@@ -85,7 +85,6 @@ export function ImageUploadField({
         placeholder="Ou cole a URL"
         className="text-xs"
       />
-      {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );
 }

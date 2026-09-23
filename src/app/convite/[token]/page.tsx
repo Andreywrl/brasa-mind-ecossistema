@@ -155,7 +155,7 @@ export default function ConvitePage({
             <div>
               <div className="font-semibold">{data.invite.hostName}</div>
               <div className="text-sm text-muted-foreground">
-                convidou você para o encontro do Brasa
+                convidou você para o encontro do Brasamind
               </div>
             </div>
           </Card>
@@ -173,7 +173,7 @@ export default function ConvitePage({
               <span className="om-img-scrim om-img-scrim--hero" aria-hidden />
               <div className="om-img-over relative z-[2] space-y-3 p-6 text-white">
                 <Badge variant="ember">Convite exclusivo</Badge>
-                <h1 className="font-display text-3xl font-extrabold">{data.event.nome}</h1>
+                <h1 className="font-impact text-[38px] leading-[1.1]">{data.event.nome}</h1>
                 <p className="text-sm text-white/85">
                   {new Date(data.event.data).toLocaleDateString("pt-BR")} · {data.event.hora}
                 </p>
@@ -223,7 +223,7 @@ export default function ConvitePage({
             <Card className="p-4">
               <div className="font-display font-extrabold">Rede gaúcha</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Empresários em um encontro por mês.
+                Churrasco, palestra e networking com empresários gaúchos.
               </p>
             </Card>
             <Card className="p-4">
@@ -242,7 +242,7 @@ export default function ConvitePage({
             </Card>
           </section>
 
-          <EventGallery title="O que já rolou no Brasa" events={data.pastEvents} />
+          <EventGallery title="O que já rolou no Brasamind" events={data.pastEvents} />
 
           <footer className="border-t border-border pt-6 space-y-3 text-center text-sm text-muted-foreground">
             <BrandMark lockup size="md" className="mx-auto" />

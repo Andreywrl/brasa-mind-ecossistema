@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Badge, Card } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatPoints, initials } from "@/lib/utils";
+import { MemberAvatar } from "@/components/member-avatar";
+import { formatPoints } from "@/lib/utils";
 
 export type PodiumMember = {
   id: string;
@@ -37,18 +38,12 @@ function Slot({
       {member ? (
         <Link href={`/membro/membros/${member.id}`} className="flex flex-col items-center gap-2.5">
           <div className={large ? "om-podium-photo om-podium-photo-lg" : "om-podium-photo"}>
-            {member.fotoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={member.fotoUrl}
-                alt=""
-                className="h-full w-full rounded-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-brasa text-sm font-bold text-white">
-                {initials(member.nome)}
-              </div>
-            )}
+            <MemberAvatar
+              name={member.nome}
+              src={member.fotoUrl}
+              size={large ? "lg" : "md"}
+              className="!h-full !w-full !ring-0"
+            />
             <span className={`om-medal ${medal}`} aria-hidden />
           </div>
           <div className="text-center">
@@ -130,7 +125,7 @@ export function OfferHighlight({ offer }: { offer: OfferCard | null | undefined 
       <div className="space-y-3 p-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Ofertas da rede: conecte com quem patrocina o Brasa
+            Ofertas da rede: conecte com quem patrocina o Brasamind
           </div>
           <h3 className="font-display text-lg font-extrabold mt-1">{offer.titulo}</h3>
           {offer.member?.user?.name && (

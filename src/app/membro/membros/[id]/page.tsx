@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useApiQuery } from "@/lib/api-client";
 import { Card, Skeleton } from "@/components/ui/badge";
+import { MemberAvatar } from "@/components/member-avatar";
 import { labelCategory } from "@/lib/labels";
 import {
   cn,
   formatPoints,
-  initials,
   instagramUrl,
   linkedinUrl,
   memberBannerClass,
@@ -99,16 +99,12 @@ export default function PublicMemberPage({
         </div>
         <div className="relative px-6 pb-6">
           <div className="-mt-[52px] mb-3">
-            {m.fotoUrl ? (
-              <span className="om-face om-face-lg ring-4 ring-card">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.fotoUrl} alt="" />
-              </span>
-            ) : (
-              <span className="om-face om-face-lg flex items-center justify-center bg-secondary font-display text-xl font-bold text-muted-foreground ring-4 ring-card">
-                {initials(m.nome)}
-              </span>
-            )}
+            <MemberAvatar
+              name={m.nome}
+              src={m.fotoUrl}
+              size="lg"
+              className="ring-4"
+            />
           </div>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>

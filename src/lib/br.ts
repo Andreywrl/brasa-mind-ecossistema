@@ -196,9 +196,9 @@ export const guestPayBodySchema = z.object({
 });
 
 export const profilePatchSchema = z.object({
-  name: z.string().trim().min(2).max(120).optional(),
+  name: z.string().trim().min(2, "Nome obrigatório").max(120).optional(),
   email: emailSchema.optional(),
-  empresa: z.string().trim().min(2).max(160).optional(),
+  empresa: z.string().trim().min(2, "Empresa obrigatória").max(160).optional(),
   cnpj: z
     .string()
     .optional()
@@ -222,7 +222,7 @@ export const profilePatchSchema = z.object({
   descricao: z.string().max(4000).optional(),
   fotoUrl: z.string().max(500).optional(),
   capaUrl: z.string().max(500).optional(),
-  password: z.string().min(8).max(72).optional(),
+  password: z.string().min(8, "Senha: mínimo 8 caracteres").max(72).optional(),
   currentPassword: z.string().optional(),
 });
 

@@ -85,14 +85,9 @@ export default function OfertasPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-display text-2xl font-extrabold">
-            Área do Patrocinador e Apoiador
-          </h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Até 3 banners. Uma oferta ativa por vez.
-          </p>
-        </div>
+        <p className="text-sm text-muted-foreground m-0">
+          Até 3 banners. Uma oferta ativa por vez.
+        </p>
         {data.canOffer && (
           <Button onClick={() => setOpen(true)}>Nova oferta</Button>
         )}

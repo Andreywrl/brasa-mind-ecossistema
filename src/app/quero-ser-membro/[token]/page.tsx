@@ -170,12 +170,12 @@ export default function QueroSerMembroPage({
               aria-hidden
               className="pointer-events-none absolute -right-10 -bottom-8 w-72 opacity-[0.12]"
             />
-            <h1 className="font-impact relative text-4xl sm:text-6xl leading-[1.02]">
+            <h1 className="font-impact relative text-[52px] leading-[1.02] max-w-[640px]">
               Entre para o Brasamind
             </h1>
             <p className="relative mt-4 max-w-xl text-base sm:text-lg text-white/90">
-              Empresários gaúchos que conectam, indicam e fecham negócios. Um encontro por mês,
-              rede o ano inteiro. Mensalidade de {price}.
+              O Brasamind conecta empresários gaúchos em encontros com muito churrasco, palestra
+              e networking. Mensalidade de {price}.
             </p>
             <div className="relative mt-6 flex flex-wrap gap-3">
               <Button
@@ -201,11 +201,10 @@ export default function QueroSerMembroPage({
                 Assista
               </div>
               <h2 className="font-display text-2xl font-extrabold mt-1">
-                Como o Brasa conecta empresários gaúchos
+                Como o Brasamind conecta empresários gaúchos
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                2 minutos para entender a rede, ver quem já faz parte e como fechar negócios no
-                ecossistema.
+                2 minutos para ver o churrasco, a palestra e como a rede fecha negócios.
               </p>
             </div>
             <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-secondary flex items-center justify-center text-sm text-muted-foreground">
@@ -219,7 +218,7 @@ export default function QueroSerMembroPage({
                 key={s.label}
                 className="rounded-2xl border border-border bg-card p-4 text-center"
               >
-                <div className="font-impact text-2xl">{s.value}</div>
+                <div className="font-impact text-[30px] leading-none">{s.value}</div>
                 <div className="text-xs text-muted-foreground mt-1">{s.label}</div>
               </div>
             ))}
@@ -427,7 +426,7 @@ export default function QueroSerMembroPage({
                   disabled={!terms || loading}
                   onClick={submit}
                 >
-                  {loading ? "Assinando…" : "Assinar e entrar no Brasa"}
+                  {loading ? "Assinando…" : "Assinar e entrar no Brasamind"}
                 </Button>
               </div>
             </Card>
@@ -436,7 +435,7 @@ export default function QueroSerMembroPage({
           {step === 4 && (
             <Card className="p-8 text-center space-y-4">
               <Badge variant="ember">Membro</Badge>
-              <h2 className="font-display text-2xl font-extrabold">Bem-vindo ao Brasa!</h2>
+              <h2 className="font-display text-2xl font-extrabold">Bem-vindo ao Brasamind!</h2>
               <p className="text-sm text-muted-foreground">{msg}</p>
               <div className="text-left rounded-xl border border-border p-4 space-y-2 text-sm">
                 <div className="font-semibold">Próximos passos</div>

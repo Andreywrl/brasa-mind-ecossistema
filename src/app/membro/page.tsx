@@ -46,54 +46,49 @@ export default function MembroDashboardPage() {
 
   return (
     <div className="space-y-6 max-w-6xl">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold">
-          Olá, {data?.greetingName ?? "…"}
-        </h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Conecte, indique e feche negócios no Brasa.
-        </p>
-      </div>
-
       {isLoading || !data ? (
-        <Skeleton className="h-64" />
+        <Skeleton className="h-64 rounded-[20px]" />
       ) : data.event ? (
         <Card className="om-hero-split overflow-hidden p-0">
-          <div className="space-y-4 p-5 sm:p-6">
-            <Badge variant="ember">Evento do mês</Badge>
-            <h2 className="font-display text-2xl font-extrabold om-event-title">
-              {data.event.nome}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {new Date(data.event.data).toLocaleDateString("pt-BR", {
-                weekday: "long",
-                day: "2-digit",
-                month: "long",
-              })}
-              , {data.event.hora} · {data.event.localShort ?? data.event.local}
-            </p>
-            {data.event.descricao && (
-              <p className="text-sm text-muted-foreground line-clamp-3">
-                {data.event.descricao}
-              </p>
-            )}
+          <div className="flex flex-col gap-[18px] px-[30px] py-7 max-sm:px-5 max-sm:py-5">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Badge variant="ember">Evento do mês</Badge>
+              <span className="text-[13px] text-muted-foreground">
+                {new Date(data.event.data).toLocaleDateString("pt-BR", {
+                  weekday: "short",
+                  day: "2-digit",
+                  month: "long",
+                })}
+                , {data.event.hora}
+              </span>
+            </div>
+            <div>
+              <h2 className="font-display text-[30px] font-extrabold leading-tight tracking-[-0.02em] m-0">
+                {data.event.nome}
+              </h2>
+              {data.event.descricao && (
+                <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2 m-0">
+                  {data.event.descricao}
+                </p>
+              )}
+            </div>
             <CountdownGrid target={data.event.data} />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap items-center gap-3.5">
               <Link
                 href="/membro/evento"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-brasa px-5 text-sm font-semibold text-white glow-ember"
+                className="inline-flex h-11 items-center justify-center rounded-md bg-brasa px-6 text-sm font-semibold text-white glow-ember"
               >
                 Comprar ingresso
               </Link>
               <Link
                 href="/membro/evento"
-                className="inline-flex h-11 items-center justify-center rounded-md border border-border bg-secondary px-5 text-sm font-semibold"
+                className="text-sm font-semibold text-muted-foreground hover:text-foreground"
               >
                 Ver detalhes do evento
               </Link>
             </div>
           </div>
-          <div className="relative min-h-[220px] bg-secondary">
+          <div className="relative min-h-[230px] bg-secondary">
             {data.event.capaUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -101,8 +96,9 @@ export default function MembroDashboardPage() {
                 alt=""
                 className="absolute inset-0 h-full w-full object-cover"
               />
-            ) : null}
-            <span className="om-img-scrim om-img-scrim--hero" aria-hidden />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-brasa/25 to-secondary" />
+            )}
           </div>
         </Card>
       ) : (
@@ -185,7 +181,7 @@ export default function MembroDashboardPage() {
         <Card className="lg:col-span-2 p-5">
           <h3 className="font-display font-extrabold mb-1">Sua posição no ranking</h3>
           <p className="text-xs text-muted-foreground mb-4">
-            No encerramento do ano, o Brasa premia quem performou bem e o Top 3 do ranking.
+            No encerramento do ano, o Brasamind premia quem performou bem e o Top 3 do ranking.
           </p>
           {isLoading || !data ? (
             <div className="space-y-3">

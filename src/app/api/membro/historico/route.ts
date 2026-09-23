@@ -15,8 +15,31 @@ export async function GET() {
         where: { memberId: profile.id },
         take: 1,
       },
+      _count: {
+        select: {
+          registrations: {
+            where: { status: { in: ["CONFIRMED", "CHECKED_IN"] } },
+          },
+        },
+      },
     },
   });
+
+  const eventIds = events.map((e) => e.id);
+  const pointRows =
+    eventIds.length === 0
+      ? []
+      : await prisma.pointEntry.groupBy({
+          by: ["eventId"],
+          where: {
+            memberId: profile.id,
+            eventId: { in: eventIds },
+          },
+          _sum: { pontos: true },
+        });
+  const pontosByEvent = new Map(
+    pointRows.map((r) => [r.eventId ?? "", r._sum.pontos ?? 0]),
+  );
 
   const rows = events.map((e) => {
     const reg = e.registrations[0];
@@ -42,6 +65,8 @@ export async function GET() {
         !reg || reg.status === "NO_SHOW" || reg.status === "CANCELED"
           ? "destructive"
           : "success",
+      participantes: e._count.registrations,
+      pontos: pontosByEvent.get(e.id) ?? 0,
       checkinAt: reg?.checkinAt,
       ticketCents: reg?.ticketCents,
     };

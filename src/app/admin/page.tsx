@@ -45,7 +45,7 @@ export default function AdminHomePage() {
         <div>
           <h1 className="font-display text-2xl font-extrabold">Visão geral</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Indicadores do Brasa em {monthLabel}.
+            Indicadores do Brasamind em {monthLabel}.
           </p>
         </div>
         <div className="flex items-center gap-2">

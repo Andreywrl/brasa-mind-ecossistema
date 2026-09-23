@@ -33,13 +33,6 @@ export default function FaqPage() {
 
   return (
     <div className="space-y-6 max-w-3xl">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold">FAQ</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Dúvidas sobre a rede, eventos e pagamentos.
-        </p>
-      </div>
-
       <div className="flex flex-wrap gap-2">
         {["TODOS", "MEMBRO", "EVENTO", "PAGAMENTO", "CONTA"].map((c) => (
           <button
@@ -84,7 +77,7 @@ export default function FaqPage() {
       <Card className="p-5 space-y-3">
         <h2 className="font-display font-extrabold">Ainda precisa de ajuda?</h2>
         <p className="text-sm text-muted-foreground">
-          Fale com o time do Brasa no WhatsApp e a gente te conecta com quem resolve.
+          Fale com o time do Brasamind no WhatsApp e a gente te conecta com quem resolve.
         </p>
         <a
           href="https://wa.me/5551999990000?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20Brasamind."

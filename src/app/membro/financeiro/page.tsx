@@ -109,13 +109,11 @@ export default function FinanceiroPage() {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold">Financeiro</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Mensalidade R$ 97 via Asaas, todo dia 05.
-          {!data.asaasConfigured && " (sandbox local sem chave Asaas)"}
+      {!data.asaasConfigured && (
+        <p className="text-sm text-muted-foreground m-0">
+          Sandbox local sem chave Asaas.
         </p>
-      </div>
+      )}
 
       {data.addressComplete === false && (
         <Card className="p-4 border-warning/40">

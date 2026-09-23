@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
-import { formatPoints, initials } from "@/lib/utils";
+import { formatPoints } from "@/lib/utils";
 import {
   labelCategory,
   labelInvoiceKind,
@@ -12,6 +12,7 @@ import {
   labelRegistrationStatus,
   labelSubscriptionStatus,
 } from "@/lib/labels";
+import { MemberAvatar } from "@/components/member-avatar";
 
 type MemberDetail = {
   member: {
@@ -107,18 +108,12 @@ export default function AdminMembroDetalhePage() {
         </div>
         <div className="px-6 pb-6">
           <div className="-mt-10 flex flex-wrap items-end gap-4">
-            {m.fotoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={m.fotoUrl}
-                alt=""
-                className="h-20 w-20 rounded-full object-cover border-4 border-card"
-              />
-            ) : (
-              <div className="h-20 w-20 rounded-full bg-brasa text-white flex items-center justify-center text-xl font-bold border-4 border-card">
-                {initials(m.nome ?? m.empresa)}
-              </div>
-            )}
+            <MemberAvatar
+              name={m.nome ?? m.empresa}
+              src={m.fotoUrl}
+              size="lg"
+              className="!h-20 !w-20 ring-4"
+            />
             <div className="flex-1 min-w-0 pt-10">
               <h1 className="font-display text-2xl font-extrabold">{m.nome}</h1>
               <p className="text-sm text-muted-foreground">
@@ -168,7 +163,7 @@ export default function AdminMembroDetalhePage() {
           <div className="font-mono text-xl font-extrabold mt-1">{m.mensalidade}</div>
         </Card>
         <Card className="p-4">
-          <div className="text-xs text-muted-foreground uppercase">No Brasa desde</div>
+          <div className="text-xs text-muted-foreground uppercase">No Brasamind desde</div>
           <div className="font-mono text-sm font-bold mt-2">
             {new Date(m.memberSince).toLocaleDateString("pt-BR")}
           </div>

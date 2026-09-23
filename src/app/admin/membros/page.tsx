@@ -7,7 +7,8 @@ import {
   labelCategory,
   labelSubscriptionStatus,
 } from "@/lib/labels";
-import { formatPoints, initials } from "@/lib/utils";
+import { MemberAvatar } from "@/components/member-avatar";
+import { formatPoints } from "@/lib/utils";
 
 type MembrosData = {
   members: {
@@ -59,14 +60,11 @@ export default function AdminMembrosPage() {
           {data.members.map((m) => (
             <Link key={m.id} href={`/admin/membros/${m.id}`}>
               <Card className="p-4 flex flex-wrap items-center gap-4 hover:border-primary/40 transition-colors">
-                {m.fotoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={m.fotoUrl} alt="" className="h-12 w-12 rounded-full object-cover" />
-                ) : (
-                  <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center text-sm font-bold">
-                    {initials(m.nome ?? m.empresa)}
-                  </div>
-                )}
+                <MemberAvatar
+                  name={m.nome ?? m.empresa}
+                  src={m.fotoUrl}
+                  className="!h-12 !w-12 !ring-0"
+                />
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold">{m.nome}</div>
                   <div className="text-xs text-muted-foreground truncate">

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
-import { formatPoints, initials, cn } from "@/lib/utils";
+import { formatPoints, cn } from "@/lib/utils";
 import { RankingPodium } from "@/components/ranking-podium";
+import { MemberAvatar } from "@/components/member-avatar";
 import { labelCategory } from "@/lib/labels";
 
 type RankingData = {
@@ -40,13 +41,6 @@ export default function RankingPage() {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold">Ranking</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Pontos, medalhas e prêmios no encerramento do ano. Toque no membro para ver o perfil.
-        </p>
-      </div>
-
       <div className="flex gap-2">
         {(["mensal", "geral", "anual"] as const).map((p) => (
           <button
@@ -104,7 +98,7 @@ export default function RankingPage() {
                       },
                       {
                         titulo: "Convite extra para um parceiro",
-                        detalhe: "Leve alguém de confiança para o Brasa.",
+                        detalhe: "Leve alguém de confiança para o Brasamind.",
                       },
                     ]
                 ).map((p, i) => (
@@ -121,7 +115,7 @@ export default function RankingPage() {
                 <div>
                   <h4 className="font-display font-extrabold">Top 3 do ranking anual</h4>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Os três primeiros do ranking anual levam prêmio no último encontro do Brasa,
+                    Os três primeiros do ranking anual levam prêmio no último encontro do Brasamind,
                     além do reconhecimento na rede.
                   </p>
                 </div>
@@ -174,18 +168,11 @@ export default function RankingPage() {
                       >
                         {r.rank}º
                       </span>
-                      {r.fotoUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={r.fotoUrl}
-                          alt=""
-                          className="h-[34px] w-[34px] rounded-full object-cover shrink-0"
-                        />
-                      ) : (
-                        <div className="h-[34px] w-[34px] rounded-full bg-secondary flex items-center justify-center text-[10px] font-bold shrink-0">
-                          {initials(r.nome)}
-                        </div>
-                      )}
+                      <MemberAvatar
+                        name={r.nome}
+                        src={r.fotoUrl}
+                        className="!h-[34px] !w-[34px] text-[10px] !ring-0"
+                      />
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-sm truncate">{r.nome}</div>
                         <div className="text-xs text-muted-foreground truncate">

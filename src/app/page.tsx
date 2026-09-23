@@ -1,8 +1,8 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Card } from "@/components/ui/badge";
@@ -13,10 +13,24 @@ import { Info } from "lucide-react";
 const SUPPORT_WA =
   "https://wa.me/5551999990000?text=Ol%C3%A1!%20Preciso%20de%20ajuda%20com%20o%20Brasamind.";
 
+function pathAfterLogin(email: string) {
+  const requested = new URLSearchParams(window.location.search).get("next") ?? "/membro";
+  const next = requested.startsWith("/") ? requested : "/membro";
+  if (
+    email.includes("@brasamind.com.br") &&
+    !email.startsWith("portaria") &&
+    !email.startsWith("apoio")
+  ) {
+    return "/admin";
+  }
+  if (email.startsWith("portaria") || email.startsWith("apoio")) {
+    return "/portaria";
+  }
+  return next;
+}
+
 function LoginForm() {
   const router = useRouter();
-  const params = useSearchParams();
-  const next = params.get("next") ?? "/membro";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,17 +56,7 @@ function LoginForm() {
       setError("E-mail ou senha inválidos.");
       return;
     }
-    if (
-      email.includes("@brasamind.com.br") &&
-      !email.startsWith("portaria") &&
-      !email.startsWith("apoio")
-    ) {
-      router.push("/admin");
-    } else if (email.startsWith("portaria") || email.startsWith("apoio")) {
-      router.push("/portaria");
-    } else {
-      router.push(next.startsWith("/") ? next : "/membro");
-    }
+    router.push(pathAfterLogin(email));
     router.refresh();
   }
 
@@ -81,16 +85,16 @@ function LoginForm() {
           <BrandMark variant="white" lockup size="lg" />
         </div>
         <div className="relative">
-          <h1 className="font-impact text-[52px] leading-[1.02] tracking-wide">
+          <h1 className="font-impact text-[clamp(34px,3.6vw,52px)] leading-[1.05]">
             Conecte.
             <br />
             Indique.
             <br />
-            Feche negócios.
+            Feche mais negócios.
           </h1>
           <p className="mt-4 max-w-[400px] text-[17px] leading-relaxed text-white/90">
-            O Brasamind reúne empresários gaúchos em um encontro por mês. Entre e
-            acesse sua rede.
+            O Brasamind conecta empresários gaúchos em encontros com muito churrasco,
+            palestra e networking.
           </p>
         </div>
         <div className="relative flex gap-7 text-white">
@@ -312,18 +316,5 @@ function LoginForm() {
 }
 
 export default function HomePage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="om-login-split bg-background">
-          <div className="hidden min-[900px]:block bg-brasa" />
-          <div className="flex items-center justify-center p-10 text-sm text-muted-foreground">
-            Carregando…
-          </div>
-        </div>
-      }
-    >
-      <LoginForm />
-    </Suspense>
-  );
+  return <LoginForm />;
 }

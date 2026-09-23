@@ -27,10 +27,10 @@ Os doze cabem numa apresentação. No filme de 60s entram cinco blocos, porque a
 
 | Tempo | Cena | Texto na tela | Locução sugerida |
 |-------|------|---------------|------------------|
-| 00:00 a 00:06 | Contexto | Há quatro anos o Brasa junta empresários gaúchos em volta do mesmo fogo. | "Há quatro anos o Brasa junta empresários gaúchos em volta do mesmo fogo." |
+| 00:00 a 00:06 | Contexto | Há quatro anos o Brasamind junta empresários gaúchos em volta do mesmo fogo. | "Há quatro anos o Brasamind junta empresários gaúchos em volta do mesmo fogo." |
 | 00:06 a 00:12 | Números | 128 membros, 48 encontros, 90+ empresas, 4 anos | "São 128 membros, 48 encontros e mais de 90 empresas representadas." |
 | 00:12 a 00:19 | Tensão | Só que a melhor conversa da noite não pode acabar quando o fogo apaga. | "Só que a melhor conversa da noite não pode acabar quando o fogo apaga. A indicação que ficou no guardanapo, o contato que sumiu no grupo." |
-| 00:19 a 00:26 | Reveal | Um passo tecnológico. Brasamind Hub. O ecossistema digital da rede. | "Por isso o Brasa dá um novo passo, um passo tecnológico: o Brasamind Hub." |
+| 00:19 a 00:26 | Reveal | Um passo tecnológico. Brasamind Hub. O ecossistema digital da rede. | "Por isso o Brasamind dá um novo passo, um passo tecnológico: o Brasamind Hub." |
 | 00:26 a 00:41 | O que possibilita | Hub de membros, evento do mês, convites, pontos e ranking, financeiro e histórico | "Hub de membros, com sua empresa visível para a rede inteira. Evento do mês com ingresso no celular. Convites que valem pontos. Ranking e medalhas. E toda a sua vida financeira num lugar só." |
 | 00:41 a 00:49 | Impacto no dia a dia | A rede na palma da mão, o ano inteiro | "Ache quem resolve o seu problema, chegue no encontro já conectado, e veja cada indicação sua virar reconhecimento." |
 | 00:49 a 00:55 | Resultado | Mais indicação. Mais presença. Mais negócio fechado. | "Mais indicação, mais presença, mais negócio fechado. A mesma rede de sempre, conectada todos os dias." |

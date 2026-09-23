@@ -49,7 +49,13 @@ export async function GET(
       nome: r.guest?.nome ?? "—",
       empresa: r.guest?.empresa,
       status: r.status,
+      fotoUrl: null as string | null,
     }));
+
+  const pointsAgg = await prisma.pointEntry.aggregate({
+    where: { memberId: profile.id, eventId: event.id },
+    _sum: { pontos: true },
+  });
 
   const present =
     myReg?.status === "CHECKED_IN" ||
@@ -77,17 +83,16 @@ export async function GET(
           status: myReg.status,
           checkinAt: myReg.checkinAt,
           ticketCents: myReg.ticketCents,
-          label: !myReg
-            ? "Não inscrito"
-            : myReg.status === "NO_SHOW"
-              ? "Faltou"
-              : present || myReg.status === "CHECKED_IN"
-                ? "Presente"
-                : myReg.status === "CANCELED"
-                  ? "Cancelado"
-                  : "Confirmado",
+          label: myReg.status === "NO_SHOW"
+            ? "Faltou"
+            : present || myReg.status === "CHECKED_IN"
+              ? "Presente"
+              : myReg.status === "CANCELED"
+                ? "Cancelado"
+                : "Confirmado",
         }
       : null,
     guests: myGuests,
+    pontos: pointsAgg._sum.pontos ?? 0,
   });
 }

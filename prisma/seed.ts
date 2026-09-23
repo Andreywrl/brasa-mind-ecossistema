@@ -64,7 +64,7 @@ async function main() {
     data: [
       {
         nome: MemberCategory.FUNDADOR,
-        descricao: "Sócios fundadores do Brasa.",
+        descricao: "Sócios fundadores do Brasamind.",
         entradaLabel: "Cortesia",
         entradaCents: 0,
         chipClass: "bg-brasa text-white",
@@ -99,7 +99,7 @@ async function main() {
           cidade: "Porto Alegre",
           categoria: MemberCategory.FUNDADOR,
           whatsapp: "+55 51 99999 0000",
-          descricao: "Fundador do Brasa. Conecta, indica e fecha negócios.",
+          descricao: "Fundador do Brasamind. Conecte, indique e feche mais negócios.",
           cep: "90010000",
           addressNumber: "100",
           bairro: "Centro",
@@ -301,7 +301,7 @@ async function main() {
         category: FaqCategory.MEMBRO,
         question: "O que é o Brasamind?",
         answer:
-          "Grupo gaúcho de networking: um encontro por mês para conectar, indicar e fechar negócios.",
+          "O Brasamind conecta empresários gaúchos em encontros com muito churrasco, palestra e networking.",
         order: 0,
       },
       {
@@ -319,7 +319,7 @@ async function main() {
         type: LegalDocType.TERMS,
         nome: "Termos de Uso",
         versao: "v3.2",
-        resumo: "Regras de participação no Brasa.",
+        resumo: "Regras de participação no Brasamind.",
         conteudo:
           "Ao participar do Brasamind você concorda com as regras de networking e mensalidade.",
         published: true,

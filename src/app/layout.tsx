@@ -37,6 +37,9 @@ const appUrl =
   process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ??
   "https://brasa-mind-ecossistema.vercel.app";
 
+const description =
+  "O Brasamind conecta empresários gaúchos em encontros com muito churrasco, palestra e networking.";
+
 export const viewport: Viewport = {
   themeColor: "#0e0c0b",
   width: "device-width",
@@ -49,8 +52,7 @@ export const metadata: Metadata = {
     default: "Brasamind",
     template: "%s | Brasamind",
   },
-  description:
-    "Acesse sua conta no Brasamind e entre na rede de empresários gaúchos que se reúnem todo mês para conectar, indicar e fechar negócios.",
+  description,
   applicationName: "Brasamind",
   manifest: "/site.webmanifest",
   icons: {
@@ -65,23 +67,21 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: "Brasamind",
     title: "Brasamind | Entrar",
-    description:
-      "Acesse sua conta no Brasamind e entre na rede de empresários gaúchos que se reúnem todo mês para conectar, indicar e fechar negócios.",
+    description,
     url: "/",
     images: [
       {
         url: "/brand/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Brasamind: conecte, indique, feche negócios.",
+        alt: "Brasamind: conecte, indique e feche mais negócios.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Brasamind | Entrar",
-    description:
-      "Acesse sua conta no Brasamind e entre na rede de empresários gaúchos que se reúnem todo mês para conectar, indicar e fechar negócios.",
+    description,
     images: ["/brand/og-image.png"],
   },
 };

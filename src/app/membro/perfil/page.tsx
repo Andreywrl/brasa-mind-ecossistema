@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { apiMutate, useApiQuery } from "@/lib/api-client";
 import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
@@ -74,15 +75,13 @@ export default function PerfilPage() {
     bairro: "",
     cidade: "",
   });
-  const [msg, setMsg] = useState("");
-  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
   const [pwd, setPwd] = useState({
     currentPassword: "",
     password: "",
     confirm: "",
   });
-  const [pwdMsg, setPwdMsg] = useState("");
-  const [pwdErr, setPwdErr] = useState("");
+  const [savingPwd, setSavingPwd] = useState(false);
   const [pwdOpen, setPwdOpen] = useState(false);
 
   useEffect(() => {
@@ -118,28 +117,28 @@ export default function PerfilPage() {
   }, [data]);
 
   async function save() {
-    setError("");
-    setMsg("");
+    setSaving(true);
     try {
       await apiMutate("/api/membro/perfil", {
         method: "PATCH",
         body: JSON.stringify({ ...form, ...address }),
       });
-      setMsg("Perfil atualizado.");
+      toast.success("Perfil atualizado.");
       await qc.invalidateQueries({ queryKey: ["membro", "me"] });
       await qc.invalidateQueries({ queryKey: ["membro", "hub"] });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erro");
+      toast.error(e instanceof Error ? e.message : "Não foi possível salvar o perfil.");
+    } finally {
+      setSaving(false);
     }
   }
 
   async function savePassword() {
-    setPwdErr("");
-    setPwdMsg("");
     if (pwd.password !== pwd.confirm) {
-      setPwdErr("A confirmação não bate com a nova senha.");
+      toast.error("A confirmação não bate com a nova senha.");
       return;
     }
+    setSavingPwd(true);
     try {
       await apiMutate("/api/membro/perfil", {
         method: "PATCH",
@@ -148,11 +147,13 @@ export default function PerfilPage() {
           password: pwd.password,
         }),
       });
-      setPwdMsg("Senha atualizada. Use a nova senha no próximo acesso.");
+      toast.success("Senha atualizada. Use a nova senha no próximo acesso.");
       setPwd({ currentPassword: "", password: "", confirm: "" });
       setPwdOpen(false);
     } catch (e) {
-      setPwdErr(e instanceof Error ? e.message : "Erro");
+      toast.error(e instanceof Error ? e.message : "Não foi possível atualizar a senha.");
+    } finally {
+      setSavingPwd(false);
     }
   }
 
@@ -183,13 +184,10 @@ export default function PerfilPage() {
       )}
 
       <div className="flex items-center justify-between gap-3">
-        <div>
-          <h1 className="font-display text-2xl font-extrabold">Meu perfil</h1>
-          <p className="text-muted-foreground text-sm">
-            {formatPoints(data.profile.pontos)} pts
-            {data.profile.rank ? ` · ${data.profile.rank}º no ranking` : ""}
-          </p>
-        </div>
+        <p className="text-muted-foreground text-sm m-0">
+          {formatPoints(data.profile.pontos)} pts
+          {data.profile.rank ? ` · ${data.profile.rank}º no ranking` : ""}
+        </p>
         <div className="flex items-center gap-2">
           <Badge>{labelCategory(data.profile.categoria)}</Badge>
           <ActionMenu
@@ -198,8 +196,6 @@ export default function PerfilPage() {
               {
                 label: "Alterar senha",
                 onSelect: () => {
-                  setPwdErr("");
-                  setPwdMsg("");
                   setPwd({ currentPassword: "", password: "", confirm: "" });
                   setPwdOpen(true);
                 },
@@ -208,9 +204,14 @@ export default function PerfilPage() {
           />
         </div>
       </div>
-      {pwdMsg ? <p className="text-sm text-success">{pwdMsg}</p> : null}
-
-      <Card className="p-6 grid sm:grid-cols-2 gap-4">
+      <Card className="p-6">
+        <form
+          className="grid sm:grid-cols-2 gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void save();
+          }}
+        >
         <div className="space-y-1">
           <Label>Nome</Label>
           <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -283,28 +284,43 @@ export default function PerfilPage() {
             onChange={(e) => setForm({ ...form, descricao: e.target.value })}
           />
         </div>
-        {error && <p className="sm:col-span-2 text-sm text-destructive">{error}</p>}
-        {msg && <p className="sm:col-span-2 text-sm text-success">{msg}</p>}
         <div className="sm:col-span-2">
-          <Button onClick={save}>Salvar alterações</Button>
+          <Button type="submit" loading={saving}>
+            {saving ? "Salvando…" : "Salvar alterações"}
+          </Button>
         </div>
+        </form>
       </Card>
 
       <Modal
         open={pwdOpen}
         onClose={() => setPwdOpen(false)}
         title="Alterar senha"
-        description="Confirme a senha atual e defina uma nova para o seu acesso ao Brasa."
+        description="Confirme a senha atual e defina uma nova para o seu acesso ao Brasamind."
         footer={
           <>
-            <Button variant="outline" onClick={() => setPwdOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setPwdOpen(false)}
+              disabled={savingPwd}
+            >
               Cancelar
             </Button>
-            <Button onClick={savePassword}>Salvar nova senha</Button>
+            <Button type="submit" form="form-senha" loading={savingPwd}>
+              {savingPwd ? "Salvando…" : "Salvar nova senha"}
+            </Button>
           </>
         }
       >
-        <div className="flex flex-col gap-3">
+        <form
+          id="form-senha"
+          className="flex flex-col gap-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void savePassword();
+          }}
+        >
           <div className="flex flex-col gap-1">
             <Label>Senha atual</Label>
             <Input
@@ -332,8 +348,7 @@ export default function PerfilPage() {
               autoComplete="new-password"
             />
           </div>
-          {pwdErr ? <p className="text-sm text-destructive">{pwdErr}</p> : null}
-        </div>
+        </form>
       </Modal>
     </div>
   );

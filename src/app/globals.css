@@ -32,8 +32,6 @@
   --color-ring: hsl(var(--ring));
   --color-brasa: hsl(var(--brasa));
   --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
-  --font-display: var(--font-barlow), Barlow, Inter, sans-serif;
-  --font-impact: var(--font-barlow-semi), "Barlow Semi Condensed", Barlow, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -41,6 +39,9 @@
 }
 
 :root {
+  /* Tipografia do DS fora do @theme: evita utilitário Tailwind só com font-family */
+  --font-display: var(--font-barlow), Barlow, Inter, sans-serif;
+  --font-impact: var(--font-barlow-semi), "Barlow Semi Condensed", Barlow, sans-serif;
   color-scheme: light;
   --background: 40 20% 99%;
   --foreground: 20 14% 10%;
@@ -194,4 +195,14 @@
 .skip-link:focus {
   left: 0.75rem;
   top: 0.75rem;
+}
+
+.brasa-toaster {
+  z-index: 80 !important;
+}
+
+@media (max-width: 1023px) {
+  .brasa-toaster {
+    bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
 }

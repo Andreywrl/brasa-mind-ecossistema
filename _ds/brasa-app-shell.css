@@ -311,10 +311,13 @@ select:focus-visible {
 .om-podium-photo-lg .om-medal { width: 40px; height: 40px; }
 
 .om-face {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   border-radius: 50%;
-  background: transparent;
+  background: hsl(var(--brasa));
+  color: #fff;
   flex: none;
 }
 .om-face-sm { width: 52px; height: 52px; }

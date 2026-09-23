@@ -70,7 +70,7 @@ export function BrandMark({
       {showWordmark && (
         <span
           className={cn(
-            "font-impact leading-none tracking-wide",
+            "font-impact leading-none",
             WORD_SIZE[size],
             variant === "white"
               ? "text-white"

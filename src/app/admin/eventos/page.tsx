@@ -121,7 +121,7 @@ export default function AdminEventosPage() {
           )}
           <div className="p-5 space-y-3">
             <Badge variant="ember">Ativo</Badge>
-            <h2 className="font-display text-xl font-extrabold">{data.active.nome}</h2>
+            <h2 className="font-impact text-[32px] leading-[1.1]">{data.active.nome}</h2>
             <p className="text-sm text-muted-foreground">
               {new Date(data.active.data).toLocaleDateString("pt-BR")} · {data.active.hora} ·{" "}
               {data.active.local}

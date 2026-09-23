@@ -20,7 +20,7 @@ export default function GlobalError({
     <html lang="pt-BR">
       <body style={{ fontFamily: "system-ui", padding: 40 }}>
         <h1>Algo deu errado</h1>
-        <p>Tente de novo. Se o problema continuar, fale com o suporte do Brasa.</p>
+        <p>Tente de novo. Se o problema continuar, fale com o suporte do Brasamind.</p>
         <button type="button" onClick={() => reset()}>
           Tentar novamente
         </button>

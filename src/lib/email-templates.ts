@@ -12,9 +12,9 @@ export async function emailMembershipInvite(input: {
     to: input.to,
     subject: "Seu link para entrar no Brasamind",
     html: `<p>Olá,</p>
-<p>Você foi convidado a se tornar membro do Brasamind (${labelCategory(input.categoria)}).</p>
-<p><a href="${input.link}">Quero ser membro</a></p>
-<p>Conecte, indique e feche negócios no Brasa.</p>`,
+<p>Você foi convidado para o Brasamind (${labelCategory(input.categoria)}).</p>
+<p>O Brasamind conecta empresários gaúchos em encontros com muito churrasco, palestra e networking.</p>
+<p><a href="${input.link}">Quero ser membro</a></p>`,
   });
 }
 

@@ -36,7 +36,7 @@ Fontes: `font-sans` (Inter, corpo/UI), `font-display` (Barlow, títulos), `font-
 A verdade de cada API está em `components/<grupo>/<Nome>/<Nome>.d.ts` e o uso em `<Nome>.prompt.md`. Leia `styles.css` para as classes disponíveis.
 
 ## Voz e escrita (obrigatório em toda copy)
-- Nome **"Brasamind"**, uma palavra. Sempre no **masculino**, porque é um grupo de networking: "o Brasamind", "do Brasamind". Forma curta: "o Brasa", "do Brasa". Nunca "a Brasa" nem "a Brasamind".
+- Nome **"Brasamind"**, uma palavra. Sempre no **masculino**, porque é um grupo de networking: "o Brasamind", "do Brasamind". Nunca "o Brasa", "a Brasa" nem "a Brasamind".
 - **Não use travessão nem a seta comum.** Prefira vírgula, dois-pontos ou parênteses; a ação vai no próprio botão ("Quero ser Membro").
 - Voz ativa e direta; o botão diz o que acontece e o retorno confirma.
 

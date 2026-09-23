@@ -5,11 +5,11 @@ import Link from "next/link";
 import { useApiQuery } from "@/lib/api-client";
 import { Card, Skeleton } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { MemberAvatar } from "@/components/member-avatar";
 import { labelCategory } from "@/lib/labels";
 import {
   cn,
   formatPoints,
-  initials,
   memberBannerClass,
   memberCatBadgeClass,
 } from "@/lib/utils";
@@ -58,15 +58,6 @@ export default function HubPage() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <p className="om-kicker">Rede</p>
-        <h1 className="om-page-title">Hub de Membros</h1>
-        <p className="om-lede">
-          Encontre especialidade, cidade e categoria. Abra o perfil para conectar,
-          indicar e fechar negócio.
-        </p>
-      </div>
-
       <Card className="space-y-3 p-4">
         <Input
           placeholder="Buscar por nome, empresa ou especialidade"
@@ -153,16 +144,7 @@ export default function HubPage() {
               </div>
               <div className="relative px-3 pb-3 pt-0">
                 <div className="-mt-7 mb-2">
-                  {m.fotoUrl ? (
-                    <span className="om-face om-face-sm ring-2 ring-card">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={m.fotoUrl} alt="" />
-                    </span>
-                  ) : (
-                    <span className="om-face om-face-sm flex items-center justify-center bg-secondary text-xs font-bold text-muted-foreground ring-2 ring-card">
-                      {initials(m.nome)}
-                    </span>
-                  )}
+                  <MemberAvatar name={m.nome} src={m.fotoUrl} size="sm" />
                 </div>
                 <p className="font-display text-sm font-bold leading-tight">{m.nome}</p>
                 <p className="text-xs text-muted-foreground">{m.empresa}</p>
