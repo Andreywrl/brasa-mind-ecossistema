@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32" role="img" aria-label="Elo">
+  <rect width="48" height="32" rx="4" fill="#000"/>
+  <text x="8" y="21" font-family="Arial Black, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="0.5">
+    <tspan fill="#FFCB05">e</tspan><tspan fill="#EF4123">l</tspan><tspan fill="#00A4E0">o</tspan>
+  </text>
+</svg>

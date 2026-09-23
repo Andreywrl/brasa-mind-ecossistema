@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
+import {
+  labelCategory,
+  labelSubscriptionStatus,
+} from "@/lib/labels";
 import { formatPoints, initials } from "@/lib/utils";
 
 type MembrosData = {
@@ -69,7 +73,7 @@ export default function AdminMembrosPage() {
                     {m.empresa} · {m.email} · {m.cidade}
                   </div>
                 </div>
-                <Badge>{m.categoria}</Badge>
+                <Badge>{labelCategory(m.categoria)}</Badge>
                 <span className="font-mono text-sm">{formatPoints(m.pontos)}</span>
                 <Badge
                   variant={
@@ -80,7 +84,7 @@ export default function AdminMembrosPage() {
                         : "warning"
                   }
                 >
-                  {m.status}
+                  {labelSubscriptionStatus(m.status)}
                 </Badge>
                 <span className="text-sm font-mono">{m.mensalidade}</span>
               </Card>

@@ -1,4 +1,5 @@
 import { sendEmail } from "@/lib/email";
+import { labelCategory } from "@/lib/labels";
 
 const appUrl = () => process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
@@ -11,7 +12,7 @@ export async function emailMembershipInvite(input: {
     to: input.to,
     subject: "Seu link para entrar no Brasamind",
     html: `<p>Olá,</p>
-<p>Você foi convidado a se tornar membro do Brasamind (${input.categoria}).</p>
+<p>Você foi convidado a se tornar membro do Brasamind (${labelCategory(input.categoria)}).</p>
 <p><a href="${input.link}">Quero ser membro</a></p>
 <p>Conecte, indique e feche negócios no Brasa.</p>`,
   });

@@ -22,6 +22,8 @@ export async function rankingForPeriod(period: RankPeriod) {
         ? { where: { occurredAt: { gte: from, lte: to! } } }
         : true,
       subscription: true,
+      registrations: { select: { status: true } },
+      invitesSent: { select: { _count: { select: { guests: true } } } },
     },
   });
 
@@ -54,7 +56,12 @@ export async function rankingForPeriod(period: RankPeriod) {
         cidade: m.cidade,
         categoria: m.categoria,
         fotoUrl: m.fotoUrl ?? m.user.image,
+        capaUrl: m.capaUrl,
         pontos,
+        eventos: m.registrations.filter((r) =>
+          ["CONFIRMED", "CHECKED_IN"].includes(r.status),
+        ).length,
+        convidados: m.invitesSent.reduce((s, i) => s + i._count.guests, 0),
         whatsapp: m.whatsapp,
         instagram: m.instagram,
         linkedin: m.linkedin,

@@ -6,6 +6,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { Modal } from "@/components/ui/modal";
+import { ActionMenu } from "@/components/ui/action-menu";
 
 type InvitesData = {
   invites: {
@@ -27,6 +29,7 @@ export default function AdminConvitesMembroPage() {
     ["admin", "membership-invites"],
     "/api/admin/membership-invites",
   );
+  const [formOpen, setFormOpen] = useState(false);
   const [categoria, setCategoria] = useState("MEMBRO");
   const [maxUses, setMaxUses] = useState(1);
   const [emailTo, setEmailTo] = useState("");
@@ -54,6 +57,7 @@ export default function AdminConvitesMembroPage() {
         : "",
     );
     setEmailTo("");
+    setFormOpen(false);
     await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
   }
 
@@ -67,72 +71,94 @@ export default function AdminConvitesMembroPage() {
 
   return (
     <div className="space-y-6 max-w-3xl">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold">Links de cadastro</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Novos membros entram só por estes links. Membros não cadastram outros membros.
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="font-display text-2xl font-extrabold">Links de cadastro</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Novos membros entram só por estes links. Membros não cadastram outros membros.
+          </p>
+        </div>
+        <Button onClick={() => setFormOpen(true)}>Gerar link</Button>
       </div>
 
-      <Card className="p-5 space-y-3">
-        <Label>Categoria</Label>
-        <select
-          className="h-11 w-full rounded-xl border border-border bg-secondary px-3 text-sm"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-        >
-          <option value="MEMBRO">Membro</option>
-          <option value="PATROCINADOR">Patrocinador</option>
-          <option value="FUNDADOR">Fundador</option>
-        </select>
-        <Label>Usos máximos</Label>
-        <Input
-          type="number"
-          min={1}
-          value={maxUses}
-          onChange={(e) => setMaxUses(Number(e.target.value))}
-        />
-        <Label>Enviar por e-mail (opcional)</Label>
-        <Input
-          type="email"
-          value={emailTo}
-          onChange={(e) => setEmailTo(e.target.value)}
-          placeholder="nome@empresa.com.br"
-        />
-        <Button onClick={create}>Gerar link</Button>
-        {msg && (
-          <code className="block text-xs break-all bg-secondary rounded-xl p-3">
-            {msg}
-          </code>
-        )}
-        {emailNote && (
-          <p className="text-sm text-muted-foreground">{emailNote}</p>
-        )}
-      </Card>
+      {msg ? (
+        <Card className="flex flex-col gap-2 p-4">
+          <p className="text-sm font-semibold">Link gerado</p>
+          <code className="block break-all rounded-xl bg-secondary p-3 text-xs">{msg}</code>
+          {emailNote ? (
+            <p className="text-sm text-muted-foreground">{emailNote}</p>
+          ) : null}
+        </Card>
+      ) : null}
+
+      <Modal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
+        title="Gerar link de cadastro"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setFormOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={create}>Gerar link</Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-3">
+          <Label>Categoria</Label>
+          <select
+            className="h-11 w-full rounded-xl border border-border bg-secondary px-3 text-sm"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          >
+            <option value="MEMBRO">Membro</option>
+            <option value="PATROCINADOR">Patrocinador</option>
+            <option value="FUNDADOR">Fundador</option>
+          </select>
+          <Label>Usos máximos</Label>
+          <Input
+            type="number"
+            min={1}
+            value={maxUses}
+            onChange={(e) => setMaxUses(Number(e.target.value))}
+          />
+          <Label>Enviar por e-mail (opcional)</Label>
+          <Input
+            type="email"
+            value={emailTo}
+            onChange={(e) => setEmailTo(e.target.value)}
+            placeholder="nome@empresa.com.br"
+          />
+        </div>
+      </Modal>
 
       {isLoading || !data ? (
         <Skeleton className="h-40" />
       ) : (
         <div className="space-y-3">
           {data.invites.map((i) => (
-            <Card key={i.id} className="p-4 space-y-2">
-              <div className="flex flex-wrap items-center gap-2 justify-between">
-                <Badge variant={i.active ? "success" : "secondary"}>
-                  {i.active ? "Ativo" : "Inativo"}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  {i.categoria} · {i.usedCount}/{i.maxUses} usos · por{" "}
-                  {i.createdBy.name}
-                </span>
+            <Card key={i.id} className="flex flex-col gap-2 p-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant={i.active ? "success" : "secondary"}>
+                    {i.active ? "Ativo" : "Inativo"}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    {i.categoria} · {i.usedCount}/{i.maxUses} usos · por{" "}
+                    {i.createdBy.name}
+                  </span>
+                </div>
+                <ActionMenu
+                  label="Ações do link"
+                  items={[
+                    {
+                      label: i.active ? "Desativar" : "Reativar",
+                      onSelect: () => toggle(i.id, i.active),
+                    },
+                  ]}
+                />
               </div>
-              <code className="block text-xs break-all">{i.link}</code>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => toggle(i.id, i.active)}
-              >
-                {i.active ? "Desativar" : "Reativar"}
-              </Button>
+              <code className="block break-all text-xs">{i.link}</code>
             </Card>
           ))}
         </div>

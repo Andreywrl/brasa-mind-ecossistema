@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { Modal } from "@/components/ui/modal";
 
 type Users = {
   admins: {
@@ -37,6 +38,7 @@ export default function AdminUsuariosPage() {
     ["admin", "usuarios"],
     "/api/admin/usuarios",
   );
+  const [doorOpen, setDoorOpen] = useState(false);
   const [doorForm, setDoorForm] = useState({
     name: "",
     email: "",
@@ -50,6 +52,7 @@ export default function AdminUsuariosPage() {
       body: JSON.stringify({ type: "door", ...doorForm }),
     });
     setDoorForm({ name: "", email: "", password: "", login: "" });
+    setDoorOpen(false);
     await qc.invalidateQueries({ queryKey: ["admin", "usuarios"] });
   }
 
@@ -86,12 +89,17 @@ export default function AdminUsuariosPage() {
             ))}
           </Card>
 
-          <Card className="p-5 space-y-3">
-            <h2 className="font-display font-extrabold">Portaria</h2>
+          <Card className="flex flex-col gap-3 p-5">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="font-display font-extrabold">Portaria</h2>
+              <Button size="sm" onClick={() => setDoorOpen(true)}>
+                Gerar acesso
+              </Button>
+            </div>
             {data.door.map((d) => (
               <div
                 key={d.id}
-                className="flex justify-between gap-2 text-sm border-b border-border pb-2"
+                className="flex justify-between gap-2 border-b border-border pb-2 text-sm"
               >
                 <div>
                   <div className="font-semibold">
@@ -107,43 +115,57 @@ export default function AdminUsuariosPage() {
                 </Badge>
               </div>
             ))}
-            <div className="grid sm:grid-cols-2 gap-2 pt-2">
-              <div>
-                <Label>Nome</Label>
-                <Input
-                  value={doorForm.name}
-                  onChange={(e) => setDoorForm({ ...doorForm, name: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label>Login</Label>
-                <Input
-                  value={doorForm.login}
-                  onChange={(e) => setDoorForm({ ...doorForm, login: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label>E-mail</Label>
-                <Input
-                  value={doorForm.email}
-                  onChange={(e) => setDoorForm({ ...doorForm, email: e.target.value })}
-                />
-              </div>
-              <div>
-                <Label>Senha</Label>
-                <Input
-                  type="password"
-                  value={doorForm.password}
-                  onChange={(e) =>
-                    setDoorForm({ ...doorForm, password: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <Button onClick={createDoor}>Gerar acesso</Button>
           </Card>
         </>
       )}
+
+      <Modal
+        open={doorOpen}
+        onClose={() => setDoorOpen(false)}
+        title="Gerar acesso de portaria"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setDoorOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={createDoor}>Gerar acesso</Button>
+          </>
+        }
+      >
+        <div className="grid gap-2 sm:grid-cols-2">
+          <div>
+            <Label>Nome</Label>
+            <Input
+              value={doorForm.name}
+              onChange={(e) => setDoorForm({ ...doorForm, name: e.target.value })}
+            />
+          </div>
+          <div>
+            <Label>Login</Label>
+            <Input
+              value={doorForm.login}
+              onChange={(e) => setDoorForm({ ...doorForm, login: e.target.value })}
+            />
+          </div>
+          <div>
+            <Label>E-mail</Label>
+            <Input
+              value={doorForm.email}
+              onChange={(e) => setDoorForm({ ...doorForm, email: e.target.value })}
+            />
+          </div>
+          <div>
+            <Label>Senha</Label>
+            <Input
+              type="password"
+              value={doorForm.password}
+              onChange={(e) =>
+                setDoorForm({ ...doorForm, password: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

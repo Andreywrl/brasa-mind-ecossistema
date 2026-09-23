@@ -8,6 +8,7 @@ import { Input, Label } from "@/components/ui/input";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
 
 function ResetForm() {
   const params = useSearchParams();
@@ -57,7 +58,8 @@ function ResetForm() {
 
 export default function RecuperarSenhaPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center gap-6 p-6">
+      <BrandMark lockup size="md" />
       <Suspense>
         <ResetForm />
       </Suspense>

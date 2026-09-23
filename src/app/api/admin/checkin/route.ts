@@ -1,5 +1,6 @@
 import { jsonError, jsonOk, requireSession } from "@/lib/api";
 import { prisma } from "@/lib/db";
+import { labelRegistrationType } from "@/lib/labels";
 
 async function attachHosts(
   results: {
@@ -38,7 +39,7 @@ function mapReg(r: {
 }) {
   return {
     id: r.id,
-    tipo: r.type,
+    tipo: labelRegistrationType(r.type),
     nome: r.member?.user.name ?? r.guest?.nome ?? "—",
     empresa: r.member?.empresa ?? r.guest?.empresa ?? "",
     email: r.member?.user.email ?? r.guest?.email ?? "",
@@ -144,7 +145,7 @@ export async function POST(req: Request) {
     return jsonOk({
       registration: reg,
       already: true,
-      message: "Check-in já registrado",
+      message: "Entrada já registrada",
       nome: reg.member?.user.name ?? reg.guest?.nome,
     });
   }
@@ -163,7 +164,7 @@ export async function POST(req: Request) {
         memberId: reg.memberId,
         action: "PRESENCA",
         pontos: rule?.pontos ?? 90,
-        note: "Check-in no evento",
+        note: "Entrada no evento",
         eventId: reg.eventId,
       },
     });
@@ -172,6 +173,6 @@ export async function POST(req: Request) {
   return jsonOk({
     registration: updated,
     nome: reg.member?.user.name ?? reg.guest?.nome,
-    message: "Check-in confirmado",
+    message: "Entrada registrada",
   });
 }

@@ -12,6 +12,9 @@ import {
   type CardFormState,
 } from "@/components/credit-card-fields";
 import { PixResult } from "@/components/pix-result";
+import { PaymentTrust } from "@/components/payment-trust";
+import { labelInvoiceStatus, labelPaymentMethod } from "@/lib/labels";
+import { Modal } from "@/components/ui/modal";
 
 type FinData = {
   emDia: boolean;
@@ -179,7 +182,7 @@ export default function FinanceiroPage() {
                       : "warning"
                 }
               >
-                {inv.status}
+                {labelInvoiceStatus(inv.status)}
               </Badge>
               {(inv.status === "PENDING" || inv.status === "OVERDUE") && (
                 <Button size="sm" onClick={() => setPaying(inv.id)}>
@@ -191,27 +194,41 @@ export default function FinanceiroPage() {
         </ul>
       </Card>
 
-      {editCard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <Card className="w-full max-w-md p-6 space-y-3">
-            <h3 className="font-display font-extrabold">Alterar cartão</h3>
-            <CreditCardFields value={cardForm} onChange={setCardForm} />
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            {msg && <p className="text-sm text-success">{msg}</p>}
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setEditCard(false)}>
-                Cancelar
-              </Button>
-              <Button onClick={salvarCartao}>Salvar</Button>
-            </div>
-          </Card>
+      <Modal
+        open={editCard}
+        onClose={() => setEditCard(false)}
+        title="Alterar cartão"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setEditCard(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={salvarCartao}>Salvar</Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-3">
+          <CreditCardFields value={cardForm} onChange={setCardForm} />
+          <PaymentTrust />
+          {error ? <p className="text-sm text-destructive">{error}</p> : null}
+          {msg ? <p className="text-sm text-success">{msg}</p> : null}
         </div>
-      )}
+      </Modal>
 
-      {paying && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <Card className="w-full max-w-md p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-display font-extrabold">Pagar mensalidade</h3>
+      <Modal
+        open={Boolean(paying)}
+        onClose={() => setPaying(null)}
+        title="Pagar mensalidade"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setPaying(null)}>
+              Fechar
+            </Button>
+            <Button onClick={() => paying && pagar(paying)}>Confirmar</Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-4">
             <div className="flex gap-2">
               {(["PIX", "CREDIT_CARD", "BOLETO"] as const).map((m) => (
                 <Button
@@ -220,13 +237,14 @@ export default function FinanceiroPage() {
                   variant={method === m ? "default" : "outline"}
                   onClick={() => setMethod(m)}
                 >
-                  {m === "CREDIT_CARD" ? "Cartão" : m}
+                  {labelPaymentMethod(m)}
                 </Button>
               ))}
             </div>
             {method === "CREDIT_CARD" && (
               <CreditCardFields value={payCard} onChange={setPayCard} />
             )}
+            <PaymentTrust />
             {pix && <PixResult encodedImage={pix.encodedImage} payload={pix.payload} />}
             {boletoUrl && (
               <a
@@ -240,15 +258,8 @@ export default function FinanceiroPage() {
             )}
             {error && <p className="text-sm text-destructive">{error}</p>}
             {msg && <p className="text-sm text-success">{msg}</p>}
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setPaying(null)}>
-                Fechar
-              </Button>
-              <Button onClick={() => pagar(paying)}>Confirmar</Button>
-            </div>
-          </Card>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

@@ -5,6 +5,13 @@ import { useParams } from "next/navigation";
 import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { formatPoints, initials } from "@/lib/utils";
+import {
+  labelCategory,
+  labelInvoiceKind,
+  labelInvoiceStatus,
+  labelRegistrationStatus,
+  labelSubscriptionStatus,
+} from "@/lib/labels";
 
 type MemberDetail = {
   member: {
@@ -121,7 +128,7 @@ export default function AdminMembroDetalhePage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2 pt-10">
-              <Badge>{m.categoria}</Badge>
+              <Badge>{labelCategory(m.categoria)}</Badge>
               <Badge
                 variant={
                   m.status === "ACTIVE"
@@ -131,7 +138,7 @@ export default function AdminMembroDetalhePage() {
                       : "warning"
                 }
               >
-                {m.status}
+                {labelSubscriptionStatus(m.status)}
               </Badge>
             </div>
           </div>
@@ -258,12 +265,12 @@ export default function AdminMembroDetalhePage() {
             {m.invoices.map((i) => (
               <li key={i.id} className="flex justify-between text-sm gap-2">
                 <span>
-                  {i.kind} ·{" "}
+                  {labelInvoiceKind(i.kind)} ·{" "}
                   {new Date(i.dueDate).toLocaleDateString("pt-BR")}
                 </span>
                 <span className="flex items-center gap-2">
                   <span className="font-mono">{i.valor}</span>
-                  <Badge variant="secondary">{i.status}</Badge>
+                  <Badge variant="secondary">{labelInvoiceStatus(i.status)}</Badge>
                 </span>
               </li>
             ))}
@@ -281,7 +288,7 @@ export default function AdminMembroDetalhePage() {
                   {r.eventNome} ·{" "}
                   {new Date(r.eventData).toLocaleDateString("pt-BR")}
                 </span>
-                <Badge variant="secondary">{r.status}</Badge>
+                <Badge variant="secondary">{labelRegistrationStatus(r.status)}</Badge>
               </li>
             ))}
           </ul>

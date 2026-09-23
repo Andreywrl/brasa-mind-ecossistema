@@ -2,6 +2,7 @@
 
 import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
+import { labelInvoiceStatus } from "@/lib/labels";
 
 type Fin = {
   kpis: { mrr: string; pendencias: number };
@@ -64,7 +65,7 @@ export default function AdminFinanceiroPage() {
                           : "warning"
                     }
                   >
-                    {t.status}
+                    {labelInvoiceStatus(t.status)}
                   </Badge>
                 </li>
               ))}

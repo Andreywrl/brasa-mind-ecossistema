@@ -1,196 +1,197 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import { useApiQuery } from "@/lib/api-client";
-import { Badge, Card, Skeleton } from "@/components/ui/badge";
+import { Card, Skeleton } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { formatPoints, initials } from "@/lib/utils";
+import { labelCategory } from "@/lib/labels";
+import {
+  cn,
+  formatPoints,
+  initials,
+  memberBannerClass,
+  memberCatBadgeClass,
+} from "@/lib/utils";
 
-type HubData = {
-  members: {
-    id: string;
-    nome: string;
-    empresa: string;
-    especialidade: string | null;
-    cidade: string | null;
-    categoria: string;
-    pontos: number;
-    fotoUrl: string | null;
-    rank: number;
-  }[];
-  especialidades: string[];
-  cidades: string[];
-  total: number;
-  offer: { titulo: string; bannerUrl: string | null; destino: string } | null;
+type Member = {
+  id: string;
+  nome: string;
+  empresa: string;
+  especialidade: string | null;
+  cidade: string | null;
+  categoria: string;
+  fotoUrl: string | null;
+  capaUrl: string | null;
+  pontos: number;
 };
+
+const CAT_CHIPS = [
+  { value: "", label: "Todas" },
+  { value: "FUNDADOR", label: "Fundador" },
+  { value: "PATROCINADOR", label: "Patrocinador" },
+  { value: "MEMBRO", label: "Membro" },
+];
 
 export default function HubPage() {
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState("todos");
+  const [cat, setCat] = useState("");
   const [esp, setEsp] = useState("");
-  const [cidade, setCidade] = useState("");
+  const [cid, setCid] = useState("");
+  const params = new URLSearchParams();
+  if (q) params.set("q", q);
+  if (cat) params.set("cat", cat);
+  if (esp) params.set("especialidade", esp);
+  if (cid) params.set("cidade", cid);
+  const { data, isLoading } = useApiQuery<{
+    members: Member[];
+    especialidades: string[];
+    cidades: string[];
+  }>(["hub", q, cat, esp, cid], `/api/membro/hub?${params}`);
 
-  const qs = useMemo(() => {
-    const p = new URLSearchParams();
-    if (q) p.set("q", q);
-    if (cat !== "todos") p.set("cat", cat);
-    if (esp) p.set("especialidade", esp);
-    if (cidade) p.set("cidade", cidade);
-    const s = p.toString();
-    return s ? `?${s}` : "";
-  }, [q, cat, esp, cidade]);
-
-  const { data, isLoading } = useApiQuery<HubData>(
-    ["membro", "hub", q, cat, esp, cidade],
-    `/api/membro/hub${qs}`,
+  const especialidades = (data?.especialidades ?? []).slice().sort((a, b) =>
+    a.localeCompare(b, "pt-BR"),
+  );
+  const cidades = (data?.cidades ?? []).slice().sort((a, b) =>
+    a.localeCompare(b, "pt-BR"),
   );
 
-  const chips = [
-    { id: "todos", label: "Todos" },
-    { id: "fundadores", label: "Fundadores" },
-    { id: "patrocinadores", label: "Patrocinadores" },
-    { id: "membros", label: "Membros" },
-  ];
-
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-5">
       <div>
-        <h1 className="font-display text-2xl font-extrabold">Hub de membros</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Ordenado por categoria e pontuação. Conecte e indique parceiros.
+        <p className="om-kicker">Rede</p>
+        <h1 className="om-page-title">Hub de Membros</h1>
+        <p className="om-lede">
+          Encontre especialidade, cidade e categoria. Abra o perfil para conectar,
+          indicar e fechar negócio.
         </p>
       </div>
 
-      {data?.offer && (
-        <Card className="overflow-hidden">
-          {data.offer.bannerUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={data.offer.bannerUrl}
-              alt=""
-              className="h-36 w-full object-cover"
-            />
-          )}
-          <div className="p-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="font-semibold">{data.offer.titulo}</div>
-            <a
-              href={data.offer.destino}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-semibold text-primary"
-            >
-              Abrir oferta
-            </a>
-          </div>
-        </Card>
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        {chips.map((c) => (
-          <button
-            key={c.id}
-            onClick={() => setCat(c.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold border border-border ${
-              cat === c.id ? "bg-secondary text-foreground" : "text-muted-foreground"
-            }`}
-          >
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-3">
+      <Card className="space-y-3 p-4">
         <Input
-          placeholder="Buscar nome, empresa…"
+          placeholder="Buscar por nome, empresa ou especialidade"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <select
-          className="h-11 rounded-xl border border-border bg-secondary px-3 text-sm"
-          value={esp}
-          onChange={(e) => setEsp(e.target.value)}
-        >
-          <option value="">Especialidade</option>
-          {(data?.especialidades ?? []).map((e) => (
-            <option key={e} value={e}>
-              {e}
-            </option>
-          ))}
-        </select>
-        <select
-          className="h-11 rounded-xl border border-border bg-secondary px-3 text-sm"
-          value={cidade}
-          onChange={(e) => setCidade(e.target.value)}
-        >
-          <option value="">Cidade</option>
-          {(data?.cidades ?? []).map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <p className="text-sm text-muted-foreground">
-        {isLoading ? "…" : `${data?.total ?? 0} membros`}
-      </p>
-
-      {isLoading || !data ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-40" />
+        <div className="flex flex-wrap gap-2">
+          {CAT_CHIPS.map((c) => (
+            <button
+              key={c.label}
+              type="button"
+              onClick={() => setCat(c.value)}
+              className={cn(
+                "rounded-full px-3 py-1 text-xs font-bold",
+                cat === c.value
+                  ? "bg-brasa text-white"
+                  : "bg-secondary text-muted-foreground",
+              )}
+            >
+              {c.label}
+            </button>
           ))}
         </div>
+        <div className="grid gap-2 sm:grid-cols-2">
+          <select
+            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            value={esp}
+            onChange={(e) => setEsp(e.target.value)}
+            aria-label="Especialidade"
+          >
+            <option value="">Todas as especialidades</option>
+            {especialidades.map((v) => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+          <select
+            className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+            value={cid}
+            onChange={(e) => setCid(e.target.value)}
+            aria-label="Cidade"
+          >
+            <option value="">Todas as cidades</option>
+            {cidades.map((v) => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+        </div>
+      </Card>
+
+      {isLoading ? (
+        <Skeleton className="h-48" />
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.members.map((m) => (
-            <Link key={m.id} href={`/membro/membros/${m.id}`}>
-              <Card className="p-4 om-lift h-full space-y-3">
-                <div className="flex items-center gap-3">
-                  {m.fotoUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={m.fotoUrl}
-                      alt=""
-                      className="h-12 w-12 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="h-12 w-12 rounded-full bg-brasa text-white flex items-center justify-center text-sm font-bold">
-                      {initials(m.nome)}
-                    </div>
+        <div className="om-grid-3">
+          {(data?.members ?? []).map((m) => (
+            <Link
+              key={m.id}
+              href={`/membro/membros/${m.id}`}
+              className="block overflow-hidden rounded-[var(--radius)] border border-border bg-card text-card-foreground no-underline shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div
+                className={cn("relative h-14", memberBannerClass(m.categoria))}
+                style={
+                  m.capaUrl
+                    ? {
+                        backgroundImage: `url(${m.capaUrl})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }
+                    : undefined
+                }
+              >
+                <span
+                  className={cn(
+                    "absolute right-3 top-3 rounded-full px-[9px] py-[3px] text-[11px] font-bold",
+                    memberCatBadgeClass(m.categoria),
                   )}
-                  <div className="min-w-0">
-                    <div className="font-semibold truncate">{m.nome}</div>
-                    <div className="text-xs text-muted-foreground truncate">
-                      {m.empresa}
-                    </div>
-                  </div>
+                >
+                  {labelCategory(m.categoria)}
+                </span>
+              </div>
+              <div className="relative px-3 pb-3 pt-0">
+                <div className="-mt-7 mb-2">
+                  {m.fotoUrl ? (
+                    <span className="om-face om-face-sm ring-2 ring-card">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={m.fotoUrl} alt="" />
+                    </span>
+                  ) : (
+                    <span className="om-face om-face-sm flex items-center justify-center bg-secondary text-xs font-bold text-muted-foreground ring-2 ring-card">
+                      {initials(m.nome)}
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-center justify-between gap-2">
-                  <Badge
-                    variant={
-                      m.categoria === "FUNDADOR"
-                        ? "default"
-                        : m.categoria === "PATROCINADOR"
-                          ? "ember"
-                          : "secondary"
-                    }
-                  >
-                    {m.categoria}
-                  </Badge>
-                  <span className="font-mono text-sm">
-                    {formatPoints(m.pontos)} pts
-                  </span>
+                <p className="font-display text-sm font-bold leading-tight">{m.nome}</p>
+                <p className="text-xs text-muted-foreground">{m.empresa}</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {m.especialidade ? (
+                    <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                      {m.especialidade}
+                    </span>
+                  ) : null}
+                  {m.cidade ? (
+                    <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                      {m.cidade}
+                    </span>
+                  ) : null}
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {m.especialidade} · {m.cidade}
+                <p className="mt-3 border-t border-border pt-2 text-xs font-bold text-brasa">
+                  {formatPoints(m.pontos)} pts
                 </p>
-              </Card>
+              </div>
             </Link>
           ))}
         </div>
       )}
+
+      {!isLoading && (data?.members ?? []).length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Nenhum membro com esses filtros. Amplie a busca para conectar com a rede.
+        </p>
+      ) : null}
     </div>
   );
 }

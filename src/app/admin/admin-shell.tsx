@@ -1,24 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { usePrefetch } from "@/lib/api-client";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { BrandMark } from "@/components/brand-mark";
 import { cn, initials } from "@/lib/utils";
 import { useState } from "react";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { NotificationBell } from "@/components/notification-bell";
-import { BrandMark } from "@/components/brand-mark";
 import {
   CalendarDays,
   CircleHelp,
-  History,
-  Home,
-  LayoutGrid,
+  LayoutDashboard,
+  Link2,
   Menu,
-  MoreHorizontal,
+  ScrollText,
+  Shield,
+  Tags,
   Trophy,
-  UserRound,
   Users,
   Wallet,
   X,
@@ -27,58 +26,38 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 
 const nav = [
-  { href: "/membro", label: "Início", key: ["membro", "dashboard"], api: "/api/membro/dashboard", icon: Home },
-  { href: "/membro/evento", label: "Evento do mês", key: ["membro", "evento"], api: "/api/membro/evento", icon: CalendarDays },
-  { href: "/membro/hub", label: "Hub de membros", key: ["membro", "hub"], api: "/api/membro/hub", icon: Users },
-  { href: "/membro/ranking", label: "Ranking", key: ["membro", "ranking"], api: "/api/membro/ranking?period=geral", icon: Trophy },
-  { href: "/membro/convites", label: "Convites", key: ["membro", "convites"], api: "/api/membro/convites", icon: LayoutGrid },
-  { href: "/membro/ofertas", label: "Ofertas", key: ["membro", "ofertas"], api: "/api/membro/ofertas", icon: LayoutGrid },
-  { href: "/membro/financeiro", label: "Financeiro", key: ["membro", "financeiro"], api: "/api/membro/financeiro", icon: Wallet },
-  { href: "/membro/historico", label: "Histórico", key: ["membro", "historico"], api: "/api/membro/historico", icon: History },
-  { href: "/membro/faq", label: "FAQ", key: ["faq"], api: "/api/faq", icon: CircleHelp },
-  { href: "/membro/perfil", label: "Perfil", key: ["membro", "me"], api: "/api/membro/me", icon: UserRound },
+  { href: "/admin", label: "Visão geral", key: ["admin", "overview"], api: "/api/admin/overview", icon: LayoutDashboard },
+  { href: "/admin/membros", label: "Membros", key: ["admin", "membros"], api: "/api/admin/membros", icon: Users },
+  { href: "/admin/eventos", label: "Eventos", key: ["admin", "eventos"], api: "/api/admin/eventos", icon: CalendarDays },
+  { href: "/admin/financeiro", label: "Financeiro", key: ["admin", "financeiro"], api: "/api/admin/financeiro", icon: Wallet },
+  { href: "/admin/ranking", label: "Ranking", key: ["admin", "ranking"], api: "/api/admin/ranking", icon: Trophy },
+  { href: "/admin/check-in", label: "Portaria", key: ["admin", "checkin"], api: "/api/admin/checkin", icon: Shield },
+  { href: "/admin/categorias", label: "Categorias", key: ["admin", "categorias"], api: "/api/admin/categorias", icon: Tags },
+  { href: "/admin/ofertas", label: "Ofertas", key: ["admin", "ofertas"], api: "/api/admin/ofertas", icon: LayoutDashboard },
+  { href: "/admin/usuarios", label: "Usuários", key: ["admin", "usuarios"], api: "/api/admin/usuarios", icon: Shield },
+  { href: "/admin/termos", label: "Termos e privacidade", key: ["admin", "termos"], api: "/api/admin/termos", icon: ScrollText },
+  { href: "/admin/faq", label: "FAQ", key: ["faq"], api: "/api/faq", icon: CircleHelp },
+  { href: "/admin/convites-membro", label: "Links de cadastro", key: ["admin", "membership-invites"], api: "/api/admin/membership-invites", icon: Link2 },
 ];
 
-const bottom = [
-  { href: "/membro", label: "Início", icon: Home },
-  { href: "/membro/evento", label: "Evento", icon: CalendarDays },
-  { href: "/membro/hub", label: "Hub", icon: Users },
-  { href: "/membro/ranking", label: "Ranking", icon: Trophy },
-];
-
-const moreHrefs = [
-  "/membro/convites",
-  "/membro/financeiro",
-  "/membro/historico",
-  "/membro/faq",
-  "/membro/perfil",
-  "/membro/ofertas",
-];
-
-function isActive(pathname: string, href: string) {
-  return href === "/membro" ? pathname === "/membro" : pathname.startsWith(href);
-}
-
-export default function MembroLayout({ children }: { children: React.ReactNode }) {
+export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
   const { data } = useSession();
   const prefetch = usePrefetch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [confirmLogout, setConfirmLogout] = useState(false);
-  const name = data?.user?.name ?? "Membro";
-  const moreOn = moreHrefs.some((h) => pathname.startsWith(h));
+  const name = data?.user?.name ?? "Admin";
 
   return (
     <div className="om-shell">
       <a href="#conteudo-principal" className="om-skip">
         Ir para o conteúdo
       </a>
-      <aside className={cn("om-sidebar", menuOpen && "is-open")} aria-label="Menu do membro">
+      <aside className={cn("om-sidebar", menuOpen && "is-open")} aria-label="Menu administrativo">
         <div className="flex items-start justify-between gap-3">
           <div>
             <BrandMark />
-            <p className="text-xs text-muted-foreground mt-1">Área do membro</p>
+            <p className="text-xs text-muted-foreground mt-1">Painel administrativo</p>
           </div>
           <button
             type="button"
@@ -89,9 +68,12 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
             <X size={18} />
           </button>
         </div>
-        <nav className="flex flex-col gap-1 flex-1" aria-label="Navegação do membro">
+        <nav className="flex flex-col gap-1 flex-1 overflow-y-auto" aria-label="Navegação administrativa">
           {nav.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active =
+              item.href === "/admin"
+                ? pathname === "/admin"
+                : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (
               <Link
@@ -113,12 +95,12 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
           })}
         </nav>
         <div className="flex items-center gap-3 border-t border-border pt-4">
-          <div className="h-10 w-10 rounded-full bg-brasa text-white flex items-center justify-center text-sm font-bold">
+          <div className="h-10 w-10 rounded-full bg-secondary text-foreground flex items-center justify-center text-sm font-bold">
             {initials(name)}
           </div>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold truncate">{name}</div>
-            <div className="text-xs text-muted-foreground">Membro</div>
+            <div className="text-xs text-muted-foreground">Administrador</div>
           </div>
           <button
             type="button"
@@ -145,47 +127,20 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
             <BrandMark size="sm" symbolClassName="h-7" />
           </div>
           <div className="hidden lg:block flex-1 font-display font-bold text-lg">
-            Área do Membro
+            Painel Administrativo
           </div>
           <ThemeToggle />
-          <NotificationBell />
         </header>
         <main id="conteudo-principal" className="om-main" tabIndex={-1}>
           {children}
         </main>
       </div>
 
-      <nav className="om-bottom" aria-label="Navegação principal">
-        {bottom.map((item) => {
-          const Icon = item.icon;
-          const on = isActive(pathname, item.href);
-          return (
-            <button
-              key={item.href}
-              type="button"
-              className={cn(on && "is-on")}
-              onClick={() => router.push(item.href)}
-            >
-              <Icon size={20} aria-hidden />
-              {item.label}
-            </button>
-          );
-        })}
-        <button
-          type="button"
-          className={cn(moreOn && "is-on")}
-          onClick={() => setMenuOpen(true)}
-        >
-          <MoreHorizontal size={20} aria-hidden />
-          Mais
-        </button>
-      </nav>
-
       <Modal
         open={confirmLogout}
         onClose={() => setConfirmLogout(false)}
         title="Sair da conta?"
-        description="Você será desconectado da Área do Membro e precisará entrar de novo."
+        description="Você será desconectado do Painel Administrativo e precisará entrar de novo."
         footer={
           <>
             <Button

@@ -47,6 +47,7 @@ button, a, input, select, textarea { touch-action: manipulation; }
 }
 .om-maincol { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .om-menu-btn.om-icon-btn { display: none; }
+.om-sidebar-close.om-icon-btn { display: none; }
 .om-bottom { display: none; }
 .om-scrim { display: none; }
 
@@ -228,6 +229,7 @@ select:focus-visible {
   }
   .om-sidebar.is-open { transform: none; }
   .om-menu-btn.om-icon-btn { display: flex; flex: none; }
+  .om-sidebar-close.om-icon-btn { display: flex; }
   .om-bottom { display: flex; }
   .om-main { padding: 24px 16px 96px; }
   .om-header-inner { padding: 12px 16px; }

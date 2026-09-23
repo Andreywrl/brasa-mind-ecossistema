@@ -7,6 +7,8 @@ import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { ImageUploadField } from "@/components/image-upload-field";
+import { Modal } from "@/components/ui/modal";
+import { ActionMenu } from "@/components/ui/action-menu";
 
 type OfertasData = {
   canOffer: boolean;
@@ -137,19 +139,34 @@ export default function OfertasPage() {
               <Badge variant={o.ativo ? "success" : "secondary"}>
                 {o.ativo ? "Ativa" : "Pausada"}
               </Badge>
-              <Button variant="outline" size="sm" onClick={() => toggleActive(o.id, o.ativo)}>
-                {o.ativo ? "Pausar" : "Ativar"}
-              </Button>
+              <ActionMenu
+                label="Ações da oferta"
+                items={[
+                  {
+                    label: o.ativo ? "Pausar" : "Ativar",
+                    onSelect: () => toggleActive(o.id, o.ativo),
+                  },
+                ]}
+              />
             </Card>
           ))
         )}
       </div>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <Card className="w-full max-w-lg p-6 space-y-3">
-            <h3 className="font-display font-extrabold text-lg">Nova oferta</h3>
-            <div className="space-y-2">
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Nova oferta"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={save}>Salvar</Button>
+          </>
+        }
+      >
+            <div className="flex flex-col gap-2">
               <Label>Título</Label>
               <Input
                 value={form.titulo}
@@ -196,15 +213,7 @@ export default function OfertasPage() {
               </label>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setOpen(false)}>
-                Cancelar
-              </Button>
-              <Button onClick={save}>Salvar</Button>
-            </div>
-          </Card>
-        </div>
-      )}
+      </Modal>
     </div>
   );
 }

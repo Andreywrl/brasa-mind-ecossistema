@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { TicketQr } from "@/components/ticket-qr";
 import { EventMap } from "@/components/event-map";
+import { labelRegistrationStatus } from "@/lib/labels";
 import {
   CreditCardFields,
   emptyCreditCard,
@@ -179,9 +180,7 @@ export default function EventoPage() {
                     : "ember"
                 }
               >
-                {data.registration.status === "CHECKED_IN"
-                  ? "Check-in feito"
-                  : "Confirmado"}
+                {labelRegistrationStatus(data.registration.status)}
               </Badge>
               <TicketQr code={data.registration.checkinCode} />
               <Link

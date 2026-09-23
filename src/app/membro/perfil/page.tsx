@@ -6,10 +6,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
+import { Modal } from "@/components/ui/modal";
+import { ActionMenu } from "@/components/ui/action-menu";
 import { formatPoints } from "@/lib/utils";
 import { MaskedInput } from "@/components/masked-input";
 import { AddressFields, type AddressForm } from "@/components/address-fields";
 import { ImageUploadField } from "@/components/image-upload-field";
+import { labelCategory } from "@/lib/labels";
 import {
   formatCnpj,
   formatPhoneBr,
@@ -73,6 +76,14 @@ export default function PerfilPage() {
   });
   const [msg, setMsg] = useState("");
   const [error, setError] = useState("");
+  const [pwd, setPwd] = useState({
+    currentPassword: "",
+    password: "",
+    confirm: "",
+  });
+  const [pwdMsg, setPwdMsg] = useState("");
+  const [pwdErr, setPwdErr] = useState("");
+  const [pwdOpen, setPwdOpen] = useState(false);
 
   useEffect(() => {
     if (!data) return;
@@ -122,6 +133,29 @@ export default function PerfilPage() {
     }
   }
 
+  async function savePassword() {
+    setPwdErr("");
+    setPwdMsg("");
+    if (pwd.password !== pwd.confirm) {
+      setPwdErr("A confirmação não bate com a nova senha.");
+      return;
+    }
+    try {
+      await apiMutate("/api/membro/perfil", {
+        method: "PATCH",
+        body: JSON.stringify({
+          currentPassword: pwd.currentPassword,
+          password: pwd.password,
+        }),
+      });
+      setPwdMsg("Senha atualizada. Use a nova senha no próximo acesso.");
+      setPwd({ currentPassword: "", password: "", confirm: "" });
+      setPwdOpen(false);
+    } catch (e) {
+      setPwdErr(e instanceof Error ? e.message : "Erro");
+    }
+  }
+
   if (isLoading || !data) {
     return (
       <div className="space-y-4 max-w-3xl">
@@ -156,8 +190,25 @@ export default function PerfilPage() {
             {data.profile.rank ? ` · ${data.profile.rank}º no ranking` : ""}
           </p>
         </div>
-        <Badge>{data.profile.categoria}</Badge>
+        <div className="flex items-center gap-2">
+          <Badge>{labelCategory(data.profile.categoria)}</Badge>
+          <ActionMenu
+            label="Ações do perfil"
+            items={[
+              {
+                label: "Alterar senha",
+                onSelect: () => {
+                  setPwdErr("");
+                  setPwdMsg("");
+                  setPwd({ currentPassword: "", password: "", confirm: "" });
+                  setPwdOpen(true);
+                },
+              },
+            ]}
+          />
+        </div>
       </div>
+      {pwdMsg ? <p className="text-sm text-success">{pwdMsg}</p> : null}
 
       <Card className="p-6 grid sm:grid-cols-2 gap-4">
         <div className="space-y-1">
@@ -238,6 +289,52 @@ export default function PerfilPage() {
           <Button onClick={save}>Salvar alterações</Button>
         </div>
       </Card>
+
+      <Modal
+        open={pwdOpen}
+        onClose={() => setPwdOpen(false)}
+        title="Alterar senha"
+        description="Confirme a senha atual e defina uma nova para o seu acesso ao Brasa."
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setPwdOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={savePassword}>Salvar nova senha</Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <Label>Senha atual</Label>
+            <Input
+              type="password"
+              value={pwd.currentPassword}
+              onChange={(e) => setPwd({ ...pwd, currentPassword: e.target.value })}
+              autoComplete="current-password"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label>Nova senha</Label>
+            <Input
+              type="password"
+              value={pwd.password}
+              onChange={(e) => setPwd({ ...pwd, password: e.target.value })}
+              autoComplete="new-password"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label>Confirmar nova senha</Label>
+            <Input
+              type="password"
+              value={pwd.confirm}
+              onChange={(e) => setPwd({ ...pwd, confirm: e.target.value })}
+              autoComplete="new-password"
+            />
+          </div>
+          {pwdErr ? <p className="text-sm text-destructive">{pwdErr}</p> : null}
+        </div>
+      </Modal>
     </div>
   );
 }

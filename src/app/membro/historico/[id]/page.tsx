@@ -6,6 +6,7 @@ import { useApiQuery } from "@/lib/api-client";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { EventMap } from "@/components/event-map";
 import { initials } from "@/lib/utils";
+import { labelRegistrationStatus } from "@/lib/labels";
 
 type Detail = {
   event: {
@@ -129,7 +130,9 @@ export default function HistoricoDetalhePage() {
                       {g.empresa}
                     </div>
                   </div>
-                  <Badge variant="secondary">{g.status}</Badge>
+                  <Badge variant="secondary">
+                    {labelRegistrationStatus(g.status)}
+                  </Badge>
                 </li>
               ))}
             </ul>

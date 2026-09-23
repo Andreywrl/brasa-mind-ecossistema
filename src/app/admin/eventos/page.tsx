@@ -9,12 +9,16 @@ import { Input, Label, Textarea } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils";
 import { ImageUploadField } from "@/components/image-upload-field";
 import { StarRating } from "@/components/star-rating";
+import { Modal } from "@/components/ui/modal";
+import {
+  labelRegistrationStatus,
+  labelRegistrationType,
+} from "@/lib/labels";
 
 type Review = {
   stars: number;
   comment: string | null;
   author: { name: string | null; email: string } | null;
-  updatedAt?: string;
 };
 
 type EventosData = {
@@ -54,15 +58,6 @@ export default function AdminEventosPage() {
     "/api/admin/eventos",
   );
   const [open, setOpen] = useState(false);
-  const [reviewing, setReviewing] = useState<{
-    id: string;
-    nome: string;
-    stars: number;
-    comment: string;
-  } | null>(null);
-  const [savingReview, setSavingReview] = useState(false);
-  const [reviewMsg, setReviewMsg] = useState("");
-  const [reviewErr, setReviewErr] = useState("");
   const [form, setForm] = useState({
     nome: "",
     data: "",
@@ -97,29 +92,6 @@ export default function AdminEventosPage() {
     await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
   }
 
-  async function saveReview() {
-    if (!reviewing) return;
-    setSavingReview(true);
-    setReviewErr("");
-    setReviewMsg("");
-    try {
-      await apiMutate(`/api/admin/eventos/${reviewing.id}/review`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          stars: reviewing.stars,
-          comment: reviewing.comment,
-        }),
-      });
-      setReviewMsg("Nota salva.");
-      await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
-      setTimeout(() => setReviewing(null), 600);
-    } catch (e) {
-      setReviewErr(e instanceof Error ? e.message : "Erro");
-    } finally {
-      setSavingReview(false);
-    }
-  }
-
   if (isLoading || !data) {
     return (
       <div className="space-y-4">
@@ -135,7 +107,7 @@ export default function AdminEventosPage() {
         <div>
           <h1 className="font-display text-2xl font-extrabold">Eventos</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Uma capa por evento. Sem galeria de fotos. Nota só no admin.
+            Uma capa por evento. Sem galeria de fotos. A nota do encontro é do membro.
           </p>
         </div>
         <Button onClick={() => setOpen(true)}>Novo evento</Button>
@@ -159,7 +131,10 @@ export default function AdminEventosPage() {
             </p>
             <div className="grid sm:grid-cols-2 gap-2 text-sm">
               {data.active.prices.map((p) => (
-                <div key={p.tier} className="flex justify-between bg-secondary rounded-lg px-3 py-2">
+                <div
+                  key={p.tier}
+                  className="flex justify-between bg-secondary rounded-lg px-3 py-2"
+                >
                   <span>{p.label}</span>
                   <span className="font-mono">
                     {p.amountCents === 0 ? "Cortesia" : formatCurrency(p.amountCents)}
@@ -171,10 +146,14 @@ export default function AdminEventosPage() {
               <h3 className="font-semibold mb-2">Participantes</h3>
               <ul className="space-y-2 max-h-64 overflow-y-auto">
                 {data.active.registrations.map((r) => (
-                  <li key={r.id} className="flex justify-between text-sm border-b border-border pb-2">
+                  <li
+                    key={r.id}
+                    className="flex justify-between text-sm border-b border-border pb-2"
+                  >
                     <span>
                       {r.member?.user.name ?? r.guest?.nome} ·{" "}
-                      {r.member?.empresa ?? r.guest?.empresa} ({r.type})
+                      {r.member?.empresa ?? r.guest?.empresa} (
+                      {labelRegistrationType(r.type)})
                     </span>
                     <Badge
                       variant={
@@ -185,7 +164,7 @@ export default function AdminEventosPage() {
                             : "secondary"
                       }
                     >
-                      {r.status}
+                      {labelRegistrationStatus(r.status)}
                     </Badge>
                   </li>
                 ))}
@@ -215,45 +194,66 @@ export default function AdminEventosPage() {
                 </div>
                 <div className="mt-2">
                   {e.review ? (
-                    <StarRating value={e.review.stars} readOnly size={16} />
+                    <div className="flex flex-wrap items-center gap-2">
+                      <StarRating value={e.review.stars} readOnly size={16} />
+                      {e.review.author?.name && (
+                        <span className="text-xs text-muted-foreground">
+                          por {e.review.author.name}
+                        </span>
+                      )}
+                    </div>
                   ) : (
-                    <span className="text-xs text-muted-foreground">Sem nota</span>
+                    <span className="text-xs text-muted-foreground">
+                      Sem nota dos membros
+                    </span>
                   )}
                 </div>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() =>
-                  setReviewing({
-                    id: e.id,
-                    nome: e.nome,
-                    stars: e.review?.stars ?? 0,
-                    comment: e.review?.comment ?? "",
-                  })
-                }
-              >
-                {e.review ? "Editar nota" : "Dar nota"}
-              </Button>
             </li>
           ))}
         </ul>
       </Card>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <Card className="w-full max-w-lg p-6 space-y-3 max-h-[90vh] overflow-y-auto">
-            <h3 className="font-display font-extrabold">Novo evento</h3>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Novo evento"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={create}>Salvar</Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-3">
             <Label>Nome</Label>
-            <Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
+            <Input
+              value={form.nome}
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+            />
             <Label>Data</Label>
-            <Input type="datetime-local" value={form.data} onChange={(e) => setForm({ ...form, data: e.target.value })} />
+            <Input
+              type="datetime-local"
+              value={form.data}
+              onChange={(e) => setForm({ ...form, data: e.target.value })}
+            />
             <Label>Hora (rótulo)</Label>
-            <Input value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} />
+            <Input
+              value={form.hora}
+              onChange={(e) => setForm({ ...form, hora: e.target.value })}
+            />
             <Label>Local</Label>
-            <Input value={form.local} onChange={(e) => setForm({ ...form, local: e.target.value })} />
+            <Input
+              value={form.local}
+              onChange={(e) => setForm({ ...form, local: e.target.value })}
+            />
             <Label>Local curto</Label>
-            <Input value={form.localShort} onChange={(e) => setForm({ ...form, localShort: e.target.value })} />
+            <Input
+              value={form.localShort}
+              onChange={(e) => setForm({ ...form, localShort: e.target.value })}
+            />
             <ImageUploadField
               label="Capa"
               value={form.capaUrl}
@@ -261,56 +261,20 @@ export default function AdminEventosPage() {
               folder="events/capas"
             />
             <Label>Descrição</Label>
-            <Textarea value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} />
+            <Textarea
+              value={form.descricao}
+              onChange={(e) => setForm({ ...form, descricao: e.target.value })}
+            />
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={form.ativo} onChange={(e) => setForm({ ...form, ativo: e.target.checked })} />
+              <input
+                type="checkbox"
+                checked={form.ativo}
+                onChange={(e) => setForm({ ...form, ativo: e.target.checked })}
+              />
               Tornar ativo
             </label>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-              <Button onClick={create}>Salvar</Button>
-            </div>
-          </Card>
         </div>
-      )}
-
-      {reviewing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <Card className="w-full max-w-md p-6 space-y-4">
-            <div>
-              <h3 className="font-display font-extrabold">Avaliar evento</h3>
-              <p className="text-sm text-muted-foreground mt-1">{reviewing.nome}</p>
-            </div>
-            <StarRating
-              value={reviewing.stars}
-              onChange={(stars) => setReviewing({ ...reviewing, stars })}
-            />
-            <div className="space-y-1">
-              <Label>Comentário</Label>
-              <Textarea
-                value={reviewing.comment}
-                onChange={(e) =>
-                  setReviewing({ ...reviewing, comment: e.target.value })
-                }
-                placeholder="Como foi o encontro, o que melhorar…"
-              />
-            </div>
-            {reviewErr && <p className="text-sm text-destructive">{reviewErr}</p>}
-            {reviewMsg && <p className="text-sm text-success">{reviewMsg}</p>}
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={() => setReviewing(null)}>
-                Cancelar
-              </Button>
-              <Button
-                disabled={savingReview || reviewing.stars < 1}
-                onClick={saveReview}
-              >
-                {savingReview ? "Salvando…" : "Salvar nota"}
-              </Button>
-            </div>
-          </Card>
-        </div>
-      )}
+      </Modal>
     </div>
   );
 }

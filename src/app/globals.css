@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../../_ds/brasa-app-shell.css";
+@import "../../_ds/brasa-dark-theme.css";
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -30,8 +31,10 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
   --color-brasa: hsl(var(--brasa));
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
+  --font-display: var(--font-barlow), Barlow, Inter, sans-serif;
+  --font-impact: var(--font-barlow-semi), "Barlow Semi Condensed", Barlow, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -123,14 +126,15 @@
 }
 
 .font-display {
-  font-family: var(--font-sans);
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 .font-impact {
-  font-family: var(--font-sans);
+  font-family: var(--font-impact);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .bg-brasa {
@@ -142,7 +146,9 @@
 }
 
 .glow-ember {
-  box-shadow: 0 0 24px hsl(var(--primary) / 0.35);
+  box-shadow:
+    0 0 0 1px hsl(var(--primary) / 0.25),
+    0 8px 30px -6px hsl(var(--primary) / 0.45);
 }
 
 .om-lift {
@@ -150,6 +156,12 @@
 }
 .om-lift:hover {
   transform: translateY(-2px);
+  box-shadow: 0 10px 28px -12px hsl(20 10% 4% / 0.35);
+}
+
+/* Card surface closer to the design system */
+.bg-card {
+  box-shadow: 0 1px 0 hsl(var(--border) / 0.65);
 }
 
 @keyframes shimmer {

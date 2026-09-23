@@ -7,6 +7,7 @@ import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckinCodeForm } from "@/components/checkin-code-form";
+import { labelRegistrationStatus } from "@/lib/labels";
 
 type CheckinData = {
   event: { nome: string } | null;
@@ -52,7 +53,7 @@ export default function AdminCheckinPage() {
       );
       setMsg(
         res.already
-          ? `${res.nome ?? "Participante"} já tinha check-in.`
+          ? `${res.nome ?? "Participante"} já tinha entrada registrada.`
           : `${res.message ?? "OK"}${res.nome ? `: ${res.nome}` : ""}`,
       );
       await qc.invalidateQueries({ queryKey: ["admin", "checkin"] });
@@ -66,7 +67,7 @@ export default function AdminCheckinPage() {
   return (
     <div className="space-y-6 max-w-3xl">
       <div>
-        <h1 className="font-display text-2xl font-extrabold">Check-in</h1>
+        <h1 className="font-display text-2xl font-extrabold">Portaria</h1>
         <p className="text-muted-foreground text-sm mt-1">
           {data?.event?.nome ?? "Sem evento ativo"}
         </p>
@@ -109,11 +110,11 @@ export default function AdminCheckinPage() {
                         : "secondary"
                   }
                 >
-                  {r.status}
+                  {labelRegistrationStatus(r.status)}
                 </Badge>
                 {r.status === "CONFIRMED" && (
                   <Button size="sm" onClick={() => checkin(r.id)}>
-                    Check-in
+                    Registrar entrada
                   </Button>
                 )}
               </div>

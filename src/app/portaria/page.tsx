@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckinCodeForm } from "@/components/checkin-code-form";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { BrandMark } from "@/components/brand-mark";
 import { signOut, useSession } from "next-auth/react";
+import { labelRegistrationStatus } from "@/lib/labels";
 
 type CheckinData = {
   event: { nome: string } | null;
@@ -42,7 +44,7 @@ export default function PortariaPage() {
       method: "POST",
       body: JSON.stringify({ registrationId: id }),
     });
-    setMsg("Check-in confirmado.");
+    setMsg("Entrada registrada.");
     await qc.invalidateQueries({ queryKey: ["portaria", "checkin"] });
   }
 
@@ -61,7 +63,7 @@ export default function PortariaPage() {
       setMsg(
         res.already
           ? `${res.nome ?? "Participante"} já tinha check-in.`
-          : `${res.message ?? "Check-in confirmado"}${res.nome ? `: ${res.nome}` : ""}`,
+          : `${res.message ?? "Entrada registrada"}${res.nome ? `: ${res.nome}` : ""}`,
       );
       await qc.invalidateQueries({ queryKey: ["portaria", "checkin"] });
     } catch (e) {
@@ -75,8 +77,8 @@ export default function PortariaPage() {
     <div className="min-h-screen p-6 max-w-xl mx-auto space-y-6">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <div className="font-impact text-xl text-brasa">Brasamind</div>
-          <p className="text-sm text-muted-foreground">
+          <BrandMark lockup size="sm" />
+          <p className="text-sm text-muted-foreground mt-1">
             Portaria · {session?.user?.name}
           </p>
         </div>
@@ -90,7 +92,7 @@ export default function PortariaPage() {
 
       <Card className="p-5 space-y-4">
         <h1 className="font-display text-xl font-extrabold">
-          {data?.event?.nome ?? "Check-in"}
+          {data?.event?.nome ?? "Portaria"}
         </h1>
         <CheckinCodeForm onSubmit={checkinByCode} loading={busy} />
         {msg && <p className="text-sm text-success">{msg}</p>}
@@ -128,11 +130,11 @@ export default function PortariaPage() {
                         : "secondary"
                   }
                 >
-                  {r.status}
+                  {labelRegistrationStatus(r.status)}
                 </Badge>
                 {r.status === "CONFIRMED" && (
                   <Button size="sm" onClick={() => checkin(r.id)}>
-                    Confirmar check-in
+                    Registrar entrada
                   </Button>
                 )}
               </div>
