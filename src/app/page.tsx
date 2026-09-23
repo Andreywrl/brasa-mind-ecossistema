@@ -12,8 +12,8 @@ function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const next = params.get("next") ?? "/membro";
-  const [email, setEmail] = useState("joao@silvaalimentos.com.br");
-  const [password, setPassword] = useState("membro123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<"login" | "reset">("login");
@@ -174,21 +174,23 @@ function LoginForm() {
             </form>
           )}
 
-          <Card className="p-4 space-y-2 text-sm">
-            <div className="font-semibold">Contas do seed</div>
-            <p className="text-muted-foreground">
-              Membro: joao@silvaalimentos.com.br / membro123
-            </p>
-            <p className="text-muted-foreground">
-              Admin: carla@brasamind.com.br / admin123
-            </p>
-            <p className="text-muted-foreground">
-              Cadastro:{" "}
-              <Link className="text-primary font-semibold" href="/quero-ser-membro/seed-membro-link">
-                link do admin
-              </Link>
-            </p>
-          </Card>
+          {process.env.NODE_ENV === "development" && (
+            <Card className="p-4 space-y-2 text-sm">
+              <div className="font-semibold">Contas do seed</div>
+              <p className="text-muted-foreground">
+                Membro: joao@silvaalimentos.com.br / membro123
+              </p>
+              <p className="text-muted-foreground">
+                Admin: carla@brasamind.com.br / admin123
+              </p>
+              <p className="text-muted-foreground">
+                Cadastro:{" "}
+                <Link className="text-primary font-semibold" href="/quero-ser-membro/seed-membro-link">
+                  link do admin
+                </Link>
+              </p>
+            </Card>
+          )}
         </div>
       </main>
     </div>
