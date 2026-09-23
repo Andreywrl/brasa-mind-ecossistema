@@ -29,17 +29,31 @@ export default function AdminConvitesMembroPage() {
   );
   const [categoria, setCategoria] = useState("MEMBRO");
   const [maxUses, setMaxUses] = useState(1);
+  const [emailTo, setEmailTo] = useState("");
   const [msg, setMsg] = useState("");
+  const [emailNote, setEmailNote] = useState("");
 
   async function create() {
-    const res = await apiMutate<{ invite: { link: string } }>(
-      "/api/admin/membership-invites",
-      {
-        method: "POST",
-        body: JSON.stringify({ categoria, maxUses }),
-      },
-    );
+    const res = await apiMutate<{
+      invite: { link: string };
+      emailSent?: boolean;
+    }>("/api/admin/membership-invites", {
+      method: "POST",
+      body: JSON.stringify({
+        categoria,
+        maxUses,
+        emailTo: emailTo.trim() || undefined,
+      }),
+    });
     setMsg(res.invite.link);
+    setEmailNote(
+      emailTo.trim()
+        ? res.emailSent
+          ? `E-mail enviado para ${emailTo}.`
+          : "Link gerado. E-mail não enviado (Resend desligado ou falha)."
+        : "",
+    );
+    setEmailTo("");
     await qc.invalidateQueries({ queryKey: ["admin", "membership-invites"] });
   }
 
@@ -78,9 +92,21 @@ export default function AdminConvitesMembroPage() {
           value={maxUses}
           onChange={(e) => setMaxUses(Number(e.target.value))}
         />
+        <Label>Enviar por e-mail (opcional)</Label>
+        <Input
+          type="email"
+          value={emailTo}
+          onChange={(e) => setEmailTo(e.target.value)}
+          placeholder="nome@empresa.com.br"
+        />
         <Button onClick={create}>Gerar link</Button>
         {msg && (
-          <code className="block text-xs break-all bg-secondary rounded-xl p-3">{msg}</code>
+          <code className="block text-xs break-all bg-secondary rounded-xl p-3">
+            {msg}
+          </code>
+        )}
+        {emailNote && (
+          <p className="text-sm text-muted-foreground">{emailNote}</p>
         )}
       </Card>
 
@@ -100,7 +126,11 @@ export default function AdminConvitesMembroPage() {
                 </span>
               </div>
               <code className="block text-xs break-all">{i.link}</code>
-              <Button size="sm" variant="outline" onClick={() => toggle(i.id, i.active)}>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => toggle(i.id, i.active)}
+              >
                 {i.active ? "Desativar" : "Reativar"}
               </Button>
             </Card>

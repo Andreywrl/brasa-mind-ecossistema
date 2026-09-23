@@ -8,6 +8,7 @@ import {
   formatCpf,
   formatPhoneBr,
 } from "@/lib/br";
+import { useId } from "react";
 
 type Mask = "cpf" | "cnpj" | "cep" | "phone" | "card";
 
@@ -40,11 +41,18 @@ export function MaskedInput({
   inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
   placeholder?: string;
 }) {
+  const autoId = useId();
+  const inputId = id ?? autoId;
   return (
     <div className="space-y-1">
-      {label && <Label htmlFor={id}>{label}{required ? " *" : ""}</Label>}
+      {label && (
+        <Label htmlFor={inputId}>
+          {label}
+          {required ? " *" : ""}
+        </Label>
+      )}
       <Input
-        id={id}
+        id={inputId}
         value={value}
         onChange={(e) => onChange(formatters[mask](e.target.value))}
         autoComplete={autoComplete}

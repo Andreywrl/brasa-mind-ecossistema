@@ -1,4 +1,6 @@
 import { jsonError, jsonOk, requireSession } from "@/lib/api";
+import { emailMembershipInvite } from "@/lib/email-templates";
+import { isValidEmail } from "@/lib/br";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
 import type { MemberCategory } from "@prisma/client";
@@ -30,7 +32,12 @@ export async function POST(req: Request) {
     categoria?: MemberCategory;
     maxUses?: number;
     expiresAt?: string;
+    emailTo?: string;
   };
+
+  if (body.emailTo && !isValidEmail(body.emailTo)) {
+    return jsonError("E-mail de envio inválido");
+  }
 
   const invite = await prisma.membershipInvite.create({
     data: {
@@ -44,11 +51,21 @@ export async function POST(req: Request) {
   });
 
   const base = process.env.NEXT_PUBLIC_APP_URL ?? "";
+  const link = `${base}/quero-ser-membro/${invite.token}`;
+
+  let emailSent = false;
+  if (body.emailTo) {
+    const sent = await emailMembershipInvite({
+      to: body.emailTo,
+      link,
+      categoria: invite.categoria,
+    });
+    emailSent = Boolean(sent.ok);
+  }
+
   return jsonOk({
-    invite: {
-      ...invite,
-      link: `${base}/quero-ser-membro/${invite.token}`,
-    },
+    invite: { ...invite, link },
+    emailSent,
   });
 }
 

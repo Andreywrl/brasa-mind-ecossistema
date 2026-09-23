@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { ImageUploadField } from "@/components/image-upload-field";
 
 type OfertasData = {
   canOffer: boolean;
@@ -179,10 +180,11 @@ export default function OfertasPage() {
                 value={form.destRotulo}
                 onChange={(e) => setForm({ ...form, destRotulo: e.target.value })}
               />
-              <Label>Banner URL (Blob)</Label>
-              <Input
+              <ImageUploadField
+                label="Banner"
                 value={form.bannerUrl}
-                onChange={(e) => setForm({ ...form, bannerUrl: e.target.value })}
+                onChange={(bannerUrl) => setForm({ ...form, bannerUrl })}
+                folder="offers/banners"
               />
               <label className="flex items-center gap-2 text-sm">
                 <input

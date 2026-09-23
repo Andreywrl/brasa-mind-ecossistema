@@ -113,6 +113,7 @@ model User {
   notifications Notification[]
   consents      Consent[]
   membershipInvitesCreated MembershipInvite[] @relation("MembershipInviteCreator")
+  eventReviews  EventReview[]
 
   @@index([role])
 }
@@ -313,9 +314,26 @@ model Event {
   registrations Registration[]
   invites       Invite[]
   doorAccesses  DoorAccess[]
+  review        EventReview?
 
   @@index([ativo])
   @@index([data])
+}
+
+model EventReview {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+  stars     Int
+  comment   String?  @db.Text
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event  Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  author User  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([stars])
 }
 
 enum TicketTier {

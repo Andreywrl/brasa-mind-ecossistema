@@ -32,12 +32,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="om-shell">
-      <aside className={cn("om-sidebar", menuOpen && "om-open")}>
+      <a href="#conteudo-principal" className="skip-link">
+        Ir para o conteúdo
+      </a>
+      <aside className={cn("om-sidebar", menuOpen && "om-open")} aria-label="Menu administrativo">
         <div>
           <div className="font-impact text-xl text-brasa">Brasamind</div>
           <p className="text-xs text-muted-foreground mt-1">Painel administrativo</p>
         </div>
-        <nav className="flex flex-col gap-1 flex-1 overflow-y-auto">
+        <nav className="flex flex-col gap-1 flex-1 overflow-y-auto" aria-label="Navegação administrativa">
           {nav.map((item) => {
             const active =
               item.href === "/admin"
@@ -91,7 +94,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="font-display font-bold text-lg flex-1">Painel Administrativo</div>
           <ThemeToggle />
         </header>
-        <main className="flex-1 p-4 lg:p-8">{children}</main>
+        <main id="conteudo-principal" className="flex-1 p-4 lg:p-8" tabIndex={-1}>
+          {children}
+        </main>
       </div>
     </div>
   );

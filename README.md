@@ -11,6 +11,7 @@ O protótipo estático anterior (HTML DC) está em [`prototype/`](prototype/).
 - Auth.js (credenciais + Google opcional)
 - Asaas (opcional até configurar a chave)
 - Vercel Blob, Sentry e Analytics (opcionais)
+- Resend (e-mails transacionais opcionais)
 - pnpm · funções em `gru1` (`vercel.js`)
 
 ## Setup local
@@ -36,6 +37,27 @@ Sem `DATABASE_URL` válido o schema continua pronto e o seed espera a conexão. 
 - Cadastro: `/quero-ser-membro/seed-membro-link`
 - Convite convidado: `/convite/seed-guest-invite`
 
+## Checklist de produção
+
+Antes do deploy:
+
+1. `pnpm db:push` (ou migrate) e `pnpm db:seed` só em ambiente novo
+2. Env obrigatórios: `DATABASE_URL`, `AUTH_SECRET`, `AUTH_URL`, `NEXT_PUBLIC_APP_URL`
+3. Asaas: `ASAAS_API_KEY`, `ASAAS_API_URL` e **`ASAAS_WEBHOOK_TOKEN` (obrigatório em produção)**
+4. Resend: `RESEND_API_KEY` + `EMAIL_FROM` (sem chave, e-mails não saem; `devToken` de reset **não** é devolvido em produção)
+5. Blob: `BLOB_READ_WRITE_TOKEN` para upload de capas/banners/perfil
+6. Sentry (opcional): `NEXT_PUBLIC_SENTRY_DSN` (+ org/project/token se for usar upload de sourcemaps)
+
+Smoke operacional (MySQL + Asaas reais): signup por link, pagamento de convidado, check-in na portaria e nota admin em evento passado.
+
+## Qualidade
+
+```bash
+pnpm test          # máscaras BR + smoke de rotas críticas
+pnpm test:e2e      # Playwright leve (formulários mascarados)
+pnpm smoke:api     # HTTP smoke (servidor em http://localhost:3000)
+```
+
 ## Regras de negócio
 
 - Mensalidade R$ 97 (dia 05), não inclui ingresso
@@ -43,3 +65,4 @@ Sem `DATABASE_URL` válido o schema continua pronto e o seed espera a conexão. 
 - Novos membros só por link do admin
 - Convidados pagam R$ 200, sem limite por evento
 - Imagens de perfil/evento/oferta no Vercel Blob (sem galeria no fim da página)
+- Nota de evento (1–5 estrelas + comentário) é interna do admin, só em eventos anteriores

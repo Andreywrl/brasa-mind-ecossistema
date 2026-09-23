@@ -28,6 +28,9 @@ export async function GET() {
       include: {
         prices: true,
         _count: { select: { registrations: true } },
+        review: {
+          include: { author: { select: { name: true, email: true } } },
+        },
       },
     }),
   ]);

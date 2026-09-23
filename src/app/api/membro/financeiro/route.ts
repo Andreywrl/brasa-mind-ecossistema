@@ -3,6 +3,7 @@ import { asaasConfigured, createPayment, getPixQrCode } from "@/lib/asaas";
 import { holderFromProfile } from "@/lib/asaas-holder";
 import { creditCardSchema, onlyDigits, zodErrorMessage } from "@/lib/br";
 import { prisma } from "@/lib/db";
+import { emailMembershipInvoice } from "@/lib/email-templates";
 import { formatCurrency } from "@/lib/utils";
 import { z } from "zod";
 
@@ -80,6 +81,11 @@ export async function POST(req: Request) {
       where: { memberId: profile.id },
       data: { status: "ACTIVE", overdueSince: null },
     });
+    void emailMembershipInvoice({
+      to: session.user.email!,
+      competencia: invoice.competencia,
+      amountLabel: formatCurrency(invoice.amountCents),
+    });
     return jsonOk({
       ok: true,
       asaasSkipped: true,
@@ -144,6 +150,11 @@ export async function POST(req: Request) {
     await prisma.subscription.update({
       where: { memberId: profile.id },
       data: { status: "ACTIVE", overdueSince: null },
+    });
+    void emailMembershipInvoice({
+      to: session.user.email!,
+      competencia: invoice.competencia,
+      amountLabel: formatCurrency(invoice.amountCents),
     });
   }
 

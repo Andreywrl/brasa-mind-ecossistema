@@ -31,12 +31,15 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="om-shell">
-      <aside className={cn("om-sidebar", menuOpen && "om-open")}>
+      <a href="#conteudo-principal" className="skip-link">
+        Ir para o conteúdo
+      </a>
+      <aside className={cn("om-sidebar", menuOpen && "om-open")} aria-label="Menu do membro">
         <div>
           <div className="font-impact text-xl text-brasa">Brasamind</div>
           <p className="text-xs text-muted-foreground mt-1">Área do membro</p>
         </div>
-        <nav className="flex flex-col gap-1 flex-1">
+        <nav className="flex flex-col gap-1 flex-1" aria-label="Navegação do membro">
           {nav.map((item) => {
             const active =
               item.href === "/membro"
@@ -91,7 +94,9 @@ export default function MembroLayout({ children }: { children: React.ReactNode }
           <NotificationBell />
           <ThemeToggle />
         </header>
-        <main className="flex-1 p-4 lg:p-8">{children}</main>
+        <main id="conteudo-principal" className="flex-1 p-4 lg:p-8" tabIndex={-1}>
+          {children}
+        </main>
       </div>
     </div>
   );

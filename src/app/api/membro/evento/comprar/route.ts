@@ -4,6 +4,7 @@ import { holderFromProfile } from "@/lib/asaas-holder";
 import { creditCardSchema, onlyDigits, zodErrorMessage } from "@/lib/br";
 import { newCheckinCode } from "@/lib/checkin";
 import { prisma } from "@/lib/db";
+import { emailTicketConfirmed } from "@/lib/email-templates";
 import { TICKET_PRICES } from "@/lib/utils";
 import type { MemberCategory } from "@prisma/client";
 import { z } from "zod";
@@ -57,6 +58,11 @@ export async function POST(req: Request) {
         ticketCents: 0,
         checkinCode: newCheckinCode(),
       },
+    });
+    void emailTicketConfirmed({
+      to: session.user.email!,
+      eventName: event.nome,
+      checkinCode: reg.checkinCode,
     });
     return jsonOk({ registration: reg, free: true });
   }
@@ -115,6 +121,11 @@ export async function POST(req: Request) {
           include: { invoice: true },
         });
       });
+    void emailTicketConfirmed({
+      to: session.user.email!,
+      eventName: event.nome,
+      checkinCode: reg.checkinCode,
+    });
     return jsonOk({
       registration: reg,
       asaasSkipped: true,
@@ -198,6 +209,14 @@ export async function POST(req: Request) {
         });
       }
     }
+  }
+
+  if (status === "CONFIRMED") {
+    void emailTicketConfirmed({
+      to: session.user.email!,
+      eventName: event.nome,
+      checkinCode: reg.checkinCode,
+    });
   }
 
   return jsonOk({

@@ -7,6 +7,15 @@ import { Badge, Card, Skeleton } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Textarea } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils";
+import { ImageUploadField } from "@/components/image-upload-field";
+import { StarRating } from "@/components/star-rating";
+
+type Review = {
+  stars: number;
+  comment: string | null;
+  author: { name: string | null; email: string } | null;
+  updatedAt?: string;
+};
 
 type EventosData = {
   active: {
@@ -34,6 +43,7 @@ type EventosData = {
     data: string;
     localShort: string | null;
     _count: { registrations: number };
+    review: Review | null;
   }[];
 };
 
@@ -44,6 +54,15 @@ export default function AdminEventosPage() {
     "/api/admin/eventos",
   );
   const [open, setOpen] = useState(false);
+  const [reviewing, setReviewing] = useState<{
+    id: string;
+    nome: string;
+    stars: number;
+    comment: string;
+  } | null>(null);
+  const [savingReview, setSavingReview] = useState(false);
+  const [reviewMsg, setReviewMsg] = useState("");
+  const [reviewErr, setReviewErr] = useState("");
   const [form, setForm] = useState({
     nome: "",
     data: "",
@@ -63,7 +82,42 @@ export default function AdminEventosPage() {
       body: JSON.stringify(form),
     });
     setOpen(false);
+    setForm({
+      nome: "",
+      data: "",
+      hora: "19h00",
+      local: "",
+      localShort: "",
+      descricao: "",
+      palestrante: "",
+      capaUrl: "",
+      vagas: 120,
+      ativo: true,
+    });
     await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
+  }
+
+  async function saveReview() {
+    if (!reviewing) return;
+    setSavingReview(true);
+    setReviewErr("");
+    setReviewMsg("");
+    try {
+      await apiMutate(`/api/admin/eventos/${reviewing.id}/review`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          stars: reviewing.stars,
+          comment: reviewing.comment,
+        }),
+      });
+      setReviewMsg("Nota salva.");
+      await qc.invalidateQueries({ queryKey: ["admin", "eventos"] });
+      setTimeout(() => setReviewing(null), 600);
+    } catch (e) {
+      setReviewErr(e instanceof Error ? e.message : "Erro");
+    } finally {
+      setSavingReview(false);
+    }
   }
 
   if (isLoading || !data) {
@@ -81,7 +135,7 @@ export default function AdminEventosPage() {
         <div>
           <h1 className="font-display text-2xl font-extrabold">Eventos</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Uma capa por evento. Sem galeria de fotos.
+            Uma capa por evento. Sem galeria de fotos. Nota só no admin.
           </p>
         </div>
         <Button onClick={() => setOpen(true)}>Novo evento</Button>
@@ -145,15 +199,42 @@ export default function AdminEventosPage() {
 
       <Card className="p-5">
         <h2 className="font-display font-extrabold mb-3">Anteriores</h2>
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {data.past.map((e) => (
-            <li key={e.id} className="flex justify-between text-sm border-b border-border pb-2">
-              <span>
-                {e.nome} · {new Date(e.data).toLocaleDateString("pt-BR")}
-              </span>
-              <span className="text-muted-foreground">
-                {e._count.registrations} inscritos
-              </span>
+            <li
+              key={e.id}
+              className="flex flex-wrap items-center justify-between gap-3 text-sm border-b border-border pb-3"
+            >
+              <div className="min-w-0">
+                <div className="font-semibold">
+                  {e.nome} · {new Date(e.data).toLocaleDateString("pt-BR")}
+                </div>
+                <div className="text-muted-foreground text-xs mt-1">
+                  {e._count.registrations} inscritos
+                  {e.localShort ? ` · ${e.localShort}` : ""}
+                </div>
+                <div className="mt-2">
+                  {e.review ? (
+                    <StarRating value={e.review.stars} readOnly size={16} />
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Sem nota</span>
+                  )}
+                </div>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() =>
+                  setReviewing({
+                    id: e.id,
+                    nome: e.nome,
+                    stars: e.review?.stars ?? 0,
+                    comment: e.review?.comment ?? "",
+                  })
+                }
+              >
+                {e.review ? "Editar nota" : "Dar nota"}
+              </Button>
             </li>
           ))}
         </ul>
@@ -165,7 +246,7 @@ export default function AdminEventosPage() {
             <h3 className="font-display font-extrabold">Novo evento</h3>
             <Label>Nome</Label>
             <Input value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
-            <Label>Data (ISO)</Label>
+            <Label>Data</Label>
             <Input type="datetime-local" value={form.data} onChange={(e) => setForm({ ...form, data: e.target.value })} />
             <Label>Hora (rótulo)</Label>
             <Input value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} />
@@ -173,8 +254,12 @@ export default function AdminEventosPage() {
             <Input value={form.local} onChange={(e) => setForm({ ...form, local: e.target.value })} />
             <Label>Local curto</Label>
             <Input value={form.localShort} onChange={(e) => setForm({ ...form, localShort: e.target.value })} />
-            <Label>Capa URL (Blob)</Label>
-            <Input value={form.capaUrl} onChange={(e) => setForm({ ...form, capaUrl: e.target.value })} />
+            <ImageUploadField
+              label="Capa"
+              value={form.capaUrl}
+              onChange={(capaUrl) => setForm({ ...form, capaUrl })}
+              folder="events/capas"
+            />
             <Label>Descrição</Label>
             <Textarea value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} />
             <label className="flex items-center gap-2 text-sm">
@@ -184,6 +269,44 @@ export default function AdminEventosPage() {
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
               <Button onClick={create}>Salvar</Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {reviewing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <Card className="w-full max-w-md p-6 space-y-4">
+            <div>
+              <h3 className="font-display font-extrabold">Avaliar evento</h3>
+              <p className="text-sm text-muted-foreground mt-1">{reviewing.nome}</p>
+            </div>
+            <StarRating
+              value={reviewing.stars}
+              onChange={(stars) => setReviewing({ ...reviewing, stars })}
+            />
+            <div className="space-y-1">
+              <Label>Comentário</Label>
+              <Textarea
+                value={reviewing.comment}
+                onChange={(e) =>
+                  setReviewing({ ...reviewing, comment: e.target.value })
+                }
+                placeholder="Como foi o encontro, o que melhorar…"
+              />
+            </div>
+            {reviewErr && <p className="text-sm text-destructive">{reviewErr}</p>}
+            {reviewMsg && <p className="text-sm text-success">{reviewMsg}</p>}
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={() => setReviewing(null)}>
+                Cancelar
+              </Button>
+              <Button
+                disabled={savingReview || reviewing.stars < 1}
+                onClick={saveReview}
+              >
+                {savingReview ? "Salvando…" : "Salvar nota"}
+              </Button>
             </div>
           </Card>
         </div>

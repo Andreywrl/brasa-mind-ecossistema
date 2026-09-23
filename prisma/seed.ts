@@ -195,6 +195,7 @@ async function resolveImageUrl(relativePath: string): Promise<string> {
 async function main() {
   console.log("Seeding Brasamind…");
 
+  await prisma.eventReview.deleteMany();
   await prisma.memberAchievement.deleteMany();
   await prisma.achievement.deleteMany();
   await prisma.pointEntry.deleteMany();
@@ -742,6 +743,30 @@ async function main() {
         status: "NO_SHOW",
         ticketCents: 0,
         checkinCode: checkinCode(),
+      },
+    });
+  }
+
+  const carla = await prisma.user.findUnique({
+    where: { email: "carla@brasamind.com.br" },
+  });
+  if (carla && past[0]) {
+    await prisma.eventReview.create({
+      data: {
+        eventId: past[0].id,
+        stars: 5,
+        comment: "Encontro forte: networking fluindo e assado no ponto.",
+        authorId: carla.id,
+      },
+    });
+  }
+  if (carla && past[1]) {
+    await prisma.eventReview.create({
+      data: {
+        eventId: past[1].id,
+        stars: 3,
+        comment: "Talk boa, mas o ritmo do networking ficou curto.",
+        authorId: carla.id,
       },
     });
   }

@@ -1,4 +1,10 @@
 import { prisma } from "@/lib/db";
+import {
+  emailGuestTicketConfirmed,
+  emailMembershipInvoice,
+  emailTicketConfirmed,
+} from "@/lib/email-templates";
+import { formatCurrency } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -41,10 +47,20 @@ export async function POST(req: Request) {
 
   const invoice = await prisma.invoice.findFirst({
     where: { asaasPaymentId: paymentId },
-    include: { registration: true, member: true },
+    include: {
+      registration: {
+        include: {
+          event: true,
+          guest: { include: { invite: { include: { host: { include: { user: true } } } } } },
+          member: { include: { user: true } },
+        },
+      },
+      member: { include: { user: true } },
+    },
   });
 
   const paid = ["CONFIRMED", "RECEIVED", "RECEIVED_IN_CASH"].includes(status);
+  const wasUnpaid = invoice?.status !== "PAID";
 
   if (invoice) {
     await prisma.invoice.update({
@@ -62,21 +78,39 @@ export async function POST(req: Request) {
       });
 
       if (invoice.kind === "GUEST_TICKET" && invoice.registration?.guestId) {
-        const reg = await prisma.registration.findUnique({
-          where: { id: invoice.registrationId },
-          include: { guest: { include: { invite: true } } },
-        });
-        if (reg?.guest?.invite) {
+        const reg = invoice.registration;
+        const guest = reg.guest;
+        if (guest?.invite) {
           await prisma.pointEntry.create({
             data: {
-              memberId: reg.guest.invite.hostId,
+              memberId: guest.invite.hostId,
               action: "CONVITE_CONVERTIDO",
               pontos: 50,
-              note: `Convidado convertido, ${reg.guest.nome}`,
+              note: `Convidado convertido, ${guest.nome}`,
               eventId: reg.eventId,
             },
           });
+          if (wasUnpaid) {
+            void emailGuestTicketConfirmed({
+              to: guest.email,
+              eventName: reg.event.nome,
+              checkinCode: reg.checkinCode,
+              hostName: guest.invite.host.user.name ?? null,
+            });
+          }
         }
+      }
+
+      if (
+        wasUnpaid &&
+        invoice.kind === "EVENT_TICKET" &&
+        invoice.registration?.member?.user.email
+      ) {
+        void emailTicketConfirmed({
+          to: invoice.registration.member.user.email,
+          eventName: invoice.registration.event.nome,
+          checkinCode: invoice.registration.checkinCode,
+        });
       }
     }
 
@@ -93,6 +127,13 @@ export async function POST(req: Request) {
             titulo: "Mensalidade confirmada",
           },
         });
+        if (wasUnpaid && invoice.member.user.email) {
+          void emailMembershipInvoice({
+            to: invoice.member.user.email,
+            competencia: invoice.competencia,
+            amountLabel: formatCurrency(invoice.amountCents),
+          });
+        }
       }
     }
   }

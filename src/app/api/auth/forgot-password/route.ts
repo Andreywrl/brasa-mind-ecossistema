@@ -2,11 +2,19 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
 import { sendEmail } from "@/lib/email";
+import { isValidEmail } from "@/lib/br";
+
+function isProd() {
+  return (
+    process.env.VERCEL_ENV === "production" ||
+    process.env.NODE_ENV === "production"
+  );
+}
 
 export async function POST(req: Request) {
   const { email } = (await req.json()) as { email?: string };
-  if (!email) {
-    return NextResponse.json({ error: "E-mail obrigatório" }, { status: 400 });
+  if (!email || !isValidEmail(email)) {
+    return NextResponse.json({ error: "E-mail inválido" }, { status: 400 });
   }
 
   const user = await prisma.user.findUnique({ where: { email } });
@@ -28,9 +36,10 @@ export async function POST(req: Request) {
     html: `<p>Olá,</p><p>Use este link para criar uma nova senha (válido por 1h):</p><p><a href="${base}/recuperar-senha?token=${token}">Redefinir senha</a></p>`,
   });
 
-  return NextResponse.json({
-    ok: true,
-    // In local without email provider, expose token for testing
-    ...(process.env.RESEND_API_KEY ? {} : { devToken: token }),
-  });
+  const payload: { ok: true; devToken?: string } = { ok: true };
+  if (!isProd() && !process.env.RESEND_API_KEY) {
+    payload.devToken = token;
+  }
+
+  return NextResponse.json(payload);
 }

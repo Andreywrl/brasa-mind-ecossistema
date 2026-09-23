@@ -9,6 +9,7 @@ import { holderFromGuest } from "@/lib/asaas-holder";
 import { guestPayBodySchema, onlyDigits, zodErrorMessage } from "@/lib/br";
 import { newCheckinCode } from "@/lib/checkin";
 import { prisma } from "@/lib/db";
+import { emailGuestTicketConfirmed } from "@/lib/email-templates";
 import { TICKET_PRICES } from "@/lib/utils";
 
 export async function GET(
@@ -58,7 +59,10 @@ export async function POST(
   const { token } = await ctx.params;
   const invite = await prisma.invite.findUnique({
     where: { token },
-    include: { event: { include: { prices: true } }, host: true },
+    include: {
+      event: { include: { prices: true } },
+      host: { include: { user: { select: { name: true } } } },
+    },
   });
   if (!invite) return jsonError("Convite inválido", 404);
 
@@ -129,6 +133,13 @@ export async function POST(
         note: `Convidado convertido, ${guest.nome}`,
         eventId: invite.eventId,
       },
+    });
+
+    void emailGuestTicketConfirmed({
+      to: body.email,
+      eventName: invite.event.nome,
+      checkinCode,
+      hostName: invite.host.user.name ?? null,
     });
 
     return jsonOk({
@@ -213,6 +224,12 @@ export async function POST(
         note: `Convidado convertido, ${guest.nome}`,
         eventId: invite.eventId,
       },
+    });
+    void emailGuestTicketConfirmed({
+      to: body.email,
+      eventName: invite.event.nome,
+      checkinCode,
+      hostName: invite.host.user.name ?? null,
     });
   }
 
