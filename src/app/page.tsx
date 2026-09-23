@@ -60,13 +60,26 @@ function LoginForm() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       <aside className="relative hidden lg:flex flex-col justify-between p-12 bg-brasa text-white overflow-hidden">
-        <div>
-          <div className="font-impact text-3xl">Brasamind</div>
+        <img
+          src="/brand/simbolo-branco.png"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute -right-16 -bottom-10 w-[420px] opacity-[0.12]"
+        />
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <img
+              src="/brand/simbolo-branco.png"
+              alt="Brasamind"
+              className="h-10 w-auto"
+            />
+            <span className="font-impact text-3xl tracking-wide">Brasamind</span>
+          </div>
           <p className="mt-3 text-white/85 max-w-sm">
             Empreendedorismo, churrasco e network gaúcho. Conecte, indique e feche negócios.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="relative grid grid-cols-3 gap-6">
           <div>
             <div className="font-impact text-3xl">9</div>
             <div className="text-sm opacity-85">membros no seed</div>
@@ -84,6 +97,14 @@ function LoginForm() {
 
       <main className="flex items-center justify-center p-6 sm:p-10">
         <div className="w-full max-w-md space-y-6">
+          <div className="flex items-center gap-3 lg:hidden">
+            <img
+              src="/brand/simbolo-laranja.png"
+              alt="Brasamind"
+              className="h-9 w-auto"
+            />
+            <span className="font-impact text-2xl text-brasa">Brasamind</span>
+          </div>
           <div>
             <h1 className="font-display text-2xl font-extrabold">
               {view === "login" ? "Entrar no Brasa" : "Recuperar senha"}
