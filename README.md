@@ -2,8 +2,6 @@
 
 App Next.js do Brasamind: área do membro, painel administrativo, portaria, cadastro por link do admin e convite de convidado.
 
-O protótipo estático anterior (HTML DC) está em [`prototype/`](prototype/).
-
 ## Stack
 
 - Next.js 15 (App Router) + TypeScript + Tailwind

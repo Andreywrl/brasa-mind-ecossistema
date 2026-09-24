@@ -181,7 +181,7 @@ function LoginForm() {
                 <div className="flex items-stretch gap-2.5">
                   <Button
                     type="submit"
-                    className="h-[46px] flex-1 glow-ember"
+                    classNameLi="h-[46px] flex-1 glow-ember"
                     loading={loading}
                   >
                     {loading ? "Entrando…" : "Entrar"}
